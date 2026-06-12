@@ -12,6 +12,7 @@ body {
     background: #f5f5f5;
 }
 
+/* HEADER */
 header {
     background: orange;
     color: white;
@@ -27,30 +28,21 @@ header {
     font-size: 14px;
 }
 
-/* ✅ FLEX FIX */
+/* ✅ GRID LAYOUT (FINAL FIX) */
 .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
-/* ✅ DESKTOP VIEW (2 cards) */
+/* CARD */
 .card {
     background: white;
     padding: 15px;
     border-radius: 10px;
-    width: 45%;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     text-align: center;
-}
-
-/* ✅ MOBILE VIEW (1 card) */
-@media (max-width: 768px) {
-    .card {
-        width: 100%;
-    }
 }
 
 .card img {
@@ -95,7 +87,7 @@ button:hover {
 🔥 Today Deals: Kitchen | Beauty | Fashion | Electronics 🔥
 </div>
 
-<<div class="container">
+<div class="container">
 
     <div class="card">
         <img src="images/storage.jpg">
@@ -136,22 +128,6 @@ button:hover {
         <img src="images/headphones.jpg">
         <h2>Wireless Headphones</h2>
         <div class="price">₹1299</div>
-        <button>Buy Now</button>
-    </div>
-
-</div>
-
-    <div class="card">
-        <img src="images/storage.jpg">
-        <h2>Kitchen Storage Box</h2>
-        <div class="price">₹999</div>
-        <button>Buy Now</button>
-    </div>
-
-    <div class="card">
-        <img src="images/towel.jpg">
-        <h2>Towel Set</h2>
-        <div class="price">₹299</div>
         <button>Buy Now</button>
     </div>
 
