@@ -8,33 +8,32 @@
 <style>
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial;
     background:#f4f6fb;
 }
 
-/* TOP BAR */
+/* TOP */
 .topbar{
     background:#131921;
     color:white;
     display:flex;
     justify-content:space-between;
-    align-items:center;
     padding:12px 15px;
+    align-items:center;
 }
 
 .logo{
     color:#ff9900;
     font-weight:bold;
-    font-size:18px;
 }
 
 /* NAV */
 .nav{
     display:flex;
-    justify-content:space-around;
+    gap:10px;
+    padding:10px;
     background:#232f3e;
     color:white;
-    padding:10px;
 }
 
 .nav div{
@@ -42,6 +41,63 @@ body{
     padding:6px 12px;
     background:#37475a;
     border-radius:20px;
+}
+
+/* 🔥 AUTO SCROLL CATEGORY BAR */
+.category-scroll{
+    display:flex;
+    overflow:hidden;
+    background:white;
+    padding:10px;
+    gap:10px;
+    white-space:nowrap;
+}
+
+.category-track{
+    display:flex;
+    gap:10px;
+    animation:scroll 20s linear infinite;
+}
+
+.category-scroll:hover .category-track{
+    animation-play-state:paused;
+}
+
+.cat{
+    min-width:120px;
+    background:#ff9900;
+    color:white;
+    padding:8px;
+    border-radius:20px;
+    text-align:center;
+    font-size:13px;
+}
+
+@keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+}
+
+/* 🔥 HOT DEALS STRIP */
+.hot-deals{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px;
+    background:#fff;
+}
+
+.hot-card{
+    min-width:140px;
+    background:#f8f8f8;
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.hot-deals::-webkit-scrollbar{
+    display:none;
 }
 
 /* SEARCH */
@@ -53,9 +109,8 @@ body{
 .search-box input{
     width:100%;
     padding:10px;
-    border:none;
     border-radius:6px;
-    outline:none;
+    border:none;
 }
 
 /* GRID */
@@ -70,31 +125,20 @@ body{
 .card{
     background:white;
     border-radius:12px;
-    overflow:hidden;
+    padding:10px;
     position:relative;
     box-shadow:0 3px 10px rgba(0,0,0,0.08);
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
 }
 
 .card img{
     width:100%;
-    height:150px;
+    height:140px;
     object-fit:cover;
-}
-
-.card-content{
-    padding:10px;
-    text-align:center;
 }
 
 .price{
     color:green;
     font-weight:bold;
-    margin:5px 0;
 }
 
 /* BUTTON */
@@ -109,22 +153,6 @@ button{
 .buy{
     background:#ff9900;
     color:white;
-}
-
-/* HEART */
-.heart{
-    position:absolute;
-    top:8px;
-    right:8px;
-    cursor:pointer;
-    font-size:18px;
-    background:white;
-    border-radius:50%;
-    padding:3px 6px;
-}
-
-.active{
-    color:red;
 }
 </style>
 </head>
@@ -148,7 +176,30 @@ button{
     <input id="search" placeholder="Search products...">
 </div>
 
-<!-- GRID -->
+<!-- 🔥 AUTO SCROLL CATEGORIES -->
+<div class="category-scroll">
+    <div class="category-track">
+        <div class="cat">🔥 Deals</div>
+        <div class="cat">⚡ Fast</div>
+        <div class="cat">💰 Cheap</div>
+        <div class="cat">🆕 New</div>
+        <div class="cat">🏠 Home</div>
+        <div class="cat">📱 Tech</div>
+        <div class="cat">👕 Fashion</div>
+        <div class="cat">🔥 Hot</div>
+    </div>
+</div>
+
+<!-- 🔥 HOT DEALS STRIP -->
+<div class="hot-deals">
+    <div class="hot-card">🔥 Shoes</div>
+    <div class="hot-card">⚡ Watch</div>
+    <div class="hot-card">💰 Bag</div>
+    <div class="hot-card">🆕 Laptop</div>
+    <div class="hot-card">🔥 Mobile</div>
+</div>
+
+<!-- PRODUCTS -->
 <div class="container" id="grid"></div>
 
 <script>
@@ -157,18 +208,17 @@ const products = [
 {id:1,name:"Kitchen Box",price:999,img:"images/storage.jpg"},
 {id:2,name:"Towel Set",price:299,img:"images/towel.jpg"},
 {id:3,name:"Shoes",price:1499,img:"images/shoes.jpg"},
-{id:4,name:"Smart Watch",price:1999,img:"images/watch.jpg"},
-{id:5,name:"Travel Bag",price:899,img:"images/bag.jpg"},
-{id:6,name:"Pooja Diya",price:199,img:"images/diya.jpg"},
+{id:4,name:"Watch",price:1999,img:"images/watch.jpg"},
+{id:5,name:"Bag",price:899,img:"images/bag.jpg"},
+{id:6,name:"Diya",price:199,img:"images/diya.jpg"},
 {id:7,name:"Laptop",price:45999,img:"images/laptop.jpg"},
 {id:8,name:"Mobile",price:14999,img:"images/mobile.jpg"},
-{id:9,name:"Home Plant",price:299,img:"images/plant.jpg"},
+{id:9,name:"Plant",price:299,img:"images/plant.jpg"},
 {id:10,name:"Headphones",price:1299,img:"images/headphones.jpg"}
 ];
 
 let view="home";
-
-let wishlist = JSON.parse(localStorage.getItem("wish")||"[]");
+let wishlist=JSON.parse(localStorage.getItem("wish")||"[]");
 
 function save(){
 localStorage.setItem("wish",JSON.stringify(wishlist));
@@ -181,8 +231,8 @@ render();
 
 function toggleWish(id){
 if(wishlist.includes(id)){
-wishlist = wishlist.filter(x=>x!==id);
-} else {
+wishlist=wishlist.filter(x=>x!==id);
+}else{
 wishlist.push(id);
 }
 save();
@@ -194,30 +244,25 @@ function render(){
 let grid=document.getElementById("grid");
 grid.innerHTML="";
 
-let data = view==="home"
-? products
-: products.filter(p=>wishlist.includes(p.id));
+let data=view==="home"
+?products
+:products.filter(p=>wishlist.includes(p.id));
 
-let search = document.getElementById("search").value.toLowerCase();
+let search=document.getElementById("search").value.toLowerCase();
 
-data = data.filter(p=>p.name.toLowerCase().includes(search));
+data=data.filter(p=>p.name.toLowerCase().includes(search));
 
 data.forEach(p=>{
 
-let isWish = wishlist.includes(p.id);
-
-// 🔗 AFFILIATE LINK PLACE (add later)
-let affiliateLink = "#";
+let isWish=wishlist.includes(p.id);
 
 grid.innerHTML+=`
 <div class="card">
-<div class="heart ${isWish?'active':''}" onclick="toggleWish(${p.id})">❤</div>
+<div onclick="toggleWish(${p.id})" style="position:absolute;top:8px;right:8px;cursor:pointer;color:${isWish?'red':'black'}">❤</div>
 <img src="${p.img}">
-<div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
-<a href="${affiliateLink}" class="buy" target="_blank">Buy Now</a>
-</div>
+<a href="#" class="buy">Buy Now</a>
 </div>
 `;
 });
