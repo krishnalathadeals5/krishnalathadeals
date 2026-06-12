@@ -24,18 +24,69 @@ padding:14px 16px;
 position:sticky;
 top:0;
 z-index:999;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
+/* PREMIUM LOGO */
 .logo{
-font-size:24px;
-font-weight:800;
+font-size:26px;
+font-weight:900;
 color:#ffb84d;
+letter-spacing:0.5px;
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.logo span{
+font-size:18px;
+animation:float 2s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-3px);}
+100%{transform:translateY(0);}
 }
 
 .top-icons span{
 margin-left:12px;
 cursor:pointer;
 font-weight:bold;
+}
+
+/* HORIZONTAL SCROLL */
+.scroll-wrapper{
+overflow:hidden;
+background:white;
+padding:10px 0;
+border-bottom:1px solid #eee;
+}
+
+.scroll-track{
+display:flex;
+gap:20px;
+width:max-content;
+animation:scroll 18s linear infinite;
+}
+
+.scroll-wrapper:hover .scroll-track{
+animation-play-state:paused;
+}
+
+.scroll-item{
+min-width:140px;
+background:#f4f4f4;
+padding:8px;
+border-radius:20px;
+text-align:center;
+font-weight:bold;
+font-size:13px;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
 }
 
 /* GRID */
@@ -53,6 +104,11 @@ overflow:hidden;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
 cursor:pointer;
 position:relative;
+transition:0.2s;
+}
+
+.card:hover{
+transform:scale(1.02);
 }
 
 .card img{
@@ -62,13 +118,13 @@ object-fit:cover;
 }
 
 .card-content{
-padding:10px;
+padding:8px 10px;
 text-align:center;
 }
 
 .card h3{
-margin:6px 0;
-font-size:15px;
+margin:5px 0;
+font-size:14px;
 }
 
 .price{
@@ -86,6 +142,7 @@ color:white;
 padding:5px 8px;
 font-size:12px;
 border-radius:20px;
+font-weight:bold;
 }
 
 /* HEART */
@@ -104,7 +161,7 @@ background:red;
 color:white;
 }
 
-/* POPUP DETAIL VIEW */
+/* DETAIL POPUP */
 .detail{
 position:fixed;
 inset:0;
@@ -149,17 +206,41 @@ font-size:15px;
 
 <body>
 
+<!-- HEADER -->
 <div class="topbar">
-<div class="logo">Krishnalatha Deals</div>
+<div class="logo">
+Krishna<span>🪶</span>latha Deals
+</div>
 <div class="top-icons">
 <span>❤️ <span id="wishCount">0</span></span>
 <span>🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
+<!-- AUTO SCROLL -->
+<div class="scroll-wrapper">
+<div class="scroll-track">
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New Arrivals</div>
+<div class="scroll-item">🏆 Top Rated</div>
+<div class="scroll-item">📦 Free Delivery</div>
+
+<!-- duplicate for smooth loop -->
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New Arrivals</div>
+<div class="scroll-item">🏆 Top Rated</div>
+<div class="scroll-item">📦 Free Delivery</div>
+</div>
+</div>
+
+<!-- GRID -->
 <div class="container" id="grid"></div>
 
-<!-- PRODUCT DETAIL POPUP -->
+<!-- DETAIL -->
 <div class="detail" id="detailBox">
 <div class="detail-header">
 <div>Product Details</div>
@@ -192,7 +273,7 @@ localStorage.setItem("wish",JSON.stringify(wish));
 localStorage.setItem("cart",JSON.stringify(cart));
 }
 
-/* RENDER GRID */
+/* RENDER */
 function render(){
 let g=document.getElementById("grid");
 g.innerHTML="";
@@ -233,10 +314,9 @@ updateCounts();
 render();
 }
 
-/* OPEN PRODUCT DETAIL */
+/* DETAIL */
 function openDetail(name){
 let p = products.find(x=>x.name===name);
-
 let discount = Math.round(((p.old-p.price)/p.old)*100);
 
 document.getElementById("detailBody").innerHTML=`
@@ -256,12 +336,10 @@ document.getElementById("detailBody").innerHTML=`
 document.getElementById("detailBox").style.display="flex";
 }
 
-/* CLOSE DETAIL */
 function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* CART */
 function addCart(name){
 let p = products.find(x=>x.name===name);
 if(!cart.find(x=>x.name===name)) cart.push(p);
@@ -271,12 +349,10 @@ updateCounts();
 alert("Added to cart");
 }
 
-/* BUY */
 function buyNow(name){
 alert("Buying " + name);
 }
 
-/* COUNTS */
 function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
 document.getElementById("cartCount").innerText=cart.length;
