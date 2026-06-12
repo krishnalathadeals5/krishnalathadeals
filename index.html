@@ -1,12 +1,4 @@
-.container {
-    flex-wrap: wrap;
-}
-
-.card {
-    width: 100%;
-}button:hover {
-    background: #ff8c00;
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,6 +29,7 @@
 
         .container {
             display: flex;
+            flex-wrap: wrap; /* ✅ FIXED */
             gap: 20px;
             padding: 20px;
         }
@@ -45,7 +38,7 @@
             background: white;
             padding: 15px;
             border-radius: 10px;
-            width: 50%;
+            width: 48%; /* ✅ Better than 100% */
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
         }
@@ -76,7 +69,14 @@
         }
 
         button:hover {
-            background: darkorange;
+            background: #ff8c00; /* ✅ Your change applied */
+        }
+
+        /* ✅ MOBILE VIEW */
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -94,7 +94,6 @@
 
 <div class="container">
 
-    <!-- Product 1 -->
     <div class="card">
         <img src="images/storage.jpg" alt="Kitchen Storage Box">
         <h2>Kitchen Storage Box</h2>
@@ -102,7 +101,6 @@
         <button>Buy Now</button>
     </div>
 
-    <!-- Product 2 -->
     <div class="card">
         <img src="images/towel.jpg" alt="Towel Set">
         <h2>Towel Set</h2>
