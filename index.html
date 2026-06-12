@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals - Pro Store</title>
+<title>Krishnalatha Deals</title>
 
 <style>
 body{
@@ -19,45 +19,37 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:12px 15px;
+    padding:12px;
     position:sticky;
     top:0;
     z-index:1000;
 }
 
-.logo{
-    color:#ff9900;
-    font-weight:bold;
-}
+.logo{color:#ff9900;font-weight:bold}
 
 .top-icons{
     display:flex;
-    gap:12px;
+    gap:15px;
     cursor:pointer;
 }
 
-/* SEARCH */
-.search-box{
-    padding:10px;
-    background:#131921;
+/* SOCIAL BAR */
+.social{
+    display:flex;
+    justify-content:space-around;
+    padding:8px;
+    background:white;
+    font-size:13px;
 }
 
-.search-box input{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:6px;
-    outline:none;
-}
-
-/* AUTO CATEGORY SCROLL */
+/* AUTO SCROLL CATEGORY */
 .categories{
     display:flex;
     overflow-x:auto;
     gap:10px;
     padding:10px;
     background:#1f2a38;
-    white-space:nowrap;
+    scroll-behavior:smooth;
 }
 
 .categories div{
@@ -65,6 +57,7 @@ body{
     background:#2f3e50;
     padding:6px 12px;
     border-radius:20px;
+    white-space:nowrap;
     cursor:pointer;
 }
 
@@ -77,16 +70,7 @@ body{
     background:white;
 }
 
-.slider .mini{
-    min-width:140px;
-    background:#fff;
-    padding:10px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    text-align:center;
-}
-
-/* GRID */
+/* PRODUCTS */
 .container{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
@@ -94,13 +78,11 @@ body{
     padding:12px;
 }
 
-/* CARD */
 .card{
     background:white;
     border-radius:12px;
     overflow:hidden;
     position:relative;
-    box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
 .card img{
@@ -115,21 +97,16 @@ body{
     text-align:center;
 }
 
-.price{
-    color:green;
-    font-weight:bold;
-}
+.price{color:green;font-weight:bold}
 
-/* BUTTONS */
 .button{
     display:block;
     padding:8px;
     background:#ff9900;
     color:white;
     border-radius:6px;
-    text-decoration:none;
     margin-top:6px;
-    cursor:pointer;
+    text-decoration:none;
 }
 
 /* HEART */
@@ -141,35 +118,53 @@ body{
     border-radius:50%;
     padding:4px 6px;
     cursor:pointer;
-    color:#aaa;
 }
 
-.heart.active{
-    color:red;
-}
+.heart.active{color:red}
 
-/* CART PANEL */
+/* ===== CART FIX ===== */
 .cart{
     position:fixed;
-    right:-320px;
+    right:-350px;
     top:0;
-    width:300px;
+    width:320px;
     height:100%;
     background:white;
-    box-shadow:-2px 0 10px rgba(0,0,0,0.2);
+    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
     transition:0.3s;
-    padding:10px;
     z-index:2000;
+    padding:10px;
+    overflow:auto;
 }
 
-.cart.open{
-    right:0;
+.cart.open{right:0}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #ddd;
+    padding-bottom:10px;
+}
+
+.close{
+    cursor:pointer;
+    font-size:18px;
 }
 
 .cart-item{
-    border-bottom:1px solid #ddd;
-    padding:6px 0;
-    font-size:14px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid #eee;
+}
+
+.cart-item img{
+    width:50px;
+    height:50px;
+    object-fit:cover;
+    border-radius:6px;
 }
 
 .total{
@@ -177,28 +172,24 @@ body{
     margin-top:10px;
 }
 
-/* POPUP */
-.popup{
+/* WISHLIST */
+.modal{
     display:none;
     position:fixed;
     top:0;left:0;
-    width:100%;height:100%;
-    background:rgba(0,0,0,0.6);
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
     z-index:3000;
 }
 
-.popup-content{
+.modal-content{
     background:white;
     width:90%;
     max-width:400px;
     margin:60px auto;
     padding:15px;
     border-radius:10px;
-}
-
-.close{
-    float:right;
-    cursor:pointer;
 }
 </style>
 </head>
@@ -210,24 +201,19 @@ body{
     <div class="logo">Krishnalatha Deals</div>
     <div class="top-icons">
         <div onclick="openCart()">🛒 <span id="cartCount">0</span></div>
-        <div onclick="openWishlist()">❤️ <span id="wishCount">0</span></div>
+        <div onclick="openWish()">❤️ <span id="wishCount">0</span></div>
     </div>
 </div>
 
-<!-- SEARCH -->
-<div class="search-box">
-    <input id="search" placeholder="Search products...">
+<!-- SOCIAL -->
+<div class="social">
+    <div style="background:red;color:white;padding:4px 8px;border-radius:20px;">YouTube</div>
+    <div style="background:purple;color:white;padding:4px 8px;border-radius:20px;">Instagram</div>
+    <div style="background:#25D366;color:white;padding:4px 8px;border-radius:20px;">WhatsApp</div>
+    <div style="background:#0088cc;color:white;padding:4px 8px;border-radius:20px;">Telegram</div>
 </div>
 
-<!-- TRENDING -->
-<div class="slider">
-    <div class="mini">🔥 Trending</div>
-    <div class="mini">⚡ Fast Deals</div>
-    <div class="mini">💰 Best Price</div>
-    <div class="mini">🆕 New</div>
-</div>
-
-<!-- CATEGORIES -->
+<!-- CATEGORY -->
 <div class="categories" id="catBox"></div>
 
 <!-- PRODUCTS -->
@@ -235,55 +221,57 @@ body{
 
 <!-- CART -->
 <div class="cart" id="cart">
-    <h3>Cart</h3>
+    <div class="cart-header">
+        <h3>Cart</h3>
+        <span class="close" onclick="openCart()">✖</span>
+    </div>
     <div id="cartItems"></div>
     <div class="total">Total: ₹<span id="total">0</span></div>
 </div>
 
-<!-- PRODUCT POPUP -->
-<div class="popup" id="popup">
-    <div class="popup-content">
-        <span class="close" onclick="closePopup()">✖</span>
-        <div id="popupData"></div>
+<!-- WISHLIST -->
+<div class="modal" id="wishModal">
+    <div class="modal-content">
+        <h3>Wishlist</h3>
+        <div id="wishList"></div>
+        <button onclick="closeWish()">Close</button>
     </div>
 </div>
 
 <script>
 
 const products = [
-{name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen",link:"#"},
-{name:"Towel Set",price:299,img:"images/towel.jpg",cat:"Home",link:"#"},
-{name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion",link:"#"},
-{name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics",link:"#"},
-{name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion",link:"#"},
-{name:"Diya",price:199,img:"images/diya.jpg",cat:"Home",link:"#"},
-{name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics",link:"#"},
-{name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics",link:"#"}
+{name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen"},
+{name:"Towel",price:299,img:"images/towel.jpg",cat:"Home"},
+{name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion"},
+{name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics"},
+{name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion"},
+{name:"Diya",price:199,img:"images/diya.jpg",cat:"Home"},
+{name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics"},
+{name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics"}
 ];
 
-let wishlist = [];
-let cart = [];
+let wishlist=[];
+let cart=[];
 
-/* CATEGORIES */
-const cats = ["All","Kitchen","Fashion","Electronics","Home"];
+/* categories */
+const cats=["All","Kitchen","Fashion","Electronics","Home"];
 document.getElementById("catBox").innerHTML =
 cats.map(c=>`<div onclick="filter('${c}')">${c}</div>`).join("");
 
-/* RENDER */
 function render(data){
-let g = document.getElementById("grid");
+let g=document.getElementById("grid");
 g.innerHTML="";
 
 data.forEach((p,i)=>{
 g.innerHTML+=`
 <div class="card">
-<div class="heart" onclick="toggleWish(${i},this)">❤</div>
-<img src="${p.img}" onclick="openPopup(${i})">
+<div class="heart" onclick="wishToggle(${i},this)">❤</div>
+<img src="${p.img}">
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
-<div class="button" onclick="addCart(${i})">Add to Cart</div>
-<a class="button" href="${p.link}" target="_blank">Buy Now</a>
+<div class="button" onclick="addCart(${i})">Add Cart</div>
 </div>
 </div>`;
 });
@@ -295,66 +283,70 @@ if(c==="All") render(products);
 else render(products.filter(p=>p.cat===c));
 }
 
-/* WISHLIST */
-function toggleWish(i,el){
-let item = products[i];
-let exists = wishlist.find(x=>x.name===item.name);
+/* WISHLIST FIX */
+function wishToggle(i,el){
+let item=products[i];
+let index=wishlist.findIndex(x=>x.name===item.name);
 
-if(exists){
-wishlist = wishlist.filter(x=>x.name!==item.name);
-el.classList.remove("active");
-} else {
+if(index===-1){
 wishlist.push(item);
 el.classList.add("active");
+}else{
+wishlist.splice(index,1);
+el.classList.remove("active");
+}
+document.getElementById("wishCount").innerText=wishlist.length;
 }
 
-document.getElementById("wishCount").innerText = wishlist.length;
-}
-
-/* CART */
+/* CART FIX WITH IMAGE */
 function addCart(i){
 cart.push(products[i]);
 updateCart();
 }
 
 function updateCart(){
-document.getElementById("cartCount").innerText = cart.length;
+document.getElementById("cartCount").innerText=cart.length;
 
-let box = document.getElementById("cartItems");
-let total = 0;
-
-box.innerHTML = "";
+let box=document.getElementById("cartItems");
+let total=0;
+box.innerHTML="";
 
 cart.forEach(p=>{
-total += p.price;
-box.innerHTML += `<div class="cart-item">${p.name} - ₹${p.price}</div>`;
+total+=p.price;
+box.innerHTML+=`
+<div class="cart-item">
+<img src="${p.img}">
+<div>
+<div>${p.name}</div>
+<div>₹${p.price}</div>
+</div>
+</div>`;
 });
 
-document.getElementById("total").innerText = total;
+document.getElementById("total").innerText=total;
 }
 
 function openCart(){
 document.getElementById("cart").classList.toggle("open");
 }
 
-/* POPUP */
-function openPopup(i){
-let p = products[i];
-document.getElementById("popupData").innerHTML=`
-<h3>${p.name}</h3>
-<img src="${p.img}" style="width:100%">
-<p>Price: ₹${p.price}</p>
-<a href="${p.link}" class="button">Buy Now</a>
-`;
-document.getElementById("popup").style.display="block";
+/* WISHLIST */
+function openWish(){
+let box=document.getElementById("wishList");
+box.innerHTML="";
+
+wishlist.forEach(p=>{
+box.innerHTML+=`<p>${p.name} - ₹${p.price}</p>`;
+});
+
+document.getElementById("wishModal").style.display="block";
 }
 
-function closePopup(){
-document.getElementById("popup").style.display="none";
+function closeWish(){
+document.getElementById("wishModal").style.display="none";
 }
 
 render(products);
-
 </script>
 
 </body>
