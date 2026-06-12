@@ -8,80 +8,79 @@
 <style>
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial;
     background:#f5f6fa;
 }
 
-/* TOP BAR */
+/* TOP */
 .topbar{
     background:#131921;
     color:white;
     display:flex;
     justify-content:space-between;
-    align-items:center;
     padding:12px 15px;
+    align-items:center;
 }
 
 .logo{
     color:#ff9900;
-    font-size:20px;
     font-weight:bold;
 }
 
 /* SEARCH */
 .search-box{
-    padding:10px 15px;
+    padding:10px;
     background:#131921;
-    display:flex;
-    justify-content:center;
 }
 
 .search-box input{
     width:100%;
-    max-width:500px;
-    height:38px;
-    padding:0 12px;
+    padding:10px;
     border-radius:6px;
     border:none;
-    outline:none;
-    font-size:14px;
 }
 
-/* CATEGORY */
+/* CATEGORIES */
 .categories{
-    background:#1f2a38;
     display:flex;
+    overflow-x:auto;
     gap:10px;
     padding:10px;
-    overflow-x:auto;
+    background:#1f2a38;
 }
 
 .categories div{
-    background:#2f3e50;
     color:white;
+    background:#2f3e50;
     padding:6px 12px;
     border-radius:20px;
-    font-size:13px;
-    cursor:pointer;
     white-space:nowrap;
+    cursor:pointer;
 }
 
-/* BANNER */
-.banner{
-    background:linear-gradient(90deg,#ff9900,#ff4d00);
-    color:white;
-    text-align:center;
-    padding:20px;
-    font-size:18px;
-    font-weight:bold;
+/* DEAL SLIDER (AMAZON STYLE) */
+.slider{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px;
+    background:white;
+}
+
+.slider .mini{
+    min-width:140px;
+    background:#fff;
+    border-radius:10px;
+    padding:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* GRID */
 .container{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
-    padding:15px;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+    padding:12px;
 }
 
 /* CARD */
@@ -89,18 +88,13 @@ body{
     background:white;
     border-radius:12px;
     overflow:hidden;
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    transition:0.3s;
     position:relative;
-}
-
-.card:hover{
-    transform:translateY(-5px);
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
 .card img{
     width:100%;
-    height:160px;
+    height:150px;
     object-fit:cover;
 }
 
@@ -114,25 +108,49 @@ body{
     font-weight:bold;
 }
 
+/* BUTTONS */
 .button{
     display:block;
+    padding:8px;
     background:#ff9900;
     color:white;
-    padding:8px;
     text-decoration:none;
     border-radius:6px;
-    margin-top:8px;
+    margin-top:6px;
 }
 
-.badge{
+/* WISHLIST HEART */
+.heart{
     position:absolute;
     top:8px;
-    left:8px;
-    background:red;
+    right:8px;
+    font-size:18px;
+    cursor:pointer;
+    background:white;
+    border-radius:50%;
+    padding:3px 6px;
+}
+
+/* COMPARE BAR */
+.compare-bar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#111;
     color:white;
-    padding:4px 8px;
-    font-size:12px;
-    border-radius:20px;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.compare-btn{
+    background:#ff9900;
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -141,94 +159,104 @@ body{
 
 <div class="topbar">
     <div class="logo">Krishnalatha Deals</div>
-    <div>🛒</div>
+    <div>❤️ <span id="wishCount">0</span></div>
 </div>
 
 <div class="search-box">
-    <input type="text" id="search" placeholder="Search products...">
+    <input id="search" placeholder="Search products...">
 </div>
 
+<!-- AMAZON STYLE SLIDER -->
+<div class="slider">
+    <div class="mini">🔥 Deals</div>
+    <div class="mini">⚡ Fast Delivery</div>
+    <div class="mini">💰 Best Price</div>
+    <div class="mini">🆕 New Launch</div>
+</div>
+
+<!-- CATEGORY -->
 <div class="categories">
-    <div onclick="filterCategory('All')">All</div>
-    <div onclick="filterCategory('Kitchen')">Kitchen</div>
-    <div onclick="filterCategory('Fashion')">Fashion</div>
-    <div onclick="filterCategory('Electronics')">Electronics</div>
-    <div onclick="filterCategory('Home')">Home</div>
-    <div onclick="filterCategory('Beauty')">Beauty</div>
+    <div onclick="filter('All')">All</div>
+    <div onclick="filter('Kitchen')">Kitchen</div>
+    <div onclick="filter('Fashion')">Fashion</div>
+    <div onclick="filter('Electronics')">Electronics</div>
+    <div onclick="filter('Home')">Home</div>
 </div>
 
-<div class="banner">
-🔥 Big Deals Today | Save More | Shop Smart 🔥
-</div>
+<div class="container" id="grid"></div>
 
-<div class="container" id="productGrid"></div>
+<!-- COMPARE BAR -->
+<div class="compare-bar">
+    <div>Compare: <span id="compareCount">0</span>/2</div>
+    <button class="compare-btn" onclick="compare()">Compare</button>
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-
 const products = [
-    {name:"Kitchen Storage Box", price:999, img:"images/storage.jpg", badge:"-50%", category:"Kitchen"},
-    {name:"Towel Set", price:299, img:"images/towel.jpg", badge:"-40%", category:"Home"},
-    {name:"Running Shoes", price:1499, img:"images/shoes.jpg", badge:"-30%", category:"Fashion"},
-    {name:"Smart Watch", price:1999, img:"images/watch.jpg", badge:"HOT", category:"Electronics"},
-    {name:"Travel Bag", price:899, img:"images/bag.jpg", badge:"NEW", category:"Fashion"},
-    {name:"Pooja Diya", price:199, img:"images/diya.jpg", badge:"NEW", category:"Home"},
-    {name:"Laptop", price:45999, img:"images/laptop.jpg", badge:"HOT", category:"Electronics"},
-    {name:"Smart Mobile", price:14999, img:"images/mobile.jpg", badge:"SALE", category:"Electronics"},
-    {name:"Home Plant", price:299, img:"images/plant.jpg", badge:"NEW", category:"Home"},
-    {name:"Headphones", price:1299, img:"images/headphones.jpg", badge:"HOT", category:"Electronics"}
+{name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen"},
+{name:"Towel",price:299,img:"images/towel.jpg",cat:"Home"},
+{name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion"},
+{name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics"},
+{name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion"},
+{name:"Diya",price:199,img:"images/diya.jpg",cat:"Home"},
+{name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics"},
+{name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics"},
+{name:"Plant",price:299,img:"images/plant.jpg",cat:"Home"},
+{name:"Headphones",price:1299,img:"images/headphones.jpg",cat:"Electronics"}
 ];
 
-const grid = document.getElementById("productGrid");
-const search = document.getElementById("search");
+let wish = JSON.parse(localStorage.getItem("wish") || "[]");
+let compareList = [];
 
-let currentData = products;
-
-// RENDER FUNCTION
 function render(data){
-    grid.innerHTML = "";
+let g = document.getElementById("grid");
+g.innerHTML="";
 
-    data.forEach(p => {
-        grid.innerHTML += `
-        <div class="card">
-            <div class="badge">${p.badge}</div>
-            <img src="${p.img}">
-            <div class="card-content">
-                <h3>${p.name}</h3>
-                <div class="price">₹${p.price}</div>
-                <a href="#" class="button">Buy Now</a>
-            </div>
-        </div>`;
-    });
-}
-
-// CATEGORY FILTER
-window.filterCategory = function(category){
-
-    if(category === "All"){
-        currentData = products;
-    } else {
-        currentData = products.filter(p => p.category === category);
-    }
-
-    render(currentData);
-}
-
-// SEARCH FILTER
-search.addEventListener("input", function(){
-    let value = this.value.toLowerCase();
-
-    let filtered = currentData.filter(p =>
-        p.name.toLowerCase().includes(value)
-    );
-
-    render(filtered);
+data.forEach((p,i)=>{
+g.innerHTML+=`
+<div class="card">
+<div class="heart" onclick="wishAdd(${i})">❤</div>
+<img src="${p.img}">
+<div class="card-content">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+<a class="button">Buy Now</a>
+<button onclick="addCompare(${i})">Compare</button>
+</div>
+</div>`;
 });
+}
 
-// INITIAL LOAD
+function filter(cat){
+if(cat==="All") render(products);
+else render(products.filter(p=>p.cat===cat));
+}
+
+function wishAdd(i){
+wish.push(products[i]);
+localStorage.setItem("wish",JSON.stringify(wish));
+document.getElementById("wishCount").innerText=wish.length;
+}
+
+function addCompare(i){
+if(compareList.length<2){
+compareList.push(products[i]);
+document.getElementById("compareCount").innerText=compareList.length;
+}
+}
+
+function compare(){
+if(compareList.length<2){
+alert("Select 2 products");
+return;
+}
+alert(
+compareList[0].name+" VS "+compareList[1].name
+);
+}
+
 render(products);
-
-});
+document.getElementById("wishCount").innerText=wish.length;
 </script>
 
 </body>
