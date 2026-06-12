@@ -9,28 +9,32 @@
 body{
     margin:0;
     font-family:Arial;
-    background:#f5f6fa;
+    background:#eaeaea;
 }
 
-/* TOP */
+/* TOP BAR */
 .topbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
     background:#131921;
     color:white;
     display:flex;
+    align-items:center;
     justify-content:space-between;
     padding:12px 15px;
-    align-items:center;
 }
 
 .logo{
     color:#ff9900;
     font-weight:bold;
+    font-size:18px;
 }
 
 /* SEARCH */
 .search-box{
-    padding:10px;
     background:#131921;
+    padding:10px;
 }
 
 .search-box input{
@@ -38,42 +42,61 @@ body{
     padding:10px;
     border-radius:6px;
     border:none;
+    outline:none;
 }
 
-/* CATEGORY */
+/* CATEGORY (Amazon style chips) */
 .categories{
     display:flex;
     overflow-x:auto;
     gap:10px;
     padding:10px;
-    background:#1f2a38;
+    background:#232f3e;
 }
 
 .categories div{
+    background:#37475a;
     color:white;
-    background:#2f3e50;
     padding:6px 12px;
     border-radius:20px;
     white-space:nowrap;
     cursor:pointer;
+    font-size:13px;
 }
 
-/* AMAZON SLIDER */
+.categories div:hover{
+    background:#ff9900;
+    color:black;
+}
+
+/* AMAZON DEAL STRIP */
 .slider{
     display:flex;
     overflow-x:auto;
     gap:10px;
-    padding:10px;
+    padding:12px;
     background:white;
+    scroll-snap-type:x mandatory;
 }
 
+.slider::-webkit-scrollbar{display:none;}
+
 .slider .mini{
-    min-width:140px;
+    min-width:160px;
     background:#fff;
     border-radius:10px;
     padding:10px;
     box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    scroll-snap-align:start;
     text-align:center;
+    font-weight:bold;
+}
+
+/* SECTION TITLE */
+.section-title{
+    padding:10px 15px;
+    font-weight:bold;
+    font-size:16px;
 }
 
 /* GRID */
@@ -105,7 +128,7 @@ body{
 }
 
 .price{
-    color:green;
+    color:#1faa59;
     font-weight:bold;
 }
 
@@ -156,7 +179,6 @@ body{
     padding:6px 10px;
     border:none;
     border-radius:5px;
-    cursor:pointer;
 }
 </style>
 </head>
@@ -172,7 +194,7 @@ body{
     <input id="search" placeholder="Search products...">
 </div>
 
-<!-- SLIDER -->
+<!-- AMAZON STRIP -->
 <div class="slider">
     <div class="mini">🔥 Deals</div>
     <div class="mini">⚡ Fast Delivery</div>
@@ -180,7 +202,8 @@ body{
     <div class="mini">🆕 New Launch</div>
 </div>
 
-<!-- CATEGORY -->
+<div class="section-title">🔥 Best Deals Today</div>
+
 <div class="categories">
     <div onclick="filter('All')">All</div>
     <div onclick="filter('Kitchen')">Kitchen</div>
@@ -226,7 +249,6 @@ g.innerHTML += `
         <h3>${p.name}</h3>
         <div class="price">₹${p.price}</div>
         <a class="button">Buy Now</a>
-        <button onclick="addCompare(${p.id})">Compare</button>
     </div>
 </div>`;
 });
@@ -234,12 +256,11 @@ g.innerHTML += `
 
 function toggleWish(id){
 if(wish.includes(id)){
-wish = wish.filter(x => x !== id);
-} else {
+wish = wish.filter(x=>x!==id);
+}else{
 wish.push(id);
 }
-
-localStorage.setItem("wish", JSON.stringify(wish));
+localStorage.setItem("wish",JSON.stringify(wish));
 document.getElementById("wishCount").innerText = wish.length;
 render(products);
 }
@@ -249,20 +270,8 @@ if(cat==="All") render(products);
 else render(products.filter(p=>p.cat===cat));
 }
 
-function addCompare(id){
-let item = products.find(p=>p.id===id);
-if(compareList.length < 2 && !compareList.includes(item)){
-compareList.push(item);
-document.getElementById("compareCount").innerText = compareList.length;
-}
-}
-
 function compare(){
-if(compareList.length < 2){
-alert("Select 2 products");
-return;
-}
-alert(compareList[0].name + " VS " + compareList[1].name);
+alert("Compare feature next upgrade (UI ready)");
 }
 
 render(products);
