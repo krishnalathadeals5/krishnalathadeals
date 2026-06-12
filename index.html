@@ -27,7 +27,7 @@
             font-size: 14px;
         }
 
-        /* ✅ FIXED CONTAINER */
+        /* ✅ FLEX CONTAINER */
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -35,12 +35,13 @@
             padding: 20px;
         }
 
-        /* ✅ FINAL CARD FIX */
+        /* ✅ FINAL FIXED CARD */
         .card {
             background: white;
             padding: 15px;
             border-radius: 10px;
-            width: calc(50% - 10px);  /* ⭐ FINAL FIX */
+            flex: 1 1 calc(50% - 20px);   /* ⭐ THIS FIXES YOUR ISSUE */
+            max-width: calc(50% - 20px);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
         }
@@ -74,10 +75,11 @@
             background: darkorange;
         }
 
-        /* ✅ MOBILE VIEW */
+        /* ✅ MOBILE RESPONSIVE */
         @media (max-width: 600px) {
             .card {
-                width: 100%;
+                flex: 1 1 100%;
+                max-width: 100%;
             }
         }
     </style>
@@ -86,7 +88,7 @@
 <body>
 
 <header>
-    <h1>Krishnalatha Deals ✅ UPDATED</h1>
+    <h1>Krishnalatha Deals ✅ FINAL</h1>
     <p>Smart Deals. Better Savings.</p>
 </header>
 
