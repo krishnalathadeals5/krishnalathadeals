@@ -28,6 +28,7 @@ body{
     font-weight:bold;
 }
 
+/* SEARCH */
 .search-box{
     padding:10px 15px;
     background:#131921;
@@ -45,15 +46,6 @@ body{
     outline:none;
     font-size:14px;
 }
-}
-
-.search-box input{
-    width:90%;
-    max-width:500px;
-    padding:10px;
-    border-radius:8px;
-    border:1px solid #ccc;
-}
 
 /* CATEGORY */
 .categories{
@@ -70,6 +62,8 @@ body{
     padding:6px 12px;
     border-radius:20px;
     font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
 }
 
 /* BANNER */
@@ -155,12 +149,12 @@ body{
 </div>
 
 <div class="categories">
-    <div>All</div>
-    <div>Kitchen</div>
-    <div>Fashion</div>
-    <div>Electronics</div>
-    <div>Home</div>
-    <div>Beauty</div>
+    <div onclick="filterCategory('All')">All</div>
+    <div onclick="filterCategory('Kitchen')">Kitchen</div>
+    <div onclick="filterCategory('Fashion')">Fashion</div>
+    <div onclick="filterCategory('Electronics')">Electronics</div>
+    <div onclick="filterCategory('Home')">Home</div>
+    <div onclick="filterCategory('Beauty')">Beauty</div>
 </div>
 
 <div class="banner">
@@ -173,21 +167,24 @@ body{
 document.addEventListener("DOMContentLoaded", function(){
 
 const products = [
-    {name:"Kitchen Storage Box", price:999, img:"images/storage.jpg", badge:"-50%"},
-    {name:"Towel Set", price:299, img:"images/towel.jpg", badge:"-40%"},
-    {name:"Running Shoes", price:1499, img:"images/shoes.jpg", badge:"-30%"},
-    {name:"Smart Watch", price:1999, img:"images/watch.jpg", badge:"HOT"},
-    {name:"Travel Bag", price:899, img:"images/bag.jpg", badge:"NEW"},
-    {name:"Pooja Diya", price:199, img:"images/diya.jpg", badge:"NEW"},
-    {name:"Laptop", price:45999, img:"images/laptop.jpg", badge:"HOT"},
-    {name:"Smart Mobile", price:14999, img:"images/mobile.jpg", badge:"SALE"},
-    {name:"Home Plant", price:299, img:"images/plant.jpg", badge:"NEW"},
-    {name:"Headphones", price:1299, img:"images/headphones.jpg", badge:"HOT"}
+    {name:"Kitchen Storage Box", price:999, img:"images/storage.jpg", badge:"-50%", category:"Kitchen"},
+    {name:"Towel Set", price:299, img:"images/towel.jpg", badge:"-40%", category:"Home"},
+    {name:"Running Shoes", price:1499, img:"images/shoes.jpg", badge:"-30%", category:"Fashion"},
+    {name:"Smart Watch", price:1999, img:"images/watch.jpg", badge:"HOT", category:"Electronics"},
+    {name:"Travel Bag", price:899, img:"images/bag.jpg", badge:"NEW", category:"Fashion"},
+    {name:"Pooja Diya", price:199, img:"images/diya.jpg", badge:"NEW", category:"Home"},
+    {name:"Laptop", price:45999, img:"images/laptop.jpg", badge:"HOT", category:"Electronics"},
+    {name:"Smart Mobile", price:14999, img:"images/mobile.jpg", badge:"SALE", category:"Electronics"},
+    {name:"Home Plant", price:299, img:"images/plant.jpg", badge:"NEW", category:"Home"},
+    {name:"Headphones", price:1299, img:"images/headphones.jpg", badge:"HOT", category:"Electronics"}
 ];
 
 const grid = document.getElementById("productGrid");
 const search = document.getElementById("search");
 
+let currentData = products;
+
+// RENDER FUNCTION
 function render(data){
     grid.innerHTML = "";
 
@@ -205,17 +202,31 @@ function render(data){
     });
 }
 
-render(products);
+// CATEGORY FILTER
+window.filterCategory = function(category){
 
+    if(category === "All"){
+        currentData = products;
+    } else {
+        currentData = products.filter(p => p.category === category);
+    }
+
+    render(currentData);
+}
+
+// SEARCH FILTER
 search.addEventListener("input", function(){
     let value = this.value.toLowerCase();
 
-    let filtered = products.filter(p =>
+    let filtered = currentData.filter(p =>
         p.name.toLowerCase().includes(value)
     );
 
     render(filtered);
 });
+
+// INITIAL LOAD
+render(products);
 
 });
 </script>
