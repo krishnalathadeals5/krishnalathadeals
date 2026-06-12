@@ -1,262 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#f5f6fa;
-}
-
-/* HEADER */
-.topbar{
-background:linear-gradient(90deg,#131921,#1f2a38);
-color:white;
-display:flex;
-justify-content:space-between;
-padding:14px 16px;
-position:sticky;
-top:0;
-z-index:999;
-}
-
-.logo{
-font-size:22px;
-font-weight:800;
-color:#ffb84d;
-}
-
-.top-icons span{
-margin-left:12px;
-cursor:pointer;
-font-weight:bold;
-}
-
-/* SEARCH */
-.search-box{
-padding:10px;
-background:#131921;
-}
-.search-box input{
-width:100%;
-padding:10px;
-border-radius:6px;
-border:none;
-outline:none;
-}
-
-/* SCROLL */
-.scroll-wrapper{
-overflow:hidden;
-background:white;
-padding:10px 0;
-}
-
-.scroll-track{
-display:flex;
-gap:20px;
-width:max-content;
-animation:scroll 18s linear infinite;
-}
-
-.scroll-wrapper:hover .scroll-track{
-animation-play-state:paused;
-}
-
-.scroll-item{
-min-width:140px;
-background:#f4f4f4;
-padding:8px;
-border-radius:20px;
-text-align:center;
-font-weight:bold;
-font-size:13px;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
-}
-
-/* GRID */
-.container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-gap:12px;
-padding:12px;
-}
-
-.card{
-background:white;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-position:relative;
-}
-
-.card img{
-width:100%;
-height:150px;
-object-fit:cover;
-}
-
-.card-content{
-padding:10px;
-text-align:center;
-}
-
-.price{
-color:green;
-font-weight:bold;
-margin-top:4px;
-}
-
-/* BUTTONS */
-.btn{
-display:block;
-padding:7px;
-margin-top:6px;
-border-radius:6px;
-text-align:center;
-cursor:pointer;
-font-size:13px;
-text-decoration:none;
-}
-
-.cart-btn{background:#ff9900;color:white;}
-.buy-btn{background:#28a745;color:white;}
-
-/* BADGE */
-.discount{
-position:absolute;
-top:8px;
-left:8px;
-background:red;
-color:white;
-padding:5px 8px;
-font-size:12px;
-border-radius:20px;
-font-weight:bold;
-}
-
-/* HEART */
-.heart{
-position:absolute;
-top:8px;
-right:8px;
-background:white;
-border-radius:50%;
-padding:6px;
-cursor:pointer;
-}
-
-.heart.active{
-background:red;
-color:white;
-}
-
-/* POPUP */
-.popup{
-position:fixed;
-inset:0;
-background:white;
-display:none;
-flex-direction:column;
-z-index:9999;
-}
-
-.popup-header{
-display:flex;
-justify-content:space-between;
-padding:15px;
-background:#131921;
-color:white;
-}
-
-.popup-content{
-padding:10px;
-overflow:auto;
-}
-
-.popup-item{
-display:flex;
-gap:10px;
-padding:10px;
-background:#f2f2f2;
-margin-bottom:10px;
-border-radius:10px;
-align-items:center;
-}
-
-.popup-item img{
-width:70px;
-height:70px;
-object-fit:cover;
-}
-
-.popup-item button{
-margin-left:auto;
-padding:5px 10px;
-background:red;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<div class="topbar">
-<div class="logo">Krishnalatha Deals</div>
-
-<div class="top-icons">
-<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
-<span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
-</div>
-</div>
-
-<!-- SEARCH -->
-<div class="search-box">
-<input id="search" placeholder="Search products...">
-</div>
-
-<!-- SCROLL -->
-<div class="scroll-wrapper">
-<div class="scroll-track">
-<div class="scroll-item">🔥 Deals</div>
-<div class="scroll-item">⚡ Fast Delivery</div>
-<div class="scroll-item">💰 Best Price</div>
-<div class="scroll-item">🆕 New Arrivals</div>
-<div class="scroll-item">🏆 Top Rated</div>
-<div class="scroll-item">📦 Free Delivery</div>
-<div class="scroll-item">🔥 Deals</div>
-<div class="scroll-item">⚡ Fast Delivery</div>
-<div class="scroll-item">💰 Best Price</div>
-<div class="scroll-item">🆕 New Arrivals</div>
-</div>
-</div>
-
-<!-- GRID -->
-<div class="container" id="grid"></div>
-
-<!-- POPUP -->
-<div class="popup" id="popup">
-<div class="popup-header">
-<div id="popupTitle">List</div>
-<button onclick="closePopup()">Close</button>
-</div>
-<div class="popup-content" id="popupContent"></div>
-</div>
-
 <script>
 
 const products=[
@@ -280,6 +21,12 @@ localStorage.setItem("wish",JSON.stringify(wish));
 localStorage.setItem("cart",JSON.stringify(cart));
 }
 
+/* OPEN PRODUCT PAGE */
+function openProduct(name){
+localStorage.setItem("selectedProduct",name);
+window.location.href="product.html";
+}
+
 /* RENDER */
 function render(data=products){
 let g=document.getElementById("grid");
@@ -291,7 +38,7 @@ let liked = wish.find(x=>x.name===p.name) ? "active" : "";
 let discount = Math.round(((p.old-p.price)/p.old)*100);
 
 g.innerHTML+=`
-<div class="card">
+<div class="card" onclick="openProduct('${p.name}')">
 
 <div class="discount">${discount}% OFF</div>
 
@@ -301,11 +48,10 @@ g.innerHTML+=`
 
 <div class="card-content">
 <h3>${p.name}</h3>
-
 <div class="price">₹${p.price}</div>
 
-<a class="btn cart-btn" onclick="addCart('${p.name}')">Add to Cart</a>
-<a class="btn buy-btn" onclick="buyNow('${p.name}')">Buy Now</a>
+<a class="btn cart-btn" onclick="event.stopPropagation(); addCart('${p.name}')">Add to Cart</a>
+<a class="btn buy-btn" onclick="event.stopPropagation(); buyNow('${p.name}')">Buy Now</a>
 
 </div>
 </div>`;
@@ -315,8 +61,7 @@ g.innerHTML+=`
 /* SEARCH */
 document.getElementById("search").addEventListener("input",function(){
 let v=this.value.toLowerCase();
-let filtered = products.filter(p=>p.name.toLowerCase().includes(v));
-render(filtered);
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
 });
 
 /* WISHLIST */
@@ -390,7 +135,6 @@ updateCounts();
 openPopup("cart");
 }
 
-/* COUNTS */
 function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
 document.getElementById("cartCount").innerText=cart.length;
@@ -400,6 +144,3 @@ render();
 updateCounts();
 
 </script>
-
-</body>
-</html>
