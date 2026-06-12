@@ -8,8 +8,8 @@
 <style>
 body{
     margin:0;
-    font-family:Arial;
-    background:#f5f6fa;
+    font-family:Arial, sans-serif;
+    background:#f4f6fb;
 }
 
 /* TOP BAR */
@@ -18,29 +18,30 @@ body{
     color:white;
     display:flex;
     justify-content:space-between;
-    padding:12px 15px;
     align-items:center;
+    padding:12px 15px;
 }
 
 .logo{
     color:#ff9900;
     font-weight:bold;
+    font-size:18px;
 }
 
 /* NAV */
 .nav{
     display:flex;
-    gap:10px;
-    padding:10px;
+    justify-content:space-around;
     background:#232f3e;
     color:white;
+    padding:10px;
 }
 
 .nav div{
     cursor:pointer;
-    padding:6px 10px;
+    padding:6px 12px;
     background:#37475a;
-    border-radius:15px;
+    border-radius:20px;
 }
 
 /* SEARCH */
@@ -52,8 +53,9 @@ body{
 .search-box input{
     width:100%;
     padding:10px;
-    border-radius:6px;
     border:none;
+    border-radius:6px;
+    outline:none;
 }
 
 /* GRID */
@@ -68,26 +70,37 @@ body{
 .card{
     background:white;
     border-radius:12px;
-    padding:10px;
+    overflow:hidden;
     position:relative;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
 }
 
 .card img{
     width:100%;
-    height:140px;
+    height:150px;
     object-fit:cover;
+}
+
+.card-content{
+    padding:10px;
+    text-align:center;
 }
 
 .price{
     color:green;
     font-weight:bold;
+    margin:5px 0;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button{
     width:100%;
-    padding:6px;
-    margin-top:5px;
+    padding:8px;
     border:none;
     border-radius:6px;
     cursor:pointer;
@@ -105,75 +118,57 @@ button{
     right:8px;
     cursor:pointer;
     font-size:18px;
+    background:white;
+    border-radius:50%;
+    padding:3px 6px;
 }
 
-/* ACTIVE HEART */
 .active{
     color:red;
-}
-
-/* BAR */
-.bottom{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    background:#111;
-    color:white;
-    display:flex;
-    justify-content:space-around;
-    padding:10px;
-}
-.bottom div{
-    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
+<!-- TOP -->
 <div class="topbar">
     <div class="logo">Krishnalatha Deals</div>
     <div>❤️ <span id="wishCount">0</span></div>
 </div>
 
+<!-- NAV -->
+<div class="nav">
+    <div onclick="setView('home')">Home</div>
+    <div onclick="setView('wishlist')">Wishlist</div>
+</div>
+
+<!-- SEARCH -->
 <div class="search-box">
     <input id="search" placeholder="Search products...">
 </div>
 
-<div class="nav">
-    <div onclick="setView('home')">Home</div>
-    <div onclick="setView('wishlist')">Wishlist</div>
-    <div onclick="setView('compare')">Compare</div>
-</div>
-
-<div id="grid" class="container"></div>
-
-<div class="bottom">
-    <div onclick="setView('home')">🏠 Home</div>
-    <div onclick="setView('wishlist')">❤️ Wishlist</div>
-    <div onclick="setView('compare')">⚖ Compare</div>
-</div>
+<!-- GRID -->
+<div class="container" id="grid"></div>
 
 <script>
 
 const products = [
 {id:1,name:"Kitchen Box",price:999,img:"images/storage.jpg"},
-{id:2,name:"Towel",price:299,img:"images/towel.jpg"},
+{id:2,name:"Towel Set",price:299,img:"images/towel.jpg"},
 {id:3,name:"Shoes",price:1499,img:"images/shoes.jpg"},
-{id:4,name:"Watch",price:1999,img:"images/watch.jpg"},
-{id:5,name:"Bag",price:899,img:"images/bag.jpg"},
-{id:6,name:"Diya",price:199,img:"images/diya.jpg"},
+{id:4,name:"Smart Watch",price:1999,img:"images/watch.jpg"},
+{id:5,name:"Travel Bag",price:899,img:"images/bag.jpg"},
+{id:6,name:"Pooja Diya",price:199,img:"images/diya.jpg"},
 {id:7,name:"Laptop",price:45999,img:"images/laptop.jpg"},
 {id:8,name:"Mobile",price:14999,img:"images/mobile.jpg"},
-{id:9,name:"Plant",price:299,img:"images/plant.jpg"},
+{id:9,name:"Home Plant",price:299,img:"images/plant.jpg"},
 {id:10,name:"Headphones",price:1299,img:"images/headphones.jpg"}
 ];
 
 let view="home";
 
 let wishlist = JSON.parse(localStorage.getItem("wish")||"[]");
-let compare = [];
 
 function save(){
 localStorage.setItem("wish",JSON.stringify(wishlist));
@@ -185,25 +180,12 @@ render();
 }
 
 function toggleWish(id){
-
-let index = wishlist.indexOf(id);
-
-if(index===-1){
-wishlist.push(id);
+if(wishlist.includes(id)){
+wishlist = wishlist.filter(x=>x!==id);
 } else {
-wishlist.splice(index,1);
+wishlist.push(id);
 }
-
 save();
-render();
-}
-
-function addCompare(id){
-if(compare.includes(id)) return;
-
-if(compare.length<2){
-compare.push(id);
-}
 render();
 }
 
@@ -212,37 +194,38 @@ function render(){
 let grid=document.getElementById("grid");
 grid.innerHTML="";
 
-let data=[];
+let data = view==="home"
+? products
+: products.filter(p=>wishlist.includes(p.id));
 
-if(view==="home"){
-data=products;
-}
-else if(view==="wishlist"){
-data=products.filter(p=>wishlist.includes(p.id));
-}
-else if(view==="compare"){
-data=products.filter(p=>compare.includes(p.id));
-}
+let search = document.getElementById("search").value.toLowerCase();
+
+data = data.filter(p=>p.name.toLowerCase().includes(search));
 
 data.forEach(p=>{
 
 let isWish = wishlist.includes(p.id);
 
+// 🔗 AFFILIATE LINK PLACE (add later)
+let affiliateLink = "#";
+
 grid.innerHTML+=`
 <div class="card">
 <div class="heart ${isWish?'active':''}" onclick="toggleWish(${p.id})">❤</div>
 <img src="${p.img}">
+<div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
-
-<button class="buy">Buy Now</button>
-<button onclick="addCompare(${p.id})">Add Compare</button>
+<a href="${affiliateLink}" class="buy" target="_blank">Buy Now</a>
+</div>
 </div>
 `;
 });
 
 document.getElementById("wishCount").innerText=wishlist.length;
 }
+
+document.getElementById("search").addEventListener("input",render);
 
 render();
 
