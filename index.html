@@ -40,7 +40,7 @@ body{
     border:none;
 }
 
-/* CATEGORIES */
+/* CATEGORY */
 .categories{
     display:flex;
     overflow-x:auto;
@@ -58,13 +58,18 @@ body{
     cursor:pointer;
 }
 
-/* DEAL SLIDER (AMAZON STYLE) */
+/* AMAZON STYLE SLIDER FIXED */
 .slider{
     display:flex;
     overflow-x:auto;
     gap:10px;
     padding:10px;
     background:white;
+    scroll-snap-type:x mandatory;
+}
+
+.slider::-webkit-scrollbar{
+    display:none;
 }
 
 .slider .mini{
@@ -72,7 +77,9 @@ body{
     background:#fff;
     border-radius:10px;
     padding:10px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    text-align:center;
+    scroll-snap-align:start;
 }
 
 /* GRID */
@@ -108,7 +115,7 @@ body{
     font-weight:bold;
 }
 
-/* BUTTONS */
+/* BUTTON */
 .button{
     display:block;
     padding:8px;
@@ -166,12 +173,14 @@ body{
     <input id="search" placeholder="Search products...">
 </div>
 
-<!-- AMAZON STYLE SLIDER -->
+<!-- AMAZON SLIDER -->
 <div class="slider">
     <div class="mini">🔥 Deals</div>
     <div class="mini">⚡ Fast Delivery</div>
     <div class="mini">💰 Best Price</div>
     <div class="mini">🆕 New Launch</div>
+    <div class="mini">🏆 Top Rated</div>
+    <div class="mini">📦 Free Delivery</div>
 </div>
 
 <!-- CATEGORY -->
@@ -233,13 +242,15 @@ else render(products.filter(p=>p.cat===cat));
 }
 
 function wishAdd(i){
+if(!wish.includes(products[i])){
 wish.push(products[i]);
+}
 localStorage.setItem("wish",JSON.stringify(wish));
 document.getElementById("wishCount").innerText=wish.length;
 }
 
 function addCompare(i){
-if(compareList.length<2){
+if(compareList.length<2 && !compareList.includes(products[i])){
 compareList.push(products[i]);
 document.getElementById("compareCount").innerText=compareList.length;
 }
@@ -250,9 +261,7 @@ if(compareList.length<2){
 alert("Select 2 products");
 return;
 }
-alert(
-compareList[0].name+" VS "+compareList[1].name
-);
+alert(compareList[0].name+" VS "+compareList[1].name);
 }
 
 render(products);
