@@ -27,18 +27,20 @@
             font-size: 14px;
         }
 
+        /* ✅ FIXED CONTAINER */
         .container {
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
             padding: 20px;
-            flex-wrap: wrap;
         }
 
+        /* ✅ FINAL CARD FIX */
         .card {
             background: white;
             padding: 15px;
             border-radius: 10px;
-            width: 48%;
+            width: calc(50% - 10px);  /* ⭐ FINAL FIX */
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
         }
@@ -72,6 +74,7 @@
             background: darkorange;
         }
 
+        /* ✅ MOBILE VIEW */
         @media (max-width: 600px) {
             .card {
                 width: 100%;
@@ -93,6 +96,7 @@
 
 <div class="container">
 
+    <!-- Product 1 -->
     <div class="card">
         <img src="images/storage.jpg" alt="Kitchen Storage Box">
         <h2>Kitchen Storage Box</h2>
@@ -100,6 +104,7 @@
         <button>Buy Now</button>
     </div>
 
+    <!-- Product 2 -->
     <div class="card">
         <img src="images/towel.jpg" alt="Towel Set">
         <h2>Towel Set</h2>
