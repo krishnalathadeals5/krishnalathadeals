@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals</title>
+<title>Krishnalatha Deals - Pro Store</title>
 
 <style>
 body{
@@ -28,37 +28,36 @@ body{
 .logo{
     color:#ff9900;
     font-weight:bold;
-    font-size:18px;
 }
 
-.wish-icon{
-    cursor:pointer;
-    font-size:18px;
-}
-
-/* SOCIAL BAR */
-.social{
+.top-icons{
     display:flex;
-    justify-content:space-around;
-    padding:8px;
-    background:white;
-    font-size:13px;
-}
-
-.social div{
-    padding:5px 10px;
-    border-radius:20px;
+    gap:12px;
     cursor:pointer;
 }
 
-/* CATEGORY SCROLL */
+/* SEARCH */
+.search-box{
+    padding:10px;
+    background:#131921;
+}
+
+.search-box input{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    outline:none;
+}
+
+/* AUTO CATEGORY SCROLL */
 .categories{
     display:flex;
     overflow-x:auto;
     gap:10px;
     padding:10px;
     background:#1f2a38;
-    scroll-behavior:smooth;
+    white-space:nowrap;
 }
 
 .categories div{
@@ -66,11 +65,10 @@ body{
     background:#2f3e50;
     padding:6px 12px;
     border-radius:20px;
-    white-space:nowrap;
     cursor:pointer;
 }
 
-/* TRENDING SLIDER */
+/* TRENDING */
 .slider{
     display:flex;
     overflow-x:auto;
@@ -109,6 +107,7 @@ body{
     width:100%;
     height:150px;
     object-fit:cover;
+    cursor:pointer;
 }
 
 .card-content{
@@ -121,15 +120,16 @@ body{
     font-weight:bold;
 }
 
-/* BUTTON */
+/* BUTTONS */
 .button{
     display:block;
+    padding:8px;
     background:#ff9900;
     color:white;
-    padding:8px;
     border-radius:6px;
     text-decoration:none;
     margin-top:6px;
+    cursor:pointer;
 }
 
 /* HEART */
@@ -141,39 +141,64 @@ body{
     border-radius:50%;
     padding:4px 6px;
     cursor:pointer;
-    font-size:16px;
-    color:#999;
+    color:#aaa;
 }
 
 .heart.active{
     color:red;
 }
 
-/* WISHLIST MODAL */
-.modal{
-    display:none;
+/* CART PANEL */
+.cart{
     position:fixed;
+    right:-320px;
     top:0;
-    left:0;
-    width:100%;
+    width:300px;
     height:100%;
-    background:rgba(0,0,0,0.6);
+    background:white;
+    box-shadow:-2px 0 10px rgba(0,0,0,0.2);
+    transition:0.3s;
+    padding:10px;
     z-index:2000;
 }
 
-.modal-content{
+.cart.open{
+    right:0;
+}
+
+.cart-item{
+    border-bottom:1px solid #ddd;
+    padding:6px 0;
+    font-size:14px;
+}
+
+.total{
+    font-weight:bold;
+    margin-top:10px;
+}
+
+/* POPUP */
+.popup{
+    display:none;
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.6);
+    z-index:3000;
+}
+
+.popup-content{
     background:white;
-    margin:50px auto;
-    padding:15px;
     width:90%;
     max-width:400px;
+    margin:60px auto;
+    padding:15px;
     border-radius:10px;
 }
 
 .close{
     float:right;
     cursor:pointer;
-    font-size:18px;
 }
 </style>
 </head>
@@ -183,15 +208,15 @@ body{
 <!-- TOP -->
 <div class="topbar">
     <div class="logo">Krishnalatha Deals</div>
-    <div class="wish-icon" onclick="openWish()">❤️ <span id="wishCount">0</span></div>
+    <div class="top-icons">
+        <div onclick="openCart()">🛒 <span id="cartCount">0</span></div>
+        <div onclick="openWishlist()">❤️ <span id="wishCount">0</span></div>
+    </div>
 </div>
 
-<!-- SOCIAL -->
-<div class="social">
-    <div style="background:#ff0000;color:white;">YouTube</div>
-    <div style="background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);color:white;">Instagram</div>
-    <div style="background:#25D366;color:white;">WhatsApp</div>
-    <div style="background:#0088cc;color:white;">Telegram</div>
+<!-- SEARCH -->
+<div class="search-box">
+    <input id="search" placeholder="Search products...">
 </div>
 
 <!-- TRENDING -->
@@ -200,31 +225,31 @@ body{
     <div class="mini">⚡ Fast Deals</div>
     <div class="mini">💰 Best Price</div>
     <div class="mini">🆕 New</div>
-    <div class="mini">🏆 Top Rated</div>
 </div>
 
 <!-- CATEGORIES -->
-<div class="categories" id="catScroll">
-    <div onclick="filter('All')">All</div>
-    <div onclick="filter('Kitchen')">Kitchen</div>
-    <div onclick="filter('Fashion')">Fashion</div>
-    <div onclick="filter('Electronics')">Electronics</div>
-    <div onclick="filter('Home')">Home Decor</div>
-</div>
+<div class="categories" id="catBox"></div>
 
 <!-- PRODUCTS -->
 <div class="container" id="grid"></div>
 
-<!-- WISHLIST MODAL -->
-<div class="modal" id="wishModal">
-    <div class="modal-content">
-        <span class="close" onclick="closeWish()">✖</span>
-        <h3>Your Wishlist</h3>
-        <div id="wishList"></div>
+<!-- CART -->
+<div class="cart" id="cart">
+    <h3>Cart</h3>
+    <div id="cartItems"></div>
+    <div class="total">Total: ₹<span id="total">0</span></div>
+</div>
+
+<!-- PRODUCT POPUP -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">✖</span>
+        <div id="popupData"></div>
     </div>
 </div>
 
 <script>
+
 const products = [
 {name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen",link:"#"},
 {name:"Towel Set",price:299,img:"images/towel.jpg",cat:"Home",link:"#"},
@@ -233,13 +258,18 @@ const products = [
 {name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion",link:"#"},
 {name:"Diya",price:199,img:"images/diya.jpg",cat:"Home",link:"#"},
 {name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics",link:"#"},
-{name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics",link:"#"},
-{name:"Plant",price:299,img:"images/plant.jpg",cat:"Home",link:"#"},
-{name:"Headphones",price:1299,img:"images/headphones.jpg",cat:"Electronics",link:"#"}
+{name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics",link:"#"}
 ];
 
 let wishlist = [];
+let cart = [];
 
+/* CATEGORIES */
+const cats = ["All","Kitchen","Fashion","Electronics","Home"];
+document.getElementById("catBox").innerHTML =
+cats.map(c=>`<div onclick="filter('${c}')">${c}</div>`).join("");
+
+/* RENDER */
 function render(data){
 let g = document.getElementById("grid");
 g.innerHTML="";
@@ -248,57 +278,83 @@ data.forEach((p,i)=>{
 g.innerHTML+=`
 <div class="card">
 <div class="heart" onclick="toggleWish(${i},this)">❤</div>
-<img src="${p.img}">
+<img src="${p.img}" onclick="openPopup(${i})">
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
+<div class="button" onclick="addCart(${i})">Add to Cart</div>
 <a class="button" href="${p.link}" target="_blank">Buy Now</a>
 </div>
 </div>`;
 });
 }
 
-function filter(cat){
-if(cat==="All") render(products);
-else render(products.filter(p=>p.cat===cat));
+/* FILTER */
+function filter(c){
+if(c==="All") render(products);
+else render(products.filter(p=>p.cat===c));
 }
 
-/* WISHLIST TOGGLE */
+/* WISHLIST */
 function toggleWish(i,el){
 let item = products[i];
+let exists = wishlist.find(x=>x.name===item.name);
 
-let index = wishlist.findIndex(p=>p.name===item.name);
-
-if(index === -1){
+if(exists){
+wishlist = wishlist.filter(x=>x.name!==item.name);
+el.classList.remove("active");
+} else {
 wishlist.push(item);
 el.classList.add("active");
-} else {
-wishlist.splice(index,1);
-el.classList.remove("active");
 }
 
 document.getElementById("wishCount").innerText = wishlist.length;
 }
 
-/* OPEN WISHLIST */
-function openWish(){
-let box = document.getElementById("wishList");
-box.innerHTML="";
-
-wishlist.forEach(p=>{
-box.innerHTML += `
-<p>✔ ${p.name} - ₹${p.price}</p>
-`;
-});
-
-document.getElementById("wishModal").style.display="block";
+/* CART */
+function addCart(i){
+cart.push(products[i]);
+updateCart();
 }
 
-function closeWish(){
-document.getElementById("wishModal").style.display="none";
+function updateCart(){
+document.getElementById("cartCount").innerText = cart.length;
+
+let box = document.getElementById("cartItems");
+let total = 0;
+
+box.innerHTML = "";
+
+cart.forEach(p=>{
+total += p.price;
+box.innerHTML += `<div class="cart-item">${p.name} - ₹${p.price}</div>`;
+});
+
+document.getElementById("total").innerText = total;
+}
+
+function openCart(){
+document.getElementById("cart").classList.toggle("open");
+}
+
+/* POPUP */
+function openPopup(i){
+let p = products[i];
+document.getElementById("popupData").innerHTML=`
+<h3>${p.name}</h3>
+<img src="${p.img}" style="width:100%">
+<p>Price: ₹${p.price}</p>
+<a href="${p.link}" class="button">Buy Now</a>
+`;
+document.getElementById("popup").style.display="block";
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
 
 render(products);
+
 </script>
 
 </body>
