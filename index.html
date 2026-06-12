@@ -1,158 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals</title>
-
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f5f6fa;
-}
-
-/* TOP BAR */
-.topbar{
-    background:#131921;
-    color:white;
-    display:flex;
-    justify-content:space-between;
-    padding:12px 15px;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.logo{
-    color:#ff9900;
-    font-size:20px;
-    font-weight:bold;
-}
-
-/* CATEGORY */
-.categories{
-    background:#1f2a38;
-    display:flex;
-    gap:10px;
-    padding:10px;
-    overflow-x:auto;
-}
-
-.categories div{
-    background:#2f3e50;
-    color:white;
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:13px;
-}
-
-/* BANNER */
-.banner{
-    background:linear-gradient(90deg,#ff9900,#ff4d00);
-    color:white;
-    text-align:center;
-    padding:25px;
-    font-size:18px;
-    font-weight:bold;
-}
-
-/* SECTION TITLE */
-.section-title{
-    padding:15px;
-    font-size:18px;
-    font-weight:bold;
-}
-
-/* GRID */
-.container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:15px;
-    padding:15px;
-}
-
-/* CARD */
-.card{
-    background:white;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-}
-
-.card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
-}
-
-.card-content{
-    padding:10px;
-    text-align:center;
-}
-
-.price{
-    color:green;
-    font-weight:bold;
-    margin:5px 0;
-}
-
-.button{
-    display:block;
-    background:#ff9900;
-    color:white;
-    padding:8px;
-    text-decoration:none;
-    border-radius:6px;
-}
-
-/* BADGE */
-.badge{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:red;
-    color:white;
-    padding:4px 8px;
-    font-size:12px;
-    border-radius:20px;
-}
-
-.card-wrap{
-    position:relative;
-}
-</style>
-</head>
-
-<body>
-
-<div class="topbar">
-    <div class="logo">Krishnalatha Deals</div>
-    <div>🛒</div>
-</div>
-
-<div class="categories">
-    <div>All</div>
-    <div>Kitchen</div>
-    <div>Fashion</div>
-    <div>Electronics</div>
-    <div>Home</div>
-    <div>Beauty</div>
-</div>
-
-<div class="banner">
-🔥 Big Deals Today | Save More | Shop Smart 🔥
-</div>
-
-<div class="section-title">🔥 Best Deals Today</div>
-
-<div class="container" id="productGrid"></div>
-
 <script>
 // ==========================
 // 🧠 AUTO PRODUCT SYSTEM
@@ -173,22 +18,56 @@ const products = [
 
 const grid = document.getElementById("productGrid");
 
-products.forEach(p => {
-    grid.innerHTML += `
-    <div class="card-wrap">
-        <div class="card">
-            <div class="badge">${p.badge}</div>
-            <img src="${p.img}">
-            <div class="card-content">
-                <h3>${p.name}</h3>
-                <div class="price">₹${p.price}</div>
-                <a href="#" class="button">Buy Now</a>
+// ==========================
+// 📦 RENDER PRODUCTS
+// ==========================
+function render(items){
+    grid.innerHTML = "";
+
+    items.forEach(p => {
+        grid.innerHTML += `
+        <div class="card-wrap">
+            <div class="card">
+                <div class="badge">${p.badge}</div>
+                <img src="${p.img}">
+                <div class="card-content">
+                    <h3>${p.name}</h3>
+                    <div class="price">₹${p.price}</div>
+                    <a href="#" class="button">Buy Now</a>
+                </div>
             </div>
         </div>
-    </div>
-    `;
+        `;
+    });
+}
+
+// initial load
+render(products);
+
+// ==========================
+// 🔍 SEARCH SYSTEM
+// ==========================
+
+const searchInput = document.createElement("input");
+searchInput.placeholder = "Search products...";
+searchInput.style.cssText = `
+width:90%;
+padding:10px;
+margin:10px auto;
+display:block;
+border-radius:8px;
+border:1px solid #ccc;
+`;
+
+document.body.insertBefore(searchInput, document.querySelector(".banner"));
+
+searchInput.addEventListener("input", function(){
+    const value = this.value.toLowerCase();
+
+    const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(value)
+    );
+
+    render(filtered);
 });
 </script>
-
-</body>
-</html>
