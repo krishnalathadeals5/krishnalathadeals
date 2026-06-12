@@ -3,187 +3,201 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Krishnalatha Deals</title><style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f2f3f7;
 }
 
-/* TOP BAR */
-.topbar {
-    background: #131921;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 15px;
+/* HEADER */
+.topbar{
+    background:#131921;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 15px;
+    position:sticky;
+    top:0;
 }
 
-.logo {
-    font-size: 18px;
-    font-weight: bold;
-    color: orange;
+.logo{
+    color:#ff9900;
+    font-size:18px;
+    font-weight:bold;
 }
 
-.search {
-    flex: 1;
-    margin: 0 10px;
+.search input{
+    width:100%;
+    padding:8px;
+    border:none;
+    border-radius:4px;
 }
 
-.search input {
-    width: 100%;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
+/* CATEGORY */
+.categories{
+    background:#232f3e;
+    color:white;
+    display:flex;
+    gap:10px;
+    padding:10px;
+    overflow-x:auto;
+    font-size:13px;
 }
 
-/* CATEGORY BAR */
-.categories {
-    background: #232f3e;
-    color: white;
-    display: flex;
-    gap: 15px;
-    padding: 10px;
-    overflow-x: auto;
-    font-size: 14px;
-}
-
-.categories div {
-    white-space: nowrap;
+.categories div{
+    background:#37475a;
+    padding:6px 10px;
+    border-radius:15px;
+    white-space:nowrap;
 }
 
 /* BANNER */
-.banner {
-    background: linear-gradient(90deg, orange, red);
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-weight: bold;
+.banner{
+    background:linear-gradient(90deg,#ff9900,#ff4d00);
+    color:white;
+    text-align:center;
+    padding:25px;
+    font-size:18px;
+    font-weight:bold;
 }
 
-/* PRODUCT GRID */
-.container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-    padding: 15px;
+/* GRID */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    padding:15px;
 }
 
-/* PRODUCT CARD */
-.card {
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* CARD */
+.card{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
 }
 
-.card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 8px;
+.card:hover{
+    transform:translateY(-5px);
 }
 
-.price {
-    color: green;
-    font-weight: bold;
-    margin: 5px 0;
+.card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
 }
 
-.button {
-    display: block;
-    background: orange;
-    color: white;
-    padding: 8px;
-    border-radius: 5px;
-    text-decoration: none;
+.card-content{
+    padding:10px;
+    text-align:center;
 }
 
-.button:hover {
-    background: darkorange;
+.price{
+    color:#27ae60;
+    font-weight:bold;
+    margin:5px 0;
+    font-size:16px;
 }
-</style></head><body><!-- TOP HEADER --><div class="topbar">
+
+.button{
+    display:block;
+    background:#ff9900;
+    color:white;
+    padding:8px;
+    text-decoration:none;
+    border-radius:6px;
+    margin-top:8px;
+}
+
+.button:hover{
+    background:#e68a00;
+}
+</style></head><body><div class="topbar">
     <div class="logo">Krishnalatha Deals</div>
-    <div class="search">
-        <input type="text" placeholder="Search products...">
+    <div style="flex:1;margin:0 10px;">
+        <input type="text" placeholder="Search deals..." style="width:100%;padding:8px;border-radius:5px;border:none;">
     </div>
     <div>🛒</div>
-</div><!-- CATEGORIES --><div class="categories">
+</div><div class="categories">
     <div>All</div>
     <div>Kitchen</div>
     <div>Fashion</div>
     <div>Electronics</div>
     <div>Home</div>
     <div>Beauty</div>
-</div><!-- BANNER --><div class="banner">
+</div><div class="banner">
 🔥 Big Deals Today | Save More | Shop Smart 🔥
-</div><!-- PRODUCTS --><div class="container"><div class="card">
-    <img src="images/storage.jpg" alt="Kitchen Storage Box">
-    <h3>Kitchen Storage Box</h3>
-    <div class="price">₹999</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/towel.jpg" alt="Towel Set">
-    <h3>Towel Set</h3>
-    <div class="price">₹299</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/shoes.jpg" alt="Running Shoes">
-    <h3>Running Shoes</h3>
-    <div class="price">₹1499</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/watch.jpg" alt="Smart Watch">
-    <h3>Smart Watch</h3>
-    <div class="price">₹1999</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/bag.jpg" alt="Travel Bag">
-    <h3>Travel Bag</h3>
-    <div class="price">₹899</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-<div class="card">
-    <img src="images/laptop.jpg" alt="Laptop">
-    <h3>Laptop</h3>
-    <div class="price">₹45999</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/mobile.jpg" alt="Smart Mobile">
-    <h3>Smart Mobile</h3>
-    <div class="price">₹14999</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/plant.jpg" alt="Home Plant">
-    <h3>Home Plant</h3>
-    <div class="price">₹299</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-
-<div class="card">
-    <img src="images/headphones.jpg" alt="Headphones">
-    <h3>Wireless Headphones</h3>
-    <div class="price">₹1299</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-    <div class="card">
-    <img src="images/diya.jpg" alt="Pooja Diya">
-    <h3>Pooja Diya</h3>
-    <div class="price">₹199</div>
-    <a href="#" class="button">Buy Now</a>
-</div>
-</div></body>
+</div><div class="container"><div class="card">
+    <img src="images/storage.jpg">
+    <div class="card-content">
+        <h3>Kitchen Storage Box</h3>
+        <div class="price">₹999</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/towel.jpg">
+    <div class="card-content">
+        <h3>Towel Set</h3>
+        <div class="price">₹299</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/shoes.jpg">
+    <div class="card-content">
+        <h3>Running Shoes</h3>
+        <div class="price">₹1499</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/watch.jpg">
+    <div class="card-content">
+        <h3>Smart Watch</h3>
+        <div class="price">₹1999</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/bag.jpg">
+    <div class="card-content">
+        <h3>Travel Bag</h3>
+        <div class="price">₹899</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/diya.jpg">
+    <div class="card-content">
+        <h3>Pooja Diya</h3>
+        <div class="price">₹199</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/laptop.jpg">
+    <div class="card-content">
+        <h3>Laptop</h3>
+        <div class="price">₹45999</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/mobile.jpg">
+    <div class="card-content">
+        <h3>Smart Mobile</h3>
+        <div class="price">₹14999</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/plant.jpg">
+    <div class="card-content">
+        <h3>Home Plant</h3>
+        <div class="price">₹299</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div><div class="card">
+    <img src="images/headphones.jpg">
+    <div class="card-content">
+        <h3>Headphones</h3>
+        <div class="price">₹1299</div>
+        <a href="#" class="button">Buy Now</a>
+    </div>
+</div></div></body>
 </html>
