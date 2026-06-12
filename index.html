@@ -24,29 +24,12 @@ padding:14px 16px;
 position:sticky;
 top:0;
 z-index:999;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* PREMIUM LOGO */
 .logo{
-font-size:26px;
-font-weight:900;
+font-size:22px;
+font-weight:800;
 color:#ffb84d;
-letter-spacing:0.5px;
-display:flex;
-align-items:center;
-gap:5px;
-}
-
-.logo span{
-font-size:18px;
-animation:float 2s infinite ease-in-out;
-}
-
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-3px);}
-100%{transform:translateY(0);}
 }
 
 .top-icons span{
@@ -55,12 +38,11 @@ cursor:pointer;
 font-weight:bold;
 }
 
-/* HORIZONTAL SCROLL */
+/* SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
 padding:10px 0;
-border-bottom:1px solid #eee;
 }
 
 .scroll-track{
@@ -102,13 +84,8 @@ background:white;
 border-radius:12px;
 overflow:hidden;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
-cursor:pointer;
 position:relative;
-transition:0.2s;
-}
-
-.card:hover{
-transform:scale(1.02);
+cursor:pointer;
 }
 
 .card img{
@@ -118,13 +95,8 @@ object-fit:cover;
 }
 
 .card-content{
-padding:8px 10px;
+padding:10px;
 text-align:center;
-}
-
-.card h3{
-margin:5px 0;
-font-size:14px;
 }
 
 .price{
@@ -161,46 +133,54 @@ background:red;
 color:white;
 }
 
-/* DETAIL POPUP */
-.detail{
+/* POPUP */
+.popup{
 position:fixed;
 inset:0;
 background:white;
-z-index:9999;
 display:none;
 flex-direction:column;
+z-index:9999;
 }
 
-.detail-header{
-background:#131921;
-color:white;
-padding:12px;
+.popup-header{
 display:flex;
 justify-content:space-between;
+padding:15px;
+background:#131921;
+color:white;
 }
 
-.detail-body{
-padding:12px;
+.popup-content{
+padding:10px;
+overflow:auto;
 }
 
-.detail img{
-width:100%;
+.popup-item{
+display:flex;
+gap:10px;
+padding:10px;
+background:#f2f2f2;
+margin-bottom:10px;
 border-radius:10px;
+align-items:center;
 }
 
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
+.popup-item img{
+width:70px;
+height:70px;
+object-fit:cover;
+}
+
+.popup-item button{
+margin-left:auto;
+padding:5px 10px;
+background:red;
+color:white;
 border:none;
 border-radius:6px;
 cursor:pointer;
-font-size:15px;
 }
-
-.buy{background:#28a745;color:white;}
-.cart{background:#ff9900;color:white;}
-.close{background:#333;color:white;}
 </style>
 </head>
 
@@ -208,16 +188,15 @@ font-size:15px;
 
 <!-- HEADER -->
 <div class="topbar">
-<div class="logo">
-Krishna<span>🪶</span>latha Deals
-</div>
+<div class="logo">Krishnalatha Deals</div>
+
 <div class="top-icons">
-<span>❤️ <span id="wishCount">0</span></span>
-<span>🛒 <span id="cartCount">0</span></span>
+<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
+<span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
-<!-- AUTO SCROLL -->
+<!-- SCROLL -->
 <div class="scroll-wrapper">
 <div class="scroll-track">
 <div class="scroll-item">🔥 Deals</div>
@@ -227,7 +206,6 @@ Krishna<span>🪶</span>latha Deals
 <div class="scroll-item">🏆 Top Rated</div>
 <div class="scroll-item">📦 Free Delivery</div>
 
-<!-- duplicate for smooth loop -->
 <div class="scroll-item">🔥 Deals</div>
 <div class="scroll-item">⚡ Fast Delivery</div>
 <div class="scroll-item">💰 Best Price</div>
@@ -240,14 +218,13 @@ Krishna<span>🪶</span>latha Deals
 <!-- GRID -->
 <div class="container" id="grid"></div>
 
-<!-- DETAIL -->
-<div class="detail" id="detailBox">
-<div class="detail-header">
-<div>Product Details</div>
-<button onclick="closeDetail()">X</button>
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-header">
+<div id="popupTitle">List</div>
+<button onclick="closePopup()">Close</button>
 </div>
-
-<div class="detail-body" id="detailBody"></div>
+<div class="popup-content" id="popupContent"></div>
 </div>
 
 <script>
@@ -284,7 +261,7 @@ let liked = wish.find(x=>x.name===p.name) ? "active" : "";
 let discount = Math.round(((p.old-p.price)/p.old)*100);
 
 g.innerHTML+=`
-<div class="card" onclick="openDetail('${p.name}')">
+<div class="card">
 
 <div class="discount">${discount}% OFF</div>
 
@@ -314,45 +291,51 @@ updateCounts();
 render();
 }
 
-/* DETAIL */
-function openDetail(name){
-let p = products.find(x=>x.name===name);
-let discount = Math.round(((p.old-p.price)/p.old)*100);
+/* POPUP */
+function openPopup(type){
+let box=document.getElementById("popup");
+let content=document.getElementById("popupContent");
+let title=document.getElementById("popupTitle");
 
-document.getElementById("detailBody").innerHTML=`
+box.style.display="flex";
+
+let list = type==="wishlist" ? wish : cart;
+
+title.innerText = type==="wishlist" ? "Wishlist" : "Cart";
+
+content.innerHTML = list.length ? list.map(p=>`
+<div class="popup-item">
 <img src="${p.img}">
-<h2>${p.name}</h2>
-
-<div style="color:green;font-size:18px;font-weight:bold;">
-₹${p.price} <span style="text-decoration:line-through;color:gray;">₹${p.old}</span>
+<div>
+<b>${p.name}</b><br>
+₹${p.price}
 </div>
-
-<p>${discount}% OFF - Best Deal Price</p>
-
-<button class="buy" onclick="buyNow('${p.name}')">Buy Now</button>
-<button class="cart" onclick="addCart('${p.name}')">Add to Cart</button>
-`;
-
-document.getElementById("detailBox").style.display="flex";
+<button onclick="${type==='wishlist'?'removeWish':'removeCart'}('${p.name}')">Remove</button>
+</div>
+`).join("") : "<p style='padding:10px;'>Empty</p>";
 }
 
-function closeDetail(){
-document.getElementById("detailBox").style.display="none";
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
 
-function addCart(name){
-let p = products.find(x=>x.name===name);
-if(!cart.find(x=>x.name===name)) cart.push(p);
-
+/* REMOVE */
+function removeWish(name){
+wish = wish.filter(x=>x.name!==name);
 save();
 updateCounts();
-alert("Added to cart");
+openPopup("wishlist");
+render();
 }
 
-function buyNow(name){
-alert("Buying " + name);
+function removeCart(name){
+cart = cart.filter(x=>x.name!==name);
+save();
+updateCounts();
+openPopup("cart");
 }
 
+/* COUNTS */
 function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
 document.getElementById("cartCount").innerText=cart.length;
