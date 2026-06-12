@@ -58,18 +58,13 @@ body{
     cursor:pointer;
 }
 
-/* AMAZON STYLE SLIDER FIXED */
+/* AMAZON SLIDER */
 .slider{
     display:flex;
     overflow-x:auto;
     gap:10px;
     padding:10px;
     background:white;
-    scroll-snap-type:x mandatory;
-}
-
-.slider::-webkit-scrollbar{
-    display:none;
 }
 
 .slider .mini{
@@ -79,7 +74,6 @@ body{
     padding:10px;
     box-shadow:0 2px 8px rgba(0,0,0,0.1);
     text-align:center;
-    scroll-snap-align:start;
 }
 
 /* GRID */
@@ -126,7 +120,7 @@ body{
     margin-top:6px;
 }
 
-/* WISHLIST HEART */
+/* HEART */
 .heart{
     position:absolute;
     top:8px;
@@ -136,6 +130,11 @@ body{
     background:white;
     border-radius:50%;
     padding:3px 6px;
+    color:#aaa;
+}
+
+.heart.active{
+    color:red;
 }
 
 /* COMPARE BAR */
@@ -173,14 +172,12 @@ body{
     <input id="search" placeholder="Search products...">
 </div>
 
-<!-- AMAZON SLIDER -->
+<!-- SLIDER -->
 <div class="slider">
     <div class="mini">🔥 Deals</div>
     <div class="mini">⚡ Fast Delivery</div>
     <div class="mini">💰 Best Price</div>
     <div class="mini">🆕 New Launch</div>
-    <div class="mini">🏆 Top Rated</div>
-    <div class="mini">📦 Free Delivery</div>
 </div>
 
 <!-- CATEGORY -->
@@ -194,7 +191,6 @@ body{
 
 <div class="container" id="grid"></div>
 
-<!-- COMPARE BAR -->
 <div class="compare-bar">
     <div>Compare: <span id="compareCount">0</span>/2</div>
     <button class="compare-btn" onclick="compare()">Compare</button>
@@ -202,16 +198,16 @@ body{
 
 <script>
 const products = [
-{name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen"},
-{name:"Towel",price:299,img:"images/towel.jpg",cat:"Home"},
-{name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion"},
-{name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics"},
-{name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion"},
-{name:"Diya",price:199,img:"images/diya.jpg",cat:"Home"},
-{name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics"},
-{name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics"},
-{name:"Plant",price:299,img:"images/plant.jpg",cat:"Home"},
-{name:"Headphones",price:1299,img:"images/headphones.jpg",cat:"Electronics"}
+{id:1,name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen"},
+{id:2,name:"Towel",price:299,img:"images/towel.jpg",cat:"Home"},
+{id:3,name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion"},
+{id:4,name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics"},
+{id:5,name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion"},
+{id:6,name:"Diya",price:199,img:"images/diya.jpg",cat:"Home"},
+{id:7,name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics"},
+{id:8,name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics"},
+{id:9,name:"Plant",price:299,img:"images/plant.jpg",cat:"Home"},
+{id:10,name:"Headphones",price:1299,img:"images/headphones.jpg",cat:"Electronics"}
 ];
 
 let wish = JSON.parse(localStorage.getItem("wish") || "[]");
@@ -221,19 +217,31 @@ function render(data){
 let g = document.getElementById("grid");
 g.innerHTML="";
 
-data.forEach((p,i)=>{
-g.innerHTML+=`
+data.forEach(p=>{
+g.innerHTML += `
 <div class="card">
-<div class="heart" onclick="wishAdd(${i})">❤</div>
-<img src="${p.img}">
-<div class="card-content">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
-<a class="button">Buy Now</a>
-<button onclick="addCompare(${i})">Compare</button>
-</div>
+    <div class="heart ${wish.includes(p.id) ? 'active' : ''}" onclick="toggleWish(${p.id})">❤</div>
+    <img src="${p.img}">
+    <div class="card-content">
+        <h3>${p.name}</h3>
+        <div class="price">₹${p.price}</div>
+        <a class="button">Buy Now</a>
+        <button onclick="addCompare(${p.id})">Compare</button>
+    </div>
 </div>`;
 });
+}
+
+function toggleWish(id){
+if(wish.includes(id)){
+wish = wish.filter(x => x !== id);
+} else {
+wish.push(id);
+}
+
+localStorage.setItem("wish", JSON.stringify(wish));
+document.getElementById("wishCount").innerText = wish.length;
+render(products);
 }
 
 function filter(cat){
@@ -241,31 +249,24 @@ if(cat==="All") render(products);
 else render(products.filter(p=>p.cat===cat));
 }
 
-function wishAdd(i){
-if(!wish.includes(products[i])){
-wish.push(products[i]);
-}
-localStorage.setItem("wish",JSON.stringify(wish));
-document.getElementById("wishCount").innerText=wish.length;
-}
-
-function addCompare(i){
-if(compareList.length<2 && !compareList.includes(products[i])){
-compareList.push(products[i]);
-document.getElementById("compareCount").innerText=compareList.length;
+function addCompare(id){
+let item = products.find(p=>p.id===id);
+if(compareList.length < 2 && !compareList.includes(item)){
+compareList.push(item);
+document.getElementById("compareCount").innerText = compareList.length;
 }
 }
 
 function compare(){
-if(compareList.length<2){
+if(compareList.length < 2){
 alert("Select 2 products");
 return;
 }
-alert(compareList[0].name+" VS "+compareList[1].name);
+alert(compareList[0].name + " VS " + compareList[1].name);
 }
 
 render(products);
-document.getElementById("wishCount").innerText=wish.length;
+document.getElementById("wishCount").innerText = wish.length;
 </script>
 
 </body>
