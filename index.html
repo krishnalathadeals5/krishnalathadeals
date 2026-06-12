@@ -38,20 +38,6 @@ cursor:pointer;
 font-weight:bold;
 }
 
-/* SEARCH */
-.search-box{
-padding:10px;
-background:#131921;
-}
-
-.search-box input{
-width:100%;
-padding:10px;
-border-radius:6px;
-border:none;
-outline:none;
-}
-
 /* SCROLL */
 .scroll-wrapper{
 overflow:hidden;
@@ -93,7 +79,6 @@ gap:12px;
 padding:12px;
 }
 
-/* CARD */
 .card{
 background:white;
 border-radius:12px;
@@ -102,27 +87,22 @@ box-shadow:0 3px 10px rgba(0,0,0,0.1);
 position:relative;
 }
 
-/* IMAGE */
 .card img{
 width:100%;
 height:150px;
 object-fit:cover;
+cursor:pointer;
 }
 
-/* CONTENT */
 .card-content{
 padding:10px;
 text-align:center;
 }
 
-.card h3{
-margin:4px 0;
-font-size:15px;
-}
-
 .price{
 color:green;
 font-weight:bold;
+margin-top:4px;
 }
 
 .mrp{
@@ -148,7 +128,7 @@ width:100%;
 .cart-btn{background:#ff9900;color:white;}
 .buy-btn{background:#28a745;color:white;}
 
-/* DISCOUNT */
+/* BADGE */
 .discount{
 position:absolute;
 top:8px;
@@ -175,6 +155,33 @@ cursor:pointer;
 .heart.active{
 background:red;
 color:white;
+}
+
+/* DETAIL PAGE */
+.detail{
+position:fixed;
+inset:0;
+background:white;
+display:none;
+flex-direction:column;
+z-index:10000;
+}
+
+.detail-header{
+background:#131921;
+color:white;
+padding:12px;
+display:flex;
+justify-content:space-between;
+}
+
+.detail-body{
+padding:12px;
+}
+
+.detail-body img{
+width:100%;
+border-radius:10px;
 }
 
 /* POPUP */
@@ -235,17 +242,12 @@ cursor:pointer;
 <div class="logo">Krishnalatha Deals</div>
 
 <div class="top-icons">
-<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
-<span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
+<span>❤️ <span id="wishCount">0</span></span>
+<span>🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
-<!-- SEARCH -->
-<div class="search-box">
-<input id="search" placeholder="Search products...">
-</div>
-
-<!-- SCROLL (FIXED) -->
+<!-- SCROLL -->
 <div class="scroll-wrapper">
 <div class="scroll-track">
 <div class="scroll-item">🔥 Deals</div>
@@ -254,13 +256,8 @@ cursor:pointer;
 <div class="scroll-item">🆕 New Arrivals</div>
 <div class="scroll-item">🏆 Top Rated</div>
 <div class="scroll-item">📦 Free Delivery</div>
-
 <div class="scroll-item">🔥 Deals</div>
 <div class="scroll-item">⚡ Fast Delivery</div>
-<div class="scroll-item">💰 Best Price</div>
-<div class="scroll-item">🆕 New Arrivals</div>
-<div class="scroll-item">🏆 Top Rated</div>
-<div class="scroll-item">📦 Free Delivery</div>
 </div>
 </div>
 
@@ -276,47 +273,50 @@ cursor:pointer;
 <div class="popup-content" id="popupContent"></div>
 </div>
 
+<!-- DETAIL PAGE -->
+<div class="detail" id="detail">
+<div class="detail-header">
+<div>Product</div>
+<button onclick="closeDetail()">X</button>
+</div>
+<div class="detail-body" id="detailBody"></div>
+</div>
+
 <script>
 
 const products=[
 {name:"Kitchen Box",price:999,old:1499,img:"images/storage.jpg"},
-{name:"Towel Set",price:299,old:499,img:"images/towel.jpg"},
-{name:"Shoes",price:1499,old:1999,img:"images/shoes.jpg"},
-{name:"Watch",price:1999,old:2499,img:"images/watch.jpg"},
-{name:"Bag",price:899,old:1299,img:"images/bag.jpg"},
-{name:"Diya",price:199,old:299,img:"images/diya.jpg"},
-{name:"Laptop",price:45999,old:50999,img:"images/laptop.jpg"},
-{name:"Mobile",price:14999,old:16999,img:"images/mobile.jpg"},
-{name:"Plant",price:299,old:499,img:"images/plant.jpg"},
-{name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
+{name:"Towel Set",price:299,old:499},
+{name:"Shoes",price:1499,old:1999},
+{name:"Watch",price:1999,old:2499},
+{name:"Bag",price:899,old:1299},
+{name:"Diya",price:199,old:299},
+{name:"Laptop",price:45999,old:50999},
+{name:"Mobile",price:14999,old:16999},
+{name:"Plant",price:299,old:499},
+{name:"Headphones",price:1299,old:1999}
 ];
 
-let wish = JSON.parse(localStorage.getItem("wish")) || [];
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function save(){
-localStorage.setItem("wish",JSON.stringify(wish));
-localStorage.setItem("cart",JSON.stringify(cart));
-}
+let wish=[];
+let cart=[];
 
 /* RENDER */
-function render(data=products){
+function render(){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
-data.forEach(p=>{
+products.forEach(p=>{
 
-let liked = wish.find(x=>x.name===p.name) ? "active" : "";
-let discount = Math.round(((p.old-p.price)/p.old)*100);
+let discount=Math.round(((p.old-p.price)/p.old)*100);
 
 g.innerHTML+=`
 <div class="card">
 
 <div class="discount">${discount}% OFF</div>
 
-<div class="heart ${liked}" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
+<div class="heart" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
 
-<img src="${p.img}">
+<img src="${p.img}" onclick="openDetail('${p.name}')">
 
 <div class="card-content">
 <h3>${p.name}</h3>
@@ -325,19 +325,48 @@ g.innerHTML+=`
 ₹${p.price} <span class="mrp">₹${p.old}</span>
 </div>
 
-<button class="btn cart-btn" onclick="event.stopPropagation(); addCart('${p.name}')">Add to Cart</button>
-<button class="btn buy-btn" onclick="event.stopPropagation(); buyNow('${p.name}')">Buy Now</button>
+<button class="btn cart-btn" onclick="addCart('${p.name}')">Add to Cart</button>
+<button class="btn buy-btn" onclick="buyNow('${p.name}')">Buy Now</button>
 
 </div>
 </div>`;
 });
 }
 
-/* SEARCH */
-document.getElementById("search").addEventListener("input",function(){
-let v=this.value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(v)));
-});
+/* DETAIL PAGE */
+function openDetail(name){
+let p=products.find(x=>x.name===name);
+let discount=Math.round(((p.old-p.price)/p.old)*100);
+
+document.getElementById("detailBody").innerHTML=`
+<img src="${p.img}">
+<h2>${p.name}</h2>
+
+<h3>₹${p.price} <span class="mrp">₹${p.old}</span></h3>
+<p>${discount}% OFF</p>
+
+<button class="btn buy-btn" onclick="buyNow('${p.name}')">Buy Now</button>
+<button class="btn cart-btn" onclick="addCart('${p.name}')">Add to Cart</button>
+`;
+
+document.getElementById("detail").style.display="flex";
+}
+
+function closeDetail(){
+document.getElementById("detail").style.display="none";
+}
+
+/* CART */
+function addCart(name){
+let p=products.find(x=>x.name===name);
+if(!cart.find(x=>x.name===name)) cart.push(p);
+updateCounts();
+}
+
+/* BUY */
+function buyNow(name){
+alert("Buying " + name);
+}
 
 /* WISHLIST */
 function toggleWish(name){
@@ -347,70 +376,11 @@ let i=wish.findIndex(x=>x.name===name);
 if(i>-1) wish.splice(i,1);
 else wish.push(p);
 
-save();
 updateCounts();
 render();
 }
 
-/* CART */
-function addCart(name){
-let p=products.find(x=>x.name===name);
-if(!cart.find(x=>x.name===name)) cart.push(p);
-
-save();
-updateCounts();
-}
-
-/* BUY */
-function buyNow(name){
-alert("Buying " + name);
-}
-
-/* POPUP */
-function openPopup(type){
-let box=document.getElementById("popup");
-let content=document.getElementById("popupContent");
-let title=document.getElementById("popupTitle");
-
-box.style.display="flex";
-
-let list = type==="wishlist" ? wish : cart;
-
-title.innerText = type==="wishlist" ? "Wishlist" : "Cart";
-
-content.innerHTML = list.length ? list.map(p=>`
-<div class="popup-item">
-<img src="${p.img}">
-<div>
-<b>${p.name}</b><br>
-₹${p.price}
-</div>
-<button onclick="${type==='wishlist'?'removeWish':'removeCart'}('${p.name}')">Remove</button>
-</div>
-`).join("") : "<p style='padding:10px;'>Empty</p>";
-}
-
-function closePopup(){
-document.getElementById("popup").style.display="none";
-}
-
-/* REMOVE */
-function removeWish(name){
-wish = wish.filter(x=>x.name!==name);
-save();
-updateCounts();
-openPopup("wishlist");
-render();
-}
-
-function removeCart(name){
-cart = cart.filter(x=>x.name!==name);
-save();
-updateCounts();
-openPopup("cart");
-}
-
-/* COUNTS */
+/* COUNT */
 function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
 document.getElementById("cartCount").innerText=cart.length;
