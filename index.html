@@ -24,53 +24,20 @@ body{
 
 .logo{color:#ff9900;font-weight:bold;cursor:pointer}
 
-/* SEARCH */
-.search-box{padding:10px;background:#131921}
-
-.search-box input{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:6px;
-}
-
-/* SLIDER FIX */
-.slider{
+/* NAV BAR */
+.navbar{
     display:flex;
-    overflow-x:auto;
     gap:10px;
+    background:#232f3e;
     padding:10px;
-    background:white;
-    scroll-snap-type:x mandatory;
 }
 
-.slider::-webkit-scrollbar{display:none;}
-
-.slider .mini{
-    min-width:150px;
-    background:#fff;
-    padding:10px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    text-align:center;
-    scroll-snap-align:start;
-}
-
-/* CATEGORY */
-.categories{
-    display:flex;
-    overflow-x:auto;
-    gap:10px;
-    padding:10px;
-    background:#1f2a38;
-}
-
-.categories div{
+.navbar button{
+    background:#37475a;
     color:white;
-    background:#2f3e50;
+    border:none;
     padding:6px 12px;
     border-radius:20px;
-    white-space:nowrap;
     cursor:pointer;
 }
 
@@ -104,6 +71,7 @@ body{
     color:white;
     text-decoration:none;
     border-radius:6px;
+    margin-top:6px;
 }
 
 /* HEART */
@@ -123,8 +91,8 @@ body{
 .page{display:none}
 .page.active{display:block}
 
-/* BAR */
-.bottom-bar{
+/* COMPARE BAR */
+.compare-bar{
     position:fixed;
     bottom:0;
     left:0;
@@ -135,12 +103,23 @@ body{
     display:flex;
     justify-content:space-between;
 }
-
 .btn{
     background:#ff9900;
     border:none;
     padding:6px 10px;
     border-radius:5px;
+    cursor:pointer;
+}
+
+/* COMPARE VIEW */
+.compare-box{
+    padding:20px;
+}
+.compare-item{
+    background:white;
+    padding:10px;
+    margin:10px 0;
+    border-radius:10px;
 }
 </style>
 </head>
@@ -148,61 +127,66 @@ body{
 <body>
 
 <div class="topbar">
-    <div class="logo" onclick="showPage('home')">Krishnalatha Deals</div>
+    <div class="logo" onclick="goHome()">Krishnalatha Deals</div>
     <div onclick="showPage('wishlist')">❤️ <span id="wishCount">0</span></div>
 </div>
 
-<!-- HOME PAGE -->
+<!-- NAV -->
+<div class="navbar">
+    <button onclick="goHome()">Home</button>
+    <button onclick="showPage('wishlist')">Wishlist</button>
+    <button onclick="showCompare()">Compare</button>
+</div>
+
+<!-- HOME -->
 <div id="home" class="page active">
-
-<div class="search-box">
-    <input placeholder="Search products...">
-</div>
-
-<div class="slider">
-    <div class="mini">🔥 Deals</div>
-    <div class="mini">⚡ Fast Delivery</div>
-    <div class="mini">💰 Best Price</div>
-    <div class="mini">🆕 New Launch</div>
-</div>
-
-<div class="categories">
-    <div onclick="filter('All')">All</div>
-    <div onclick="filter('Kitchen')">Kitchen</div>
-    <div onclick="filter('Fashion')">Fashion</div>
-    <div onclick="filter('Electronics')">Electronics</div>
-    <div onclick="filter('Home Decor')">Home Decor</div>
-</div>
-
 <div class="container" id="grid"></div>
 </div>
 
-<!-- WISHLIST PAGE -->
+<!-- WISHLIST -->
 <div id="wishlist" class="page">
+    <div class="navbar">
+        <button onclick="goHome()">⬅ Back Home</button>
+    </div>
     <div class="container" id="wishGrid"></div>
 </div>
 
+<!-- COMPARE -->
+<div id="comparePage" class="page">
+    <div class="navbar">
+        <button onclick="goHome()">⬅ Back Home</button>
+    </div>
+    <div class="compare-box" id="compareBox"></div>
+</div>
+
 <!-- BOTTOM -->
-<div class="bottom-bar">
-    <div>Compare: 0/2</div>
-    <button class="btn">Compare</button>
+<div class="compare-bar">
+    <div>Compare: <span id="compareCount">0</span>/2</div>
+    <button class="btn" onclick="showCompare()">Open Compare</button>
 </div>
 
 <script>
+
 const products = [
-{id:1,name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen"},
-{id:2,name:"Towel",price:299,img:"images/towel.jpg",cat:"Home Decor"},
-{id:3,name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion"},
-{id:4,name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics"},
-{id:5,name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion"},
-{id:6,name:"Diya",price:199,img:"images/diya.jpg",cat:"Home Decor"},
-{id:7,name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics"},
-{id:8,name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics"},
-{id:9,name:"Plant",price:299,img:"images/plant.jpg",cat:"Home Decor"},
-{id:10,name:"Headphones",price:1299,img:"images/headphones.jpg",cat:"Electronics"}
+{id:1,name:"Kitchen Box",price:999,img:"images/storage.jpg"},
+{id:2,name:"Towel",price:299,img:"images/towel.jpg"},
+{id:3,name:"Shoes",price:1499,img:"images/shoes.jpg"},
+{id:4,name:"Watch",price:1999,img:"images/watch.jpg"},
+{id:5,name:"Bag",price:899,img:"images/bag.jpg"},
+{id:6,name:"Diya",price:199,img:"images/diya.jpg"},
+{id:7,name:"Laptop",price:45999,img:"images/laptop.jpg"},
+{id:8,name:"Mobile",price:14999,img:"images/mobile.jpg"},
+{id:9,name:"Plant",price:299,img:"images/plant.jpg"},
+{id:10,name:"Headphones",price:1299,img:"images/headphones.jpg"}
 ];
 
 let wish = JSON.parse(localStorage.getItem("wish") || "[]");
+let compareList = [];
+
+function goHome(){
+showPage("home");
+render();
+}
 
 function showPage(p){
 document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
@@ -210,10 +194,10 @@ document.getElementById(p).classList.add("active");
 if(p==="wishlist") renderWish();
 }
 
-function render(data=products){
+function render(){
 let g=document.getElementById("grid");
 g.innerHTML="";
-data.forEach(p=>{
+products.forEach(p=>{
 g.innerHTML+=`
 <div class="card">
 <div class="heart ${wish.includes(p.id)?'active':''}" onclick="toggleWish(${p.id})">❤</div>
@@ -222,6 +206,7 @@ g.innerHTML+=`
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
 <a class="button">Buy Now</a>
+<button onclick="addCompare(${p.id})">Compare</button>
 </div>
 </div>`;
 });
@@ -230,9 +215,7 @@ g.innerHTML+=`
 function renderWish(){
 let g=document.getElementById("wishGrid");
 g.innerHTML="";
-let list = products.filter(p=>wish.includes(p.id));
-
-list.forEach(p=>{
+products.filter(p=>wish.includes(p.id)).forEach(p=>{
 g.innerHTML+=`
 <div class="card">
 <img src="${p.img}">
@@ -255,13 +238,38 @@ document.getElementById("wishCount").innerText=wish.length;
 render();
 }
 
-function filter(cat){
-if(cat==="All") render();
-else render(products.filter(p=>p.cat===cat));
+function addCompare(id){
+let item = products.find(p=>p.id===id);
+
+if(compareList.length < 2 && !compareList.includes(item)){
+compareList.push(item);
+document.getElementById("compareCount").innerText=compareList.length;
+}
+}
+
+function showCompare(){
+showPage("comparePage");
+
+let box=document.getElementById("compareBox");
+box.innerHTML="";
+
+if(compareList.length<2){
+box.innerHTML="Select 2 products to compare";
+return;
+}
+
+box.innerHTML=`
+<div class="compare-item">
+<b>${compareList[0].name}</b> - ₹${compareList[0].price}
+</div>
+<div class="compare-item">
+<b>${compareList[1].name}</b> - ₹${compareList[1].price}
+</div>`;
 }
 
 render();
 document.getElementById("wishCount").innerText=wish.length;
+
 </script>
 
 </body>
