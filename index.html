@@ -22,23 +22,38 @@ body{
     align-items:center;
 }
 
-.logo{color:#ff9900;font-weight:bold;cursor:pointer}
-
-/* NAV BAR */
-.navbar{
-    display:flex;
-    gap:10px;
-    background:#232f3e;
-    padding:10px;
+.logo{
+    color:#ff9900;
+    font-weight:bold;
 }
 
-.navbar button{
-    background:#37475a;
+/* NAV */
+.nav{
+    display:flex;
+    gap:10px;
+    padding:10px;
+    background:#232f3e;
     color:white;
-    border:none;
-    padding:6px 12px;
-    border-radius:20px;
+}
+
+.nav div{
     cursor:pointer;
+    padding:6px 10px;
+    background:#37475a;
+    border-radius:15px;
+}
+
+/* SEARCH */
+.search-box{
+    padding:10px;
+    background:#131921;
+}
+
+.search-box input{
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+    border:none;
 }
 
 /* GRID */
@@ -53,25 +68,34 @@ body{
 .card{
     background:white;
     border-radius:12px;
-    overflow:hidden;
+    padding:10px;
     position:relative;
-    box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
-.card img{width:100%;height:150px;object-fit:cover}
+.card img{
+    width:100%;
+    height:140px;
+    object-fit:cover;
+}
 
-.card-content{text-align:center;padding:10px}
+.price{
+    color:green;
+    font-weight:bold;
+}
 
-.price{color:green;font-weight:bold}
+/* BUTTONS */
+button{
+    width:100%;
+    padding:6px;
+    margin-top:5px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
 
-.button{
-    display:block;
-    padding:8px;
+.buy{
     background:#ff9900;
     color:white;
-    text-decoration:none;
-    border-radius:6px;
-    margin-top:6px;
 }
 
 /* HEART */
@@ -79,47 +103,29 @@ body{
     position:absolute;
     top:8px;
     right:8px;
-    background:white;
-    border-radius:50%;
-    padding:4px 6px;
     cursor:pointer;
-    color:#aaa;
+    font-size:18px;
 }
-.heart.active{color:red}
 
-/* PAGES */
-.page{display:none}
-.page.active{display:block}
+/* ACTIVE HEART */
+.active{
+    color:red;
+}
 
-/* COMPARE BAR */
-.compare-bar{
+/* BAR */
+.bottom{
     position:fixed;
     bottom:0;
     left:0;
     right:0;
     background:#111;
     color:white;
-    padding:10px;
     display:flex;
-    justify-content:space-between;
-}
-.btn{
-    background:#ff9900;
-    border:none;
-    padding:6px 10px;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-/* COMPARE VIEW */
-.compare-box{
-    padding:20px;
-}
-.compare-item{
-    background:white;
+    justify-content:space-around;
     padding:10px;
-    margin:10px 0;
-    border-radius:10px;
+}
+.bottom div{
+    cursor:pointer;
 }
 </style>
 </head>
@@ -127,42 +133,26 @@ body{
 <body>
 
 <div class="topbar">
-    <div class="logo" onclick="goHome()">Krishnalatha Deals</div>
-    <div onclick="showPage('wishlist')">❤️ <span id="wishCount">0</span></div>
+    <div class="logo">Krishnalatha Deals</div>
+    <div>❤️ <span id="wishCount">0</span></div>
 </div>
 
-<!-- NAV -->
-<div class="navbar">
-    <button onclick="goHome()">Home</button>
-    <button onclick="showPage('wishlist')">Wishlist</button>
-    <button onclick="showCompare()">Compare</button>
+<div class="search-box">
+    <input id="search" placeholder="Search products...">
 </div>
 
-<!-- HOME -->
-<div id="home" class="page active">
-<div class="container" id="grid"></div>
+<div class="nav">
+    <div onclick="setView('home')">Home</div>
+    <div onclick="setView('wishlist')">Wishlist</div>
+    <div onclick="setView('compare')">Compare</div>
 </div>
 
-<!-- WISHLIST -->
-<div id="wishlist" class="page">
-    <div class="navbar">
-        <button onclick="goHome()">⬅ Back Home</button>
-    </div>
-    <div class="container" id="wishGrid"></div>
-</div>
+<div id="grid" class="container"></div>
 
-<!-- COMPARE -->
-<div id="comparePage" class="page">
-    <div class="navbar">
-        <button onclick="goHome()">⬅ Back Home</button>
-    </div>
-    <div class="compare-box" id="compareBox"></div>
-</div>
-
-<!-- BOTTOM -->
-<div class="compare-bar">
-    <div>Compare: <span id="compareCount">0</span>/2</div>
-    <button class="btn" onclick="showCompare()">Open Compare</button>
+<div class="bottom">
+    <div onclick="setView('home')">🏠 Home</div>
+    <div onclick="setView('wishlist')">❤️ Wishlist</div>
+    <div onclick="setView('compare')">⚖ Compare</div>
 </div>
 
 <script>
@@ -180,95 +170,81 @@ const products = [
 {id:10,name:"Headphones",price:1299,img:"images/headphones.jpg"}
 ];
 
-let wish = JSON.parse(localStorage.getItem("wish") || "[]");
-let compareList = [];
+let view="home";
 
-function goHome(){
-showPage("home");
+let wishlist = JSON.parse(localStorage.getItem("wish")||"[]");
+let compare = [];
+
+function save(){
+localStorage.setItem("wish",JSON.stringify(wishlist));
+}
+
+function setView(v){
+view=v;
 render();
 }
 
-function showPage(p){
-document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
-document.getElementById(p).classList.add("active");
-if(p==="wishlist") renderWish();
-}
-
-function render(){
-let g=document.getElementById("grid");
-g.innerHTML="";
-products.forEach(p=>{
-g.innerHTML+=`
-<div class="card">
-<div class="heart ${wish.includes(p.id)?'active':''}" onclick="toggleWish(${p.id})">❤</div>
-<img src="${p.img}">
-<div class="card-content">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
-<a class="button">Buy Now</a>
-<button onclick="addCompare(${p.id})">Compare</button>
-</div>
-</div>`;
-});
-}
-
-function renderWish(){
-let g=document.getElementById("wishGrid");
-g.innerHTML="";
-products.filter(p=>wish.includes(p.id)).forEach(p=>{
-g.innerHTML+=`
-<div class="card">
-<img src="${p.img}">
-<div class="card-content">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
-</div>
-</div>`;
-});
-}
-
 function toggleWish(id){
-if(wish.includes(id)){
-wish = wish.filter(x=>x!==id);
-}else{
-wish.push(id);
+
+let index = wishlist.indexOf(id);
+
+if(index===-1){
+wishlist.push(id);
+} else {
+wishlist.splice(index,1);
 }
-localStorage.setItem("wish",JSON.stringify(wish));
-document.getElementById("wishCount").innerText=wish.length;
+
+save();
 render();
 }
 
 function addCompare(id){
-let item = products.find(p=>p.id===id);
+if(compare.includes(id)) return;
 
-if(compareList.length < 2 && !compareList.includes(item)){
-compareList.push(item);
-document.getElementById("compareCount").innerText=compareList.length;
+if(compare.length<2){
+compare.push(id);
 }
-}
-
-function showCompare(){
-showPage("comparePage");
-
-let box=document.getElementById("compareBox");
-box.innerHTML="";
-
-if(compareList.length<2){
-box.innerHTML="Select 2 products to compare";
-return;
+render();
 }
 
-box.innerHTML=`
-<div class="compare-item">
-<b>${compareList[0].name}</b> - ₹${compareList[0].price}
+function render(){
+
+let grid=document.getElementById("grid");
+grid.innerHTML="";
+
+let data=[];
+
+if(view==="home"){
+data=products;
+}
+else if(view==="wishlist"){
+data=products.filter(p=>wishlist.includes(p.id));
+}
+else if(view==="compare"){
+data=products.filter(p=>compare.includes(p.id));
+}
+
+data.forEach(p=>{
+
+let isWish = wishlist.includes(p.id);
+
+grid.innerHTML+=`
+<div class="card">
+<div class="heart ${isWish?'active':''}" onclick="toggleWish(${p.id})">❤</div>
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+
+<button class="buy">Buy Now</button>
+<button onclick="addCompare(${p.id})">Add Compare</button>
 </div>
-<div class="compare-item">
-<b>${compareList[1].name}</b> - ₹${compareList[1].price}
-</div>`;
+`;
+});
+
+document.getElementById("wishCount").innerText=wishlist.length;
 }
 
 render();
-document.getElementById("wishCount").innerText=wish.length;
 
 </script>
 
