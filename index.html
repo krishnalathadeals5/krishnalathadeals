@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <!-- ✅ Fix caching issue -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishnalatha Deals</title>
 
@@ -27,18 +33,20 @@
             font-size: 14px;
         }
 
+        /* ✅ FIXED CONTAINER */
         .container {
             display: flex;
-            flex-wrap: wrap;   /* ✅ important */
             gap: 20px;
             padding: 20px;
+            flex-wrap: wrap;
         }
 
+        /* ✅ FIXED CARD */
         .card {
             background: white;
             padding: 15px;
             border-radius: 10px;
-            width: 48%;   /* ✅ 2 cards in one row */
+            width: 48%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
         }
@@ -69,13 +77,13 @@
         }
 
         button:hover {
-            background: #ff8c00; /* ✅ hover effect */
+            background: darkorange;
         }
 
-        /* ✅ MOBILE VIEW */
-        @media (max-width: 768px) {
+        /* ✅ MOBILE FIX */
+        @media (max-width: 600px) {
             .card {
-                width: 100%;  /* one card per row */
+                width: 100%;
             }
         }
     </style>
