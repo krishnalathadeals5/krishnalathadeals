@@ -9,72 +9,37 @@
 body{
     margin:0;
     font-family:Arial;
-    background:#eaeaea;
+    background:#f5f6fa;
 }
 
 /* TOP BAR */
 .topbar{
-    position:sticky;
-    top:0;
-    z-index:1000;
     background:#131921;
     color:white;
     display:flex;
-    align-items:center;
     justify-content:space-between;
     padding:12px 15px;
+    align-items:center;
 }
 
-.logo{
-    color:#ff9900;
-    font-weight:bold;
-    font-size:18px;
-}
+.logo{color:#ff9900;font-weight:bold;cursor:pointer}
 
 /* SEARCH */
-.search-box{
-    background:#131921;
-    padding:10px;
-}
+.search-box{padding:10px;background:#131921}
 
 .search-box input{
     width:100%;
     padding:10px;
-    border-radius:6px;
     border:none;
-    outline:none;
+    border-radius:6px;
 }
 
-/* CATEGORY (Amazon style chips) */
-.categories{
-    display:flex;
-    overflow-x:auto;
-    gap:10px;
-    padding:10px;
-    background:#232f3e;
-}
-
-.categories div{
-    background:#37475a;
-    color:white;
-    padding:6px 12px;
-    border-radius:20px;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:13px;
-}
-
-.categories div:hover{
-    background:#ff9900;
-    color:black;
-}
-
-/* AMAZON DEAL STRIP */
+/* SLIDER FIX */
 .slider{
     display:flex;
     overflow-x:auto;
     gap:10px;
-    padding:12px;
+    padding:10px;
     background:white;
     scroll-snap-type:x mandatory;
 }
@@ -82,21 +47,31 @@ body{
 .slider::-webkit-scrollbar{display:none;}
 
 .slider .mini{
-    min-width:160px;
+    min-width:150px;
     background:#fff;
-    border-radius:10px;
     padding:10px;
+    border-radius:10px;
     box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    scroll-snap-align:start;
     text-align:center;
-    font-weight:bold;
+    scroll-snap-align:start;
 }
 
-/* SECTION TITLE */
-.section-title{
-    padding:10px 15px;
-    font-weight:bold;
-    font-size:16px;
+/* CATEGORY */
+.categories{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px;
+    background:#1f2a38;
+}
+
+.categories div{
+    color:white;
+    background:#2f3e50;
+    padding:6px 12px;
+    border-radius:20px;
+    white-space:nowrap;
+    cursor:pointer;
 }
 
 /* GRID */
@@ -116,23 +91,12 @@ body{
     box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
-.card img{
-    width:100%;
-    height:150px;
-    object-fit:cover;
-}
+.card img{width:100%;height:150px;object-fit:cover}
 
-.card-content{
-    padding:10px;
-    text-align:center;
-}
+.card-content{text-align:center;padding:10px}
 
-.price{
-    color:#1faa59;
-    font-weight:bold;
-}
+.price{color:green;font-weight:bold}
 
-/* BUTTON */
 .button{
     display:block;
     padding:8px;
@@ -140,7 +104,6 @@ body{
     color:white;
     text-decoration:none;
     border-radius:6px;
-    margin-top:6px;
 }
 
 /* HEART */
@@ -148,20 +111,20 @@ body{
     position:absolute;
     top:8px;
     right:8px;
-    font-size:18px;
-    cursor:pointer;
     background:white;
     border-radius:50%;
-    padding:3px 6px;
+    padding:4px 6px;
+    cursor:pointer;
     color:#aaa;
 }
+.heart.active{color:red}
 
-.heart.active{
-    color:red;
-}
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
 
-/* COMPARE BAR */
-.compare-bar{
+/* BAR */
+.bottom-bar{
     position:fixed;
     bottom:0;
     left:0;
@@ -171,13 +134,12 @@ body{
     padding:10px;
     display:flex;
     justify-content:space-between;
-    align-items:center;
 }
 
-.compare-btn{
+.btn{
     background:#ff9900;
-    padding:6px 10px;
     border:none;
+    padding:6px 10px;
     border-radius:5px;
 }
 </style>
@@ -186,15 +148,17 @@ body{
 <body>
 
 <div class="topbar">
-    <div class="logo">Krishnalatha Deals</div>
-    <div>❤️ <span id="wishCount">0</span></div>
+    <div class="logo" onclick="showPage('home')">Krishnalatha Deals</div>
+    <div onclick="showPage('wishlist')">❤️ <span id="wishCount">0</span></div>
 </div>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
 
 <div class="search-box">
-    <input id="search" placeholder="Search products...">
+    <input placeholder="Search products...">
 </div>
 
-<!-- AMAZON STRIP -->
 <div class="slider">
     <div class="mini">🔥 Deals</div>
     <div class="mini">⚡ Fast Delivery</div>
@@ -202,54 +166,80 @@ body{
     <div class="mini">🆕 New Launch</div>
 </div>
 
-<div class="section-title">🔥 Best Deals Today</div>
-
 <div class="categories">
     <div onclick="filter('All')">All</div>
     <div onclick="filter('Kitchen')">Kitchen</div>
     <div onclick="filter('Fashion')">Fashion</div>
     <div onclick="filter('Electronics')">Electronics</div>
-    <div onclick="filter('Home')">Home</div>
+    <div onclick="filter('Home Decor')">Home Decor</div>
 </div>
 
 <div class="container" id="grid"></div>
+</div>
 
-<div class="compare-bar">
-    <div>Compare: <span id="compareCount">0</span>/2</div>
-    <button class="compare-btn" onclick="compare()">Compare</button>
+<!-- WISHLIST PAGE -->
+<div id="wishlist" class="page">
+    <div class="container" id="wishGrid"></div>
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom-bar">
+    <div>Compare: 0/2</div>
+    <button class="btn">Compare</button>
 </div>
 
 <script>
 const products = [
 {id:1,name:"Kitchen Box",price:999,img:"images/storage.jpg",cat:"Kitchen"},
-{id:2,name:"Towel",price:299,img:"images/towel.jpg",cat:"Home"},
+{id:2,name:"Towel",price:299,img:"images/towel.jpg",cat:"Home Decor"},
 {id:3,name:"Shoes",price:1499,img:"images/shoes.jpg",cat:"Fashion"},
 {id:4,name:"Watch",price:1999,img:"images/watch.jpg",cat:"Electronics"},
 {id:5,name:"Bag",price:899,img:"images/bag.jpg",cat:"Fashion"},
-{id:6,name:"Diya",price:199,img:"images/diya.jpg",cat:"Home"},
+{id:6,name:"Diya",price:199,img:"images/diya.jpg",cat:"Home Decor"},
 {id:7,name:"Laptop",price:45999,img:"images/laptop.jpg",cat:"Electronics"},
 {id:8,name:"Mobile",price:14999,img:"images/mobile.jpg",cat:"Electronics"},
-{id:9,name:"Plant",price:299,img:"images/plant.jpg",cat:"Home"},
+{id:9,name:"Plant",price:299,img:"images/plant.jpg",cat:"Home Decor"},
 {id:10,name:"Headphones",price:1299,img:"images/headphones.jpg",cat:"Electronics"}
 ];
 
 let wish = JSON.parse(localStorage.getItem("wish") || "[]");
-let compareList = [];
 
-function render(data){
-let g = document.getElementById("grid");
+function showPage(p){
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(p).classList.add("active");
+if(p==="wishlist") renderWish();
+}
+
+function render(data=products){
+let g=document.getElementById("grid");
 g.innerHTML="";
-
 data.forEach(p=>{
-g.innerHTML += `
+g.innerHTML+=`
 <div class="card">
-    <div class="heart ${wish.includes(p.id) ? 'active' : ''}" onclick="toggleWish(${p.id})">❤</div>
-    <img src="${p.img}">
-    <div class="card-content">
-        <h3>${p.name}</h3>
-        <div class="price">₹${p.price}</div>
-        <a class="button">Buy Now</a>
-    </div>
+<div class="heart ${wish.includes(p.id)?'active':''}" onclick="toggleWish(${p.id})">❤</div>
+<img src="${p.img}">
+<div class="card-content">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+<a class="button">Buy Now</a>
+</div>
+</div>`;
+});
+}
+
+function renderWish(){
+let g=document.getElementById("wishGrid");
+g.innerHTML="";
+let list = products.filter(p=>wish.includes(p.id));
+
+list.forEach(p=>{
+g.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<div class="card-content">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+</div>
 </div>`;
 });
 }
@@ -261,21 +251,17 @@ wish = wish.filter(x=>x!==id);
 wish.push(id);
 }
 localStorage.setItem("wish",JSON.stringify(wish));
-document.getElementById("wishCount").innerText = wish.length;
-render(products);
+document.getElementById("wishCount").innerText=wish.length;
+render();
 }
 
 function filter(cat){
-if(cat==="All") render(products);
+if(cat==="All") render();
 else render(products.filter(p=>p.cat===cat));
 }
 
-function compare(){
-alert("Compare feature next upgrade (UI ready)");
-}
-
-render(products);
-document.getElementById("wishCount").innerText = wish.length;
+render();
+document.getElementById("wishCount").innerText=wish.length;
 </script>
 
 </body>
