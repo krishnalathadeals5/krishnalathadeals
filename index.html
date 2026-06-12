@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Krishnalatha Deals</title>
 
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 body{
 margin:0;
@@ -17,7 +20,7 @@ background:#f5f6fa;
 display:flex;
 justify-content:space-around;
 align-items:center;
-padding:8px;
+padding:10px;
 background:#111;
 }
 
@@ -31,6 +34,7 @@ text-decoration:none;
 .insta{color:#E4405F;}
 .wa{color:#25D366;}
 .tele{color:#229ED9;}
+.yt{color:#FF0000;}
 
 /* TOP */
 .topbar{
@@ -162,20 +166,22 @@ border-radius:6px;
 margin-top:6px;
 }
 
-/* HEART ACTIVE */
+/* HEART */
 .heart{
 position:absolute;
 top:8px;
 right:8px;
 background:white;
 border-radius:50%;
-padding:5px;
+padding:6px;
 cursor:pointer;
+font-size:16px;
 transition:0.2s;
 }
 
 .heart.active{
-color:red;
+background:red;
+color:white;
 }
 
 /* POPUP */
@@ -222,10 +228,11 @@ object-fit:cover;
 
 <!-- SOCIAL -->
 <div class="social-bar">
-<a class="fb" href="#">📘</a>
-<a class="insta" href="#">📸</a>
-<a class="wa" href="#">🟢</a>
-<a class="tele" href="#">✈️</a>
+<a class="fb" href="#"><i class="fa-brands fa-facebook-f"></i></a>
+<a class="insta" href="#"><i class="fa-brands fa-instagram"></i></a>
+<a class="wa" href="#"><i class="fa-brands fa-whatsapp"></i></a>
+<a class="tele" href="#"><i class="fa-brands fa-telegram"></i></a>
+<a class="yt" href="#"><i class="fa-brands fa-youtube"></i></a>
 </div>
 
 <!-- TOP -->
@@ -293,37 +300,41 @@ const products=[
 let wish=[];
 let cart=[];
 
+/* RENDER */
 function render(data){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
-data.forEach((p,i)=>{
+data.forEach((p)=>{
 
 let liked = wish.find(x=>x.name===p.name) ? "active" : "";
 
 g.innerHTML+=`
 <div class="card">
-<div class="heart ${liked}" onclick="toggleWish(${i})">❤</div>
+<div class="heart ${liked}" onclick="toggleWish('${p.name}')">❤</div>
+
 <img src="${p.img}">
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
-<a class="button" href="#">Buy Now</a>
+
+<a class="button" href="#" onclick="addCart('${p.name}')">Add to Cart</a>
+
 </div>
 </div>`;
 });
 }
 
-/* CATEGORY */
+/* FILTER */
 function filter(cat){
 if(cat==="All") render(products);
 else render(products.filter(p=>p.cat===cat));
 }
 
-/* WISHLIST TOGGLE */
-function toggleWish(i){
-let p=products[i];
-let index=wish.findIndex(x=>x.name===p.name);
+/* WISHLIST */
+function toggleWish(name){
+let p = products.find(x=>x.name===name);
+let index = wish.findIndex(x=>x.name===name);
 
 if(index>-1){
 wish.splice(index,1);
@@ -336,11 +347,13 @@ render(products);
 }
 
 /* CART */
-function addCart(i){
-let p=products[i];
-if(!cart.find(x=>x.name===p.name)){
+function addCart(name){
+let p = products.find(x=>x.name===name);
+
+if(!cart.find(x=>x.name===name)){
 cart.push(p);
 }
+
 document.getElementById("cartCount").innerText=cart.length;
 }
 
