@@ -6,11 +6,7 @@
 <title>Krishnalatha Deals</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#f5f6fa;
-}
+body{margin:0;font-family:Arial;background:#f5f6fa}
 
 /* HEADER */
 .topbar{
@@ -23,60 +19,27 @@ position:sticky;
 top:0;
 z-index:999;
 }
-
-.logo{
-font-size:22px;
-font-weight:800;
-color:#ffb84d;
-}
-
-.top-icons span{
-margin-left:12px;
-cursor:pointer;
-font-weight:bold;
-}
+.logo{font-size:22px;font-weight:800;color:#ffb84d}
+.top-icons span{margin-left:12px;cursor:pointer;font-weight:bold}
 
 /* SEARCH */
-.search-box{
-padding:10px;
-background:#131921;
-}
+.search-box{padding:10px;background:#131921}
 .search-box input{
-width:100%;
-padding:10px;
-border-radius:6px;
-border:none;
-outline:none;
+width:100%;padding:10px;border-radius:6px;border:none;outline:none;
 }
 
 /* SCROLL */
-.scroll-wrapper{
-overflow:hidden;
-background:white;
-padding:10px 0;
-}
+.scroll-wrapper{overflow:hidden;background:white;padding:10px 0}
 .scroll-track{
-display:flex;
-gap:20px;
-width:max-content;
+display:flex;gap:20px;width:max-content;
 animation:scroll 18s linear infinite;
 }
-.scroll-wrapper:hover .scroll-track{
-animation-play-state:paused;
-}
+.scroll-wrapper:hover .scroll-track{animation-play-state:paused}
 .scroll-item{
-min-width:160px;
-background:#f4f4f4;
-padding:8px;
-border-radius:20px;
-text-align:center;
-font-weight:bold;
-font-size:13px;
+min-width:160px;background:#f4f4f4;
+padding:8px;border-radius:20px;text-align:center;font-size:13px;font-weight:bold
 }
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
-}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* GRID */
 .container{
@@ -87,144 +50,54 @@ padding:12px;
 }
 
 .card{
-background:white;
-border-radius:12px;
-overflow:hidden;
+background:white;border-radius:12px;overflow:hidden;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
 cursor:pointer;
-position:relative;
 }
+.card img{width:100%;height:150px;object-fit:cover}
+.card-content{text-align:center;padding:10px}
+.price{color:green;font-weight:bold}
 
-.card img{
-width:100%;
-height:150px;
-object-fit:cover;
-}
-
-.card-content{
-padding:10px;
-text-align:center;
-}
-
-.price{
-color:green;
-font-weight:bold;
-}
-
-/* DETAIL AMAZON STYLE */
+/* DETAIL */
 .detail{
-position:fixed;
-inset:0;
-background:white;
-display:none;
-z-index:9999;
+position:fixed;inset:0;background:white;display:none;z-index:9999;
 overflow:auto;
 }
-
 .detail-header{
-display:flex;
-justify-content:space-between;
-padding:12px;
-background:#131921;
-color:white;
+display:flex;justify-content:space-between;
+padding:12px;background:#131921;color:white;
 }
+.close{background:red;border:none;color:white;width:35px;height:35px;border-radius:50%}
+.detail-body{display:flex;gap:20px;padding:15px}
+.detail-body img{width:40%;border-radius:10px;object-fit:cover}
+.detail-info{flex:1}
+.old{color:gray;text-decoration:line-through;margin-left:8px}
+.discount{color:green;font-weight:bold;margin:10px 0}
 
-.close{
-background:red;
-border:none;
-color:white;
-width:35px;
-height:35px;
-border-radius:50%;
-cursor:pointer;
-}
-
-.detail-body{
-display:flex;
-gap:20px;
-padding:15px;
-}
-
-/* IMAGE LEFT */
-.detail-body img{
-width:40%;
-border-radius:10px;
-object-fit:cover;
-}
-
-/* RIGHT SIDE */
-.detail-info{
-flex:1;
-}
-
-.old{
-text-decoration:line-through;
-color:gray;
-margin-left:8px;
-}
-
-.discount{
-color:green;
-font-weight:bold;
-margin:10px 0;
-}
-
-/* BUTTONS */
 .btn{
-display:block;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-size:15px;
+width:100%;padding:12px;margin-top:10px;
+border:none;border-radius:8px;font-size:15px;cursor:pointer
 }
-
-.buy{background:#28a745;color:white;}
-.cart{background:#ff9900;color:white;}
+.buy{background:#28a745;color:white}
+.cart{background:#ff9900;color:white}
 
 /* POPUP */
 .popup{
-position:fixed;
-inset:0;
-background:white;
-display:none;
-z-index:9999;
-flex-direction:column;
+position:fixed;inset:0;background:white;display:none;
+z-index:9999;flex-direction:column;
 }
-
 .popup-header{
-display:flex;
-justify-content:space-between;
-padding:15px;
-background:#131921;
-color:white;
+display:flex;justify-content:space-between;
+padding:15px;background:#131921;color:white;
 }
-
-.popup-content{
-padding:10px;
-overflow:auto;
-}
+.popup-content{padding:10px;overflow:auto}
 
 .item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:10px;
-background:#f2f2f2;
-margin-bottom:10px;
-border-radius:10px;
+display:flex;justify-content:space-between;
+padding:10px;background:#f2f2f2;margin-bottom:10px;border-radius:10px;
 }
-
-.qty button{
-padding:5px 10px;
-margin:0 5px;
-}
-
-.total{
-padding:10px;
-font-weight:bold;
-}
+.qty button{padding:5px 10px;margin:0 5px}
+.total{padding:10px;font-weight:bold}
 </style>
 </head>
 
@@ -233,8 +106,8 @@ font-weight:bold;
 <div class="topbar">
 <div class="logo">Krishnalatha Deals</div>
 <div class="top-icons">
-<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
 <span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
+<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
 </div>
 </div>
 
@@ -261,7 +134,6 @@ font-weight:bold;
 <div>Product</div>
 <button class="close" onclick="closeDetail()">×</button>
 </div>
-
 <div class="detail-body" id="detailBody"></div>
 </div>
 
@@ -289,15 +161,14 @@ const products=[
 {name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
-let wish=[];
 let cart=[];
+let wish=[];
 
 /* RENDER */
-function render(data=products){
+function render(list=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
-
-data.forEach(p=>{
+list.forEach(p=>{
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
 <img src="${p.img}">
@@ -309,13 +180,13 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH FIXED */
-document.getElementById("search").addEventListener("input",function(){
-let v=this.value.toLowerCase();
+/* SEARCH FIX */
+document.getElementById("search").addEventListener("input",e=>{
+let v=e.target.value.toLowerCase();
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
 });
 
-/* DETAIL AMAZON STYLE */
+/* DETAIL */
 function openDetail(name){
 let p=products.find(x=>x.name===name);
 let discount=Math.round(((p.old-p.price)/p.old)*100);
@@ -324,12 +195,7 @@ document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}">
 <div class="detail-info">
 <h2>${p.name}</h2>
-
-<div>
-₹${p.price}
-<span class="old">₹${p.old}</span>
-</div>
-
+<div>₹${p.price} <span class="old">₹${p.old}</span></div>
 <div class="discount">${discount}% OFF</div>
 
 <button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
@@ -337,14 +203,16 @@ document.getElementById("detailBody").innerHTML=`
 </div>
 `;
 
-document.getElementById("detailBox").style.display="block";
+document.getElementById("detailBox").style.display="flex";
+document.getElementById("search").value="";
+render(products);
 }
 
 function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* CART WITH QTY */
+/* CART */
 function addCart(name){
 let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
@@ -360,11 +228,10 @@ function buyNow(name){
 alert("Buying "+name);
 }
 
-/* POPUP CART */
+/* POPUP */
 function openPopup(type){
 let box=document.getElementById("popup");
 let content=document.getElementById("popupContent");
-
 box.style.display="flex";
 
 if(type==="cart"){
