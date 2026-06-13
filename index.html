@@ -49,21 +49,19 @@ border:none;
 outline:none;
 }
 
-/* FULL WIDTH SCROLL FIX */
+/* SMOOTH SCROLL FIX */
 .scroll-wrapper{
 width:100%;
 overflow:hidden;
 background:white;
 padding:10px 0;
-margin:0;
 }
 
 .scroll-track{
 display:flex;
-gap:15px;
+gap:20px;
 width:max-content;
-animation:scroll 18s linear infinite;
-padding-left:100%;
+animation:scroll 40s linear infinite; /* SLOW = SMOOTH */
 }
 
 .scroll-wrapper:hover .scroll-track{
@@ -80,6 +78,7 @@ font-weight:bold;
 font-size:13px;
 }
 
+/* slower animation */
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
@@ -159,6 +158,7 @@ cursor:pointer;
 font-size:18px;
 }
 
+/* AMAZON STYLE LAYOUT */
 .detail-body{
 display:flex;
 gap:20px;
@@ -167,8 +167,8 @@ flex-wrap:wrap;
 }
 
 .detail-body img{
-width:45%;
-max-width:400px;
+width:40%;
+max-width:350px;
 border-radius:10px;
 }
 
@@ -189,14 +189,16 @@ font-weight:bold;
 margin:10px 0;
 }
 
+/* SMALL BUTTON FIX */
 .btn{
 display:block;
-width:100%;
-padding:10px;
+width:180px;
+padding:8px;   /* reduced size */
 margin-top:10px;
 border:none;
-border-radius:8px;
+border-radius:6px;
 cursor:pointer;
+font-size:14px;
 }
 
 .buy{background:#28a745;color:white;}
@@ -222,7 +224,7 @@ cursor:pointer;
 <input id="search" placeholder="Search products..." oninput="searchProducts()">
 </div>
 
-<!-- SCROLL (FULL WIDTH FIXED) -->
+<!-- SMOOTH SCROLL -->
 <div class="scroll-wrapper">
 <div class="scroll-track">
 <div class="scroll-item">🔥 Deals</div>
@@ -270,7 +272,7 @@ const products=[
 let wish=[];
 let cart=[];
 
-/* FIXED RENDER */
+/* RENDER FIXED */
 function render(list=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
@@ -290,23 +292,17 @@ onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
 </div>
-
 </div>`;
 });
 }
 
-/* SEARCH FIX */
+/* SEARCH */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
 }
 
-/* CLEAR SEARCH */
-function clearSearch(){
-document.getElementById("search").value="";
-}
-
-/* WISHLIST FIXED */
+/* WISHLIST FIX */
 function toggleWish(name){
 let p=products.find(x=>x.name===name);
 let i=wish.findIndex(x=>x.name===name);
@@ -318,7 +314,7 @@ updateCounts();
 render();
 }
 
-/* CART FIXED (NO DUPLICATE BUG) */
+/* CART FIX (MULTI QTY SAFE) */
 function addCart(name){
 let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
@@ -329,10 +325,8 @@ else cart.push({...p,qty:1});
 updateCounts();
 }
 
-/* DETAIL */
+/* DETAIL PAGE */
 function openDetail(name){
-clearSearch();
-
 let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
 
@@ -365,7 +359,7 @@ function buyNow(name){
 alert("Buying " + name);
 }
 
-/* COUNTS FIXED */
+/* COUNTS FIX */
 function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
 document.getElementById("cartCount").innerText=cart.length;
