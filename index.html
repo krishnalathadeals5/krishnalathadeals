@@ -19,7 +19,6 @@ header {
   top:10px;
   right:10px;
 }
-
 .top span {
   margin:0 5px;
   cursor:pointer;
@@ -41,20 +40,19 @@ header {
   gap:10px;
   padding:10px;
 }
-
 .card {
   min-width:200px;
   background:white;
   padding:10px;
   border-radius:10px;
 }
-
 .card img {
   width:100%;
   height:150px;
   object-fit:contain;
 }
 
+/* BUTTON */
 button {
   width:100%;
   margin-top:5px;
@@ -78,11 +76,9 @@ button {
   padding:10px;
   overflow:auto;
 }
-
 .popup.active {
   right:0;
 }
-
 .close {
   cursor:pointer;
   color:red;
@@ -114,7 +110,7 @@ button {
   <input type="text" placeholder="Search products..." onkeyup="searchProducts(this.value)">
 </div>
 
-<div id="products" class="products">Loading...</div>
+<div id="products" class="products"></div>
 
 <!-- CART -->
 <div id="cartBox" class="popup">
@@ -139,10 +135,26 @@ button {
 
 <script>
 
-// 🔥 PUT YOUR API
-const API = "PASTE_YOUR_API_LINK_HERE";
+// ✅ DEMO PRODUCTS (WORKING WITHOUT API)
+let products = [
+  {
+    id:1,
+    name:"Towel Set",
+    image:"https://via.placeholder.com/150",
+    price:299,
+    oldPrice:999,
+    link:"https://amazon.in"
+  },
+  {
+    id:2,
+    name:"Kitchen Box",
+    image:"https://via.placeholder.com/150",
+    price:499,
+    oldPrice:1299,
+    link:"https://amazon.in"
+  }
+];
 
-let products = [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
@@ -151,31 +163,9 @@ function save(){
   localStorage.setItem("wish", JSON.stringify(wish));
 }
 
-// LOAD PRODUCTS
-async function loadProducts(){
-  try{
-    const res = await fetch(API);
-    const data = await res.json();
-
-    products = data.map(p => ({
-      id: Number(p.id),
-      name: p.name,
-      image: p.image,
-      price: Number(p.price),
-      oldPrice: Number(p.oldPrice),
-      link: p.affiliateLink
-    }));
-
-    showProducts(products);
-
-  } catch{
-    document.getElementById("products").innerHTML = "Error loading";
-  }
-}
-
 // SHOW PRODUCTS
 function showProducts(list){
-  let html = "";
+  let html="";
   list.forEach(p=>{
     let heart = wish.some(w=>w.id===p.id) ? "💖" : "🤍";
 
@@ -196,7 +186,7 @@ function showProducts(list){
 
 // SEARCH
 function searchProducts(val){
-  let filtered = products.filter(p => 
+  let filtered = products.filter(p =>
     p.name.toLowerCase().includes(val.toLowerCase())
   );
   showProducts(filtered);
@@ -229,7 +219,7 @@ function renderCart(){
       <button onclick="removeCart(${p.id})">Remove</button>
     </div>`;
   });
-  document.getElementById("cart").innerHTML = html || "Empty";
+  document.getElementById("cart").innerHTML = html || "Cart Empty";
 }
 
 function toggleCart(){
@@ -258,7 +248,7 @@ function renderWish(){
       ${p.name}
     </div>`;
   });
-  document.getElementById("wish").innerHTML = html || "Empty";
+  document.getElementById("wish").innerHTML = html || "Wishlist Empty";
 }
 
 function toggleWish(){
@@ -267,11 +257,15 @@ function toggleWish(){
 
 // BUY
 function buyNow(link){
-  window.open(link, "_blank");
+  if(link && link !== "#"){
+    window.open(link, "_blank");
+  } else {
+    alert("No link available");
+  }
 }
 
 // INIT
-loadProducts();
+showProducts(products);
 renderCart();
 renderWish();
 
