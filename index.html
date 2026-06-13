@@ -48,35 +48,6 @@ border:none;
 border-radius:6px;
 }
 
-/* SCROLL */
-.scroll-wrapper{
-overflow:hidden;
-background:white;
-padding:10px 0;
-}
-.scroll-track{
-display:flex;
-gap:20px;
-width:max-content;
-animation:scroll 18s linear infinite;
-}
-.scroll-wrapper:hover .scroll-track{
-animation-play-state:paused;
-}
-.scroll-item{
-min-width:140px;
-background:#f4f4f4;
-padding:8px;
-border-radius:20px;
-text-align:center;
-font-weight:bold;
-font-size:13px;
-}
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
-}
-
 /* GRID */
 .container{
 display:grid;
@@ -89,8 +60,8 @@ padding:12px;
 background:white;
 border-radius:12px;
 overflow:hidden;
-position:relative;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
+position:relative;
 cursor:pointer;
 }
 
@@ -122,18 +93,6 @@ cursor:pointer;
 }
 .heart.active{background:red;color:white;}
 
-/* BADGE */
-.discount{
-position:absolute;
-top:8px;
-left:8px;
-background:red;
-color:white;
-padding:5px;
-font-size:12px;
-border-radius:20px;
-}
-
 /* POPUP */
 .popup{
 position:fixed;
@@ -161,11 +120,11 @@ overflow:auto;
 .item{
 display:flex;
 gap:10px;
+align-items:center;
 padding:10px;
 background:#f2f2f2;
 margin-bottom:10px;
 border-radius:10px;
-align-items:center;
 }
 
 .item img{
@@ -174,14 +133,64 @@ height:60px;
 object-fit:cover;
 }
 
-.close{
-background:red;
-border:none;
-color:white;
+.btn{
 padding:6px 10px;
+border:none;
 border-radius:6px;
 cursor:pointer;
 }
+
+.remove{background:red;color:white;}
+
+/* DETAIL */
+.detail{
+position:fixed;
+inset:0;
+background:white;
+display:none;
+flex-direction:column;
+z-index:3000;
+}
+
+.detail-header{
+background:#131921;
+color:white;
+display:flex;
+justify-content:space-between;
+padding:12px;
+}
+
+.close-btn{
+background:red;
+border:none;
+color:white;
+width:32px;
+height:32px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.detail-body{
+padding:12px;
+}
+
+.detail-body img{
+width:100%;
+border-radius:10px;
+}
+
+.action{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.buy{background:#28a745;color:white;}
+.cart{background:#ff9900;color:white;}
+
 </style>
 </head>
 
@@ -190,6 +199,7 @@ cursor:pointer;
 <!-- HEADER -->
 <div class="topbar">
 <div class="logo">Krishnalatha Deals</div>
+
 <div class="top-icons">
 <span onclick="openWish()">❤️ <span id="wishCount">0</span></span>
 <span onclick="openCart()">🛒 <span id="cartCount">0</span></span>
@@ -201,33 +211,24 @@ cursor:pointer;
 <input id="search" placeholder="Search products...">
 </div>
 
-<!-- SCROLL -->
-<div class="scroll-wrapper">
-<div class="scroll-track">
-<div class="scroll-item">🔥 Deals</div>
-<div class="scroll-item">⚡ Fast Delivery</div>
-<div class="scroll-item">💰 Best Price</div>
-<div class="scroll-item">🆕 New Arrivals</div>
-<div class="scroll-item">🏆 Top Rated</div>
-<div class="scroll-item">📦 Free Delivery</div>
-
-<div class="scroll-item">🔥 Deals</div>
-<div class="scroll-item">⚡ Fast Delivery</div>
-<div class="scroll-item">💰 Best Price</div>
-<div class="scroll-item">🆕 New Arrivals</div>
-<div class="scroll-item">🏆 Top Rated</div>
-<div class="scroll-item">📦 Free Delivery</div>
-</div>
-</div>
-
 <!-- GRID -->
 <div class="container" id="grid"></div>
+
+<!-- DETAIL -->
+<div class="detail" id="detailBox">
+<div class="detail-header">
+<span>Product</span>
+<button class="close-btn" onclick="closeDetail()">×</button>
+</div>
+
+<div class="detail-body" id="detailBody"></div>
+</div>
 
 <!-- CART -->
 <div class="popup" id="cartBox">
 <div class="popup-header">
 <span>Cart</span>
-<button class="close" onclick="closeCart()">Close</button>
+<button onclick="closeCart()">Close</button>
 </div>
 <div class="popup-content" id="cartContent"></div>
 </div>
@@ -236,7 +237,7 @@ cursor:pointer;
 <div class="popup" id="wishBox">
 <div class="popup-header">
 <span>Wishlist</span>
-<button class="close" onclick="closeWish()">Close</button>
+<button onclick="closeWish()">Close</button>
 </div>
 <div class="popup-content" id="wishContent"></div>
 </div>
@@ -256,28 +257,29 @@ const products=[
 {name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
-let wish = JSON.parse(localStorage.getItem("wish")||"[]");
-let cart = JSON.parse(localStorage.getItem("cart")||"[]");
+let wish=JSON.parse(localStorage.getItem("wish")||"[]");
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
 
 function save(){
 localStorage.setItem("wish",JSON.stringify(wish));
 localStorage.setItem("cart",JSON.stringify(cart));
 }
 
-/* GRID */
+/* RENDER */
 function render(){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
 products.forEach(p=>{
 let liked = wish.find(x=>x.name===p.name)?"active":"";
-let discount=Math.round((p.old-p.price)/p.old*100);
 
 g.innerHTML+=`
 <div class="card">
-<div class="discount">${discount}% OFF</div>
 <div class="heart ${liked}" onclick="event.stopPropagation();toggleWish('${p.name}')">❤</div>
-<img src="${p.img}">
+
+<!-- CLICK IMAGE OPENS DETAIL -->
+<img src="${p.img}" onclick="openDetail('${p.name}')">
+
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
@@ -295,40 +297,72 @@ else wish.push(p);
 save(); update(); render();
 }
 
+/* DETAIL */
+function openDetail(name){
+let p=products.find(x=>x.name===name);
+
+document.getElementById("detailBody").innerHTML=`
+<img src="${p.img}">
+<h2>${p.name}</h2>
+<p><b>₹${p.price}</b> <del>${p.old}</del></p>
+
+<button class="action buy" onclick="buyNow('${p.name}')">Buy Now</button>
+<button class="action cart" onclick="addCart('${p.name}')">Add to Cart</button>
+`;
+
+document.getElementById("detailBox").style.display="flex";
+}
+
+function closeDetail(){
+document.getElementById("detailBox").style.display="none";
+}
+
 /* CART */
 function addCart(name){
 let p=products.find(x=>x.name===name);
-if(!cart.find(x=>x.name===name)) cart.push({...p,qty:1});
+
+let item=cart.find(x=>x.name===name);
+if(item) item.qty++;
+else cart.push({...p,qty:1});
+
 save(); update();
 }
 
-/* OPEN CART */
+/* CART OPEN */
 function openCart(){
 document.getElementById("cartBox").style.display="flex";
-let html="";
-cart.forEach(p=>{
-html+=`
+
+document.getElementById("cartContent").innerHTML=
+cart.map((p,i)=>`
 <div class="item">
 <img src="${p.img}">
-<div>${p.name}</div>
-<div>Qty: ${p.qty}</div>
-</div>`;
-});
-document.getElementById("cartContent").innerHTML=html || "Empty";
+<div style="flex:1">
+<b>${p.name}</b><br>₹${p.price}
+</div>
+
+<div>
+Qty: ${p.qty}
+</div>
+
+<button class="btn remove" onclick="removeCart(${i})">X</button>
+</div>
+`).join("") || "Empty";
 }
 
 function closeCart(){
 document.getElementById("cartBox").style.display="none";
 }
 
-/* OPEN WISH */
+/* WISHLIST OPEN */
 function openWish(){
 document.getElementById("wishBox").style.display="flex";
+
 document.getElementById("wishContent").innerHTML=
-wish.map(p=>`
+wish.map((p,i)=>`
 <div class="item">
 <img src="${p.img}">
-<div>${p.name}</div>
+<div style="flex:1">${p.name}</div>
+<button class="btn remove" onclick="removeWish(${i})">X</button>
 </div>
 `).join("") || "Empty";
 }
@@ -337,16 +371,45 @@ function closeWish(){
 document.getElementById("wishBox").style.display="none";
 }
 
+/* REMOVE */
+function removeWish(i){
+wish.splice(i,1);
+save(); update(); openWish(); render();
+}
+
+function removeCart(i){
+cart.splice(i,1);
+save(); update(); openCart();
+}
+
+/* BUY */
+function buyNow(name){
+alert("Buying "+name);
+}
+
+/* UPDATE COUNTS */
+function update(){
+document.getElementById("wishCount").innerText=wish.length;
+document.getElementById("cartCount").innerText=cart.reduce((a,b)=>a+b.qty,0);
+}
+
 /* SEARCH */
 document.getElementById("search").addEventListener("input",function(){
 let v=this.value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(v)));
+let f=products.filter(p=>p.name.toLowerCase().includes(v));
+let g=document.getElementById("grid");
+g.innerHTML="";
+f.forEach(p=>{
+g.innerHTML+=`
+<div class="card">
+<img src="${p.img}" onclick="openDetail('${p.name}')">
+<div class="card-content">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+</div>
+</div>`;
 });
-
-function update(){
-document.getElementById("wishCount").innerText=wish.length;
-document.getElementById("cartCount").innerText=cart.length;
-}
+});
 
 render();
 update();
