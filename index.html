@@ -44,26 +44,32 @@ background:#131921;
 .search-box input{
 width:100%;
 padding:10px;
-border:none;
 border-radius:6px;
+border:none;
 outline:none;
 }
 
-/* SCROLL */
+/* FULL WIDTH SCROLL FIX */
 .scroll-wrapper{
+width:100%;
 overflow:hidden;
 background:white;
 padding:10px 0;
+margin:0;
 }
+
 .scroll-track{
 display:flex;
 gap:15px;
 width:max-content;
 animation:scroll 18s linear infinite;
+padding-left:100%;
 }
+
 .scroll-wrapper:hover .scroll-track{
 animation-play-state:paused;
 }
+
 .scroll-item{
 min-width:140px;
 background:#eee;
@@ -73,9 +79,10 @@ text-align:center;
 font-weight:bold;
 font-size:13px;
 }
+
 @keyframes scroll{
 0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
+100%{transform:translateX(-100%);}
 }
 
 /* GRID */
@@ -123,7 +130,7 @@ cursor:pointer;
 }
 .heart.active{background:red;color:white;}
 
-/* DETAIL AMAZON STYLE */
+/* DETAIL */
 .detail{
 position:fixed;
 inset:0;
@@ -163,7 +170,6 @@ flex-wrap:wrap;
 width:45%;
 max-width:400px;
 border-radius:10px;
-object-fit:cover;
 }
 
 .detail-info{
@@ -204,6 +210,7 @@ cursor:pointer;
 <!-- HEADER -->
 <div class="topbar">
 <div class="logo">Krishnalatha Deals</div>
+
 <div class="top-icons">
 <span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
 <span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
@@ -215,7 +222,7 @@ cursor:pointer;
 <input id="search" placeholder="Search products..." oninput="searchProducts()">
 </div>
 
-<!-- SCROLL -->
+<!-- SCROLL (FULL WIDTH FIXED) -->
 <div class="scroll-wrapper">
 <div class="scroll-track">
 <div class="scroll-item">🔥 Deals</div>
@@ -224,6 +231,11 @@ cursor:pointer;
 <div class="scroll-item">🆕 New</div>
 <div class="scroll-item">🏆 Top</div>
 <div class="scroll-item">📦 Free</div>
+
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New</div>
 </div>
 </div>
 
@@ -258,18 +270,19 @@ const products=[
 let wish=[];
 let cart=[];
 
-/* RENDER */
+/* FIXED RENDER */
 function render(list=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
 list.forEach(p=>{
-let w = wish.find(x=>x.name===p.name) ? "active" : "";
+let liked = wish.some(x=>x.name===p.name);
 
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
 
-<div class="heart ${w}" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
+<div class="heart ${liked?'active':''}"
+onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
 
 <img src="${p.img}">
 
@@ -277,23 +290,23 @@ g.innerHTML+=`
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
 </div>
+
 </div>`;
 });
 }
 
-/* SEARCH RESET FIX */
+/* SEARCH FIX */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
 }
 
-/* CLEAR SEARCH WHEN OPEN DETAIL */
+/* CLEAR SEARCH */
 function clearSearch(){
 document.getElementById("search").value="";
-render();
 }
 
-/* WISHLIST */
+/* WISHLIST FIXED */
 function toggleWish(name){
 let p=products.find(x=>x.name===name);
 let i=wish.findIndex(x=>x.name===name);
@@ -305,7 +318,7 @@ updateCounts();
 render();
 }
 
-/* CART */
+/* CART FIXED (NO DUPLICATE BUG) */
 function addCart(name){
 let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
@@ -316,7 +329,7 @@ else cart.push({...p,qty:1});
 updateCounts();
 }
 
-/* DETAIL PAGE */
+/* DETAIL */
 function openDetail(name){
 clearSearch();
 
@@ -352,7 +365,7 @@ function buyNow(name){
 alert("Buying " + name);
 }
 
-/* COUNTS */
+/* COUNTS FIXED */
 function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
 document.getElementById("cartCount").innerText=cart.length;
