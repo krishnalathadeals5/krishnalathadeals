@@ -41,61 +41,136 @@ padding:8px;border-radius:20px;text-align:center;font-size:13px;font-weight:bold
 }
 @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* GRID */
+/* GRID (FIX SEARCH + SIZE ISSUE) */
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:12px;
 padding:12px;
 }
 
 .card{
-background:white;border-radius:12px;overflow:hidden;
+background:white;
+border-radius:12px;
+overflow:hidden;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
 cursor:pointer;
+position:relative;
 }
-.card img{width:100%;height:150px;object-fit:cover}
-.card-content{text-align:center;padding:10px}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card-content{
+text-align:center;
+padding:10px;
+}
+
 .price{color:green;font-weight:bold}
 
-/* DETAIL */
-.detail{
-position:fixed;inset:0;background:white;display:none;z-index:9999;
-overflow:auto;
+/* ❤️ HEART FIXED */
+.heart{
+position:absolute;
+top:8px;
+right:8px;
+background:white;
+border-radius:50%;
+padding:6px 8px;
+font-size:14px;
+cursor:pointer;
 }
+.heart.active{
+background:red;
+color:white;
+}
+
+/* DETAIL (AMAZON STYLE FIX) */
+.detail{
+position:fixed;inset:0;background:white;
+display:none;z-index:9999;overflow:auto;
+}
+
 .detail-header{
 display:flex;justify-content:space-between;
 padding:12px;background:#131921;color:white;
 }
-.close{background:red;border:none;color:white;width:35px;height:35px;border-radius:50%}
-.detail-body{display:flex;gap:20px;padding:15px}
-.detail-body img{width:40%;border-radius:10px;object-fit:cover}
-.detail-info{flex:1}
-.old{color:gray;text-decoration:line-through;margin-left:8px}
-.discount{color:green;font-weight:bold;margin:10px 0}
 
-.btn{
-width:100%;padding:12px;margin-top:10px;
-border:none;border-radius:8px;font-size:15px;cursor:pointer
+.close{
+background:red;border:none;color:white;
+width:35px;height:35px;border-radius:50%;
 }
+
+.detail-body{
+display:flex;
+gap:20px;
+padding:15px;
+flex-wrap:wrap;
+}
+
+.detail-body img{
+width:40%;
+min-width:250px;
+border-radius:10px;
+object-fit:cover;
+}
+
+.detail-info{
+flex:1;
+min-width:250px;
+}
+
+.old{
+text-decoration:line-through;
+color:gray;
+margin-left:8px;
+}
+
+.discount{
+color:green;
+font-weight:bold;
+margin:10px 0;
+}
+
+/* BUTTONS FIX (SMALL AMAZON STYLE) */
+.btn{
+display:inline-block;
+padding:10px 14px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+width:auto;
+}
+
 .buy{background:#28a745;color:white}
 .cart{background:#ff9900;color:white}
 
 /* POPUP */
 .popup{
-position:fixed;inset:0;background:white;display:none;
-z-index:9999;flex-direction:column;
+position:fixed;inset:0;background:white;
+display:none;z-index:9999;flex-direction:column;
 }
+
 .popup-header{
 display:flex;justify-content:space-between;
 padding:15px;background:#131921;color:white;
 }
+
 .popup-content{padding:10px;overflow:auto}
 
 .item{
-display:flex;justify-content:space-between;
-padding:10px;background:#f2f2f2;margin-bottom:10px;border-radius:10px;
+display:flex;
+justify-content:space-between;
+padding:10px;
+background:#f2f2f2;
+margin-bottom:10px;
+border-radius:10px;
 }
+
 .qty button{padding:5px 10px;margin:0 5px}
 .total{padding:10px;font-weight:bold}
 </style>
@@ -119,7 +194,7 @@ padding:10px;background:#f2f2f2;margin-bottom:10px;border-radius:10px;
 <div class="scroll-track">
 <div class="scroll-item">🔥 Deals</div>
 <div class="scroll-item">⚡ Fast</div>
-<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">💰 Best</div>
 <div class="scroll-item">🆕 New</div>
 <div class="scroll-item">🏆 Top</div>
 <div class="scroll-item">📦 Free</div>
@@ -134,13 +209,14 @@ padding:10px;background:#f2f2f2;margin-bottom:10px;border-radius:10px;
 <div>Product</div>
 <button class="close" onclick="closeDetail()">×</button>
 </div>
+
 <div class="detail-body" id="detailBody"></div>
 </div>
 
 <!-- POPUP -->
 <div class="popup" id="popup">
 <div class="popup-header">
-<div id="popupTitle">Cart</div>
+<div>Cart / Wishlist</div>
 <button onclick="closePopup()">Close</button>
 </div>
 <div class="popup-content" id="popupContent"></div>
@@ -164,13 +240,19 @@ const products=[
 let cart=[];
 let wish=[];
 
-/* RENDER */
+/* RENDER FIXED */
 function render(list=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
+
 list.forEach(p=>{
+let liked = wish.find(x=>x.name===p.name) ? "active" : "";
+
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
+
+<div class="heart ${liked}" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
+
 <img src="${p.img}">
 <div class="card-content">
 <h3>${p.name}</h3>
@@ -186,7 +268,7 @@ let v=e.target.value.toLowerCase();
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
 });
 
-/* DETAIL */
+/* DETAIL FIX */
 function openDetail(name){
 let p=products.find(x=>x.name===name);
 let discount=Math.round(((p.old-p.price)/p.old)*100);
@@ -195,7 +277,12 @@ document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}">
 <div class="detail-info">
 <h2>${p.name}</h2>
-<div>₹${p.price} <span class="old">₹${p.old}</span></div>
+
+<div>
+₹${p.price}
+<span class="old">₹${p.old}</span>
+</div>
+
 <div class="discount">${discount}% OFF</div>
 
 <button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
@@ -203,13 +290,19 @@ document.getElementById("detailBody").innerHTML=`
 </div>
 `;
 
-document.getElementById("detailBox").style.display="flex";
-document.getElementById("search").value="";
-render(products);
+document.getElementById("detailBox").style.display="block";
 }
 
-function closeDetail(){
-document.getElementById("detailBox").style.display="none";
+/* WISHLIST FIX */
+function toggleWish(name){
+let p=products.find(x=>x.name===name);
+let i=wish.findIndex(x=>x.name===name);
+
+if(i>-1) wish.splice(i,1);
+else wish.push(p);
+
+updateCounts();
+render(products);
 }
 
 /* CART */
@@ -232,6 +325,7 @@ alert("Buying "+name);
 function openPopup(type){
 let box=document.getElementById("popup");
 let content=document.getElementById("popupContent");
+
 box.style.display="flex";
 
 if(type==="cart"){
@@ -241,9 +335,7 @@ content.innerHTML=cart.map(p=>{
 total+=p.price*p.qty;
 return `
 <div class="item">
-<div>
-<b>${p.name}</b><br>₹${p.price}
-</div>
+<div><b>${p.name}</b><br>₹${p.price}</div>
 
 <div class="qty">
 <button onclick="changeQty('${p.name}',-1)">-</button>
@@ -260,8 +352,6 @@ content.innerHTML+=`<div class="total">Total: ₹${total}</div>`;
 /* QTY */
 function changeQty(name,val){
 let item=cart.find(x=>x.name===name);
-if(!item) return;
-
 item.qty+=val;
 if(item.qty<=0) cart=cart.filter(x=>x.name!==name);
 
@@ -272,6 +362,10 @@ openPopup("cart");
 /* CLOSE */
 function closePopup(){
 document.getElementById("popup").style.display="none";
+}
+
+function closeDetail(){
+document.getElementById("detailBox").style.display="none";
 }
 
 /* COUNT */
