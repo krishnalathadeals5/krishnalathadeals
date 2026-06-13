@@ -1,240 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KrishnaLatha Deals</title>
 
 <style>
-body {
-  font-family: Arial;
-  margin: 0;
-  background: #f5f5f5;
-}
+body { font-family: Arial; margin:0; background:#f5f5f5; }
 
 header {
-  background: linear-gradient(45deg, #2874f0, #0f5bd3);
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
+  background:#2874f0;
+  color:white;
+  padding:15px;
+  text-align:center;
 }
 
-.search-box {
-  width: 90%;
-  padding: 10px;
-  margin: 10px auto;
-  display: block;
-  border-radius: 5px;
-  border: none;
+.top {
+  position:fixed;
+  top:10px;
+  right:10px;
 }
 
 .products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  padding: 10px;
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px;
 }
 
 .card {
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-  position: relative;
-  transition: 0.3s;
+  min-width:180px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: contain;
-}
-
-.name {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.price {
-  color: green;
-  font-weight: bold;
-}
-
-.old {
-  text-decoration: line-through;
-  color: gray;
-  font-size: 12px;
-}
-
-.btn {
-  border: none;
-  padding: 8px;
-  width: 100%;
-  margin-top: 5px;
-  cursor: pointer;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-.cart-btn {
-  background: #ffd814;
-}
-
-.buy-btn {
-  background: #fb641b;
-  color: white;
-}
-
-.wishlist {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  background: white;
-  padding: 5px;
-  border-radius: 50%;
-}
-
-.top-icons {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  font-size: 18px;
-}
-
-.top-icons span {
-  margin-left: 10px;
+button {
+  width:100%;
+  margin-top:5px;
+  padding:8px;
 }
 </style>
+
 </head>
 
 <body>
 
 <header>KrishnaLatha Deals</header>
 
-<div class="top-icons">
-  🛒 <span id="cartCount">0</span>
-  ❤️ <span id="wishCount">0</span>
+<div class="top">
+  🛒 <span onclick="openCart()">Cart</span>
+  ❤️ <span onclick="openWish()">Wish</span>
 </div>
 
-<input type="text" id="search" class="search-box" placeholder="Search products...">
+<div id="products" class="products"></div>
 
-<div class="products" id="products"></div>
+<h3>Cart</h3>
+<div id="cart"></div>
+
+<h3>Wishlist</h3>
+<div id="wish"></div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbzYhxE_0NfstLPwOpFB6e5hiRWW4mLW_YTrMaAJO5XGIyMvsGKvf1QPUCyT9QaNOWfoyw/exec";
 
-let allProducts = [];
+let products = [
+  {id:1,name:"Stylish Bag",price:899,old:1299},
+  {id:2,name:"Plant Pot",price:299,old:499}
+];
+
 let cart = [];
-let wishlist = [];
+let wish = [];
 
-/* LOAD */
-async function loadProducts() {
-  const res = await fetch(API);
-  const data = await res.json();
+function showProducts(){
+  let html="";
+  products.forEach(p=>{
+    html += `
+    <div class="card">
+      <div>${p.name}</div>
+      <div>₹${p.price} <del>₹${p.old}</del></div>
 
-  allProducts = data.map(p => ({
-    id: Number(p.id), // FIXED
-    name: (p.name || "").trim(),
-    image: (p.image || "").trim(),
-    price: Number(p.price),
-    oldPrice: Number(p.oldPrice),
-    affiliateLink: p.affiliateLink
-  }));
-
-  displayProducts(allProducts);
-}
-
-/* DISPLAY */
-function displayProducts(products) {
-  const container = document.getElementById("products");
-  container.innerHTML = "";
-
-  products.forEach(p => {
-    const isWish = wishlist.some(w => w.id === p.id);
-
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <div class="wishlist" onclick="toggleWishlist(this, ${p.id})">
-        ${isWish ? "❤️" : "🤍"}
-      </div>
-
-      <img src="${p.image}" onerror="this.src='https://via.placeholder.com/300'">
-
-      <div class="name">${p.name}</div>
-
-      <div class="price">
-        ₹${p.price} 
-        <span class="old">₹${p.oldPrice}</span>
-      </div>
-
-      <button class="btn cart-btn" onclick="addCart(${p.id})">
-        🛒 Add to Cart
-      </button>
-
-      <button class="btn buy-btn" onclick="buyNow('${p.affiliateLink}')">
-        ⚡ Buy Now
-      </button>
+      <button onclick="addCart(${p.id})">Add to Cart</button>
+      <button onclick="addWish(${p.id})">❤️ Wishlist</button>
+    </div>
     `;
-
-    container.appendChild(div);
   });
+  document.getElementById("products").innerHTML = html;
 }
 
-/* CART */
-function addCart(id) {
-  const product = allProducts.find(p => p.id === id);
-
-  if (!cart.some(p => p.id === id)) {
-    cart.push(product);
-  }
-
-  document.getElementById("cartCount").innerText = cart.length;
+function addCart(id){
+  let p = products.find(x=>x.id===id);
+  cart.push(p);
+  openCart();
 }
 
-/* WISHLIST */
-function toggleWishlist(el, id) {
-  const exists = wishlist.some(p => p.id === id);
-
-  if (exists) {
-    wishlist = wishlist.filter(p => p.id !== id);
-    el.innerText = "🤍";
-  } else {
-    const product = allProducts.find(p => p.id === id);
-    wishlist.push(product);
-    el.innerText = "❤️";
-  }
-
-  document.getElementById("wishCount").innerText = wishlist.length;
+function openCart(){
+  let html="";
+  cart.forEach(p=>{
+    html += `<div>${p.name}</div>`;
+  });
+  document.getElementById("cart").innerHTML = html;
 }
 
-/* BUY */
-function buyNow(link) {
-  window.open(link, "_blank");
+function addWish(id){
+  let p = products.find(x=>x.id===id);
+  wish.push(p);
+  openWish();
 }
 
-/* SEARCH */
-document.getElementById("search").addEventListener("input", function() {
-  const value = this.value.toLowerCase();
+function openWish(){
+  let html="";
+  wish.forEach(p=>{
+    html += `<div>${p.name}</div>`;
+  });
+  document.getElementById("wish").innerHTML = html;
+}
 
-  const filtered = allProducts.filter(p =>
-    p.name.toLowerCase().includes(value)
-  );
+showProducts();
 
-  displayProducts(filtered);
-});
-
-/* INIT */
-loadProducts();
 </script>
 
 </body>
