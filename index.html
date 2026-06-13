@@ -419,7 +419,9 @@ else wish.push({name});
 
 save();
 updateCounts();
-render();
+
+if(document.getElementById("grid")){
+    render();
 }
 
 /* CART */
