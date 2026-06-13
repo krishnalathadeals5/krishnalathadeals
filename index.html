@@ -16,6 +16,7 @@ background:#f5f6fa;
 .topbar{
 display:flex;
 justify-content:space-between;
+align-items:center;
 background:#131921;
 color:white;
 padding:14px;
@@ -25,7 +26,7 @@ z-index:999;
 }
 
 .logo{
-font-size:22px;
+font-size:20px;
 font-weight:800;
 color:#ffb84d;
 }
@@ -49,7 +50,7 @@ border-radius:6px;
 outline:none;
 }
 
-/* 🔥 FIXED SMOOTH SCROLL */
+/* SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
@@ -82,7 +83,7 @@ font-weight:bold;
 /* GRID */
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
 gap:12px;
 padding:12px;
 }
@@ -98,7 +99,7 @@ cursor:pointer;
 
 .card img{
 width:100%;
-height:160px;
+height:150px;
 object-fit:cover;
 }
 
@@ -110,6 +111,7 @@ text-align:center;
 .price{
 color:green;
 font-weight:bold;
+margin-top:5px;
 }
 
 /* HEART */
@@ -121,7 +123,9 @@ background:white;
 border-radius:50%;
 padding:6px;
 cursor:pointer;
+user-select:none;
 }
+
 .heart.active{
 background:red;
 color:white;
@@ -155,7 +159,6 @@ border-radius:50%;
 cursor:pointer;
 }
 
-/* AMAZON STYLE DETAIL */
 .detail-body{
 display:flex;
 gap:20px;
@@ -285,7 +288,6 @@ cursor:pointer;
 <div>Product</div>
 <button class="close" onclick="closeDetail()">×</button>
 </div>
-
 <div class="detail-body" id="detailBody"></div>
 </div>
 
@@ -300,7 +302,7 @@ cursor:pointer;
 
 <script>
 
-const products=[
+const products = [
 {name:"Kitchen Box",price:999,old:1499,img:"images/storage.jpg"},
 {name:"Towel Set",price:299,old:499,img:"images/towel.jpg"},
 {name:"Shoes",price:1499,old:1999,img:"images/shoes.jpg"},
@@ -317,24 +319,24 @@ let wish = JSON.parse(localStorage.getItem("wish")) || [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function save(){
-localStorage.setItem("wish",JSON.stringify(wish));
-localStorage.setItem("cart",JSON.stringify(cart));
+localStorage.setItem("wish", JSON.stringify(wish));
+localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-/* RENDER */
-function render(list=products){
-let g=document.getElementById("grid");
-g.innerHTML="";
+function render(list = products){
+const g = document.getElementById("grid");
+g.innerHTML = "";
 
 list.forEach(p=>{
-let isW = wish.find(x=>x.name===p.name);
+const isW = wish.some(x=>x.name===p.name);
 
-g.innerHTML+=`
+g.innerHTML += `
 <div class="card" onclick="openDetail('${p.name}')">
 
-<div class="heart ${isW?'active':''}" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
+<div class="heart ${isW?'active':''}"
+onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
 
-<img src="${p.img}">
+<img src="${p.img}" alt="${p.name}">
 
 <div class="card-content">
 <h3>${p.name}</h3>
@@ -344,33 +346,25 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH */
 function searchProducts(){
-let v=document.getElementById("search").value.toLowerCase();
+const v = document.getElementById("search").value.toLowerCase();
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
 }
 
-/* DETAIL */
 function openDetail(name){
+const p = products.find(x=>x.name===name);
+const d = Math.round(((p.old - p.price)/p.old)*100);
 
-let p=products.find(x=>x.name===name);
-let d=Math.round(((p.old-p.price)/p.old)*100);
-
-document.getElementById("detailBody").innerHTML=`
-<img src="${p.img}">
+document.getElementById("detailBody").innerHTML = `
+<img src="${p.img}" alt="${p.name}">
 <div class="detail-info">
 <h2>${p.name}</h2>
-
-<div>
-₹${p.price} <span class="old">₹${p.old}</span>
-</div>
-
+<div>₹${p.price} <span class="old">₹${p.old}</span></div>
 <div class="discount">${d}% OFF</div>
 
 <button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
 <button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
-</div>
-`;
+</div>`;
 
 document.getElementById("detailBox").style.display="block";
 }
@@ -379,9 +373,8 @@ function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* WISHLIST */
 function toggleWish(name){
-let i=wish.findIndex(x=>x.name===name);
+const i = wish.findIndex(x=>x.name===name);
 if(i>-1) wish.splice(i,1);
 else wish.push({name});
 
@@ -390,47 +383,44 @@ updateCounts();
 render();
 }
 
-/* CART */
 function addCart(name){
-let p=products.find(x=>x.name===name);
-let item=cart.find(x=>x.name===name);
+const p = products.find(x=>x.name===name);
+const item = cart.find(x=>x.name===name);
 
 if(item) item.qty++;
-else cart.push({...p,qty:1});
+else cart.push({...p, qty:1});
 
 save();
 updateCounts();
 }
 
-/* POPUP */
 function openPopup(type){
-let c=document.getElementById("popupContent");
+const c = document.getElementById("popupContent");
 document.getElementById("popup").style.display="flex";
 
 if(type==="wishlist"){
-c.innerHTML = wish.length ? wish.map(p=>`
+c.innerHTML = wish.length
+? wish.map(p=>`
 <div class="item">
 <div>${p.name}</div>
 <button class="remove-btn" onclick="removeWish('${p.name}')">Remove</button>
-</div>
-`).join("") : "Empty";
+</div>`).join("")
+: "Empty";
 }
 
 if(type==="cart"){
-let total=0;
+let total = 0;
 
 c.innerHTML = cart.map(p=>{
 total += p.price * p.qty;
 return `
 <div class="item">
 <div>${p.name} (₹${p.price})</div>
-
 <div>
 <button onclick="changeQty('${p.name}',-1)">-</button>
 ${p.qty}
 <button onclick="changeQty('${p.name}',1)">+</button>
 </div>
-
 <button class="remove-btn" onclick="removeCart('${p.name}')">X</button>
 </div>`;
 }).join("");
@@ -443,36 +433,28 @@ function closePopup(){
 document.getElementById("popup").style.display="none";
 }
 
-/* REMOVE */
 function removeWish(name){
 wish = wish.filter(x=>x.name!==name);
-save();
-updateCounts();
-openPopup("wishlist");
-render();
+save(); updateCounts(); render(); openPopup("wishlist");
 }
 
 function removeCart(name){
 cart = cart.filter(x=>x.name!==name);
-save();
-updateCounts();
-openPopup("cart");
+save(); updateCounts(); openPopup("cart");
 }
 
-/* QTY */
 function changeQty(name,val){
-let item=cart.find(x=>x.name===name);
-if(!item)return;
+const item = cart.find(x=>x.name===name);
+if(!item) return;
 
 item.qty += val;
-if(item.qty<=0) cart = cart.filter(x=>x.name!==name);
+if(item.qty <= 0) cart = cart.filter(x=>x.name!==name);
 
 save();
 updateCounts();
 openPopup("cart");
 }
 
-/* COUNTS */
 function updateCounts(){
 document.getElementById("wishCount").innerText = wish.length;
 document.getElementById("cartCount").innerText = cart.length;
