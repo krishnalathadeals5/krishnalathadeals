@@ -11,6 +11,8 @@ header {
   color:white;
   padding:15px;
   text-align:center;
+  font-size:20px;
+  font-weight:bold;
 }
 
 /* TOP BAR */
@@ -22,6 +24,7 @@ header {
 .top span {
   margin:0 5px;
   cursor:pointer;
+  font-weight:bold;
 }
 
 /* SEARCH */
@@ -30,38 +33,55 @@ header {
 }
 .search input {
   width:100%;
-  padding:8px;
+  padding:10px;
+  border-radius:5px;
+  border:1px solid #ccc;
 }
 
 /* PRODUCTS */
 .products {
   display:flex;
   overflow-x:auto;
-  gap:10px;
+  gap:12px;
   padding:10px;
 }
+
 .card {
   min-width:200px;
   background:white;
   padding:10px;
   border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  text-align:center;
 }
+
 .card img {
   width:100%;
   height:150px;
   object-fit:contain;
 }
 
+.price {
+  font-size:16px;
+  margin:5px 0;
+}
+
+.price del {
+  color:gray;
+  font-size:13px;
+}
+
 /* BUTTON */
 button {
   width:100%;
-  margin-top:5px;
+  margin-top:6px;
   padding:8px;
   border:none;
   background:#2874f0;
   color:white;
   border-radius:5px;
   cursor:pointer;
+  font-weight:bold;
 }
 
 /* POPUP */
@@ -75,24 +95,34 @@ button {
   transition:0.3s;
   padding:10px;
   overflow:auto;
+  box-shadow:-2px 0 10px rgba(0,0,0,0.2);
 }
 .popup.active {
   right:0;
 }
+
 .close {
   cursor:pointer;
   color:red;
+  font-weight:bold;
+}
+
+/* ITEM LIST */
+.item {
+  border-bottom:1px solid #eee;
+  padding:5px 0;
 }
 
 /* SOCIAL */
 .social {
   text-align:center;
-  margin:10px;
+  margin:15px;
 }
 .social a {
   margin:5px;
-  font-size:20px;
+  font-size:18px;
   text-decoration:none;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -135,7 +165,7 @@ button {
 
 <script>
 
-// ✅ DEMO PRODUCTS (WORKING WITHOUT API)
+// ✅ DEMO PRODUCTS
 let products = [
   {
     id:1,
@@ -155,6 +185,7 @@ let products = [
   }
 ];
 
+// STORAGE
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
@@ -173,7 +204,10 @@ function showProducts(list){
     <div class="card">
       <img src="${p.image}">
       <div>${p.name}</div>
-      <div>₹${p.price} <del>₹${p.oldPrice}</del></div>
+
+      <div class="price">
+        ₹${p.price} <del>₹${p.oldPrice}</del>
+      </div>
 
       <button onclick="addCart(${p.id})">Add to Cart</button>
       <button onclick="toggleWishlist(${p.id})">${heart} Wishlist</button>
@@ -213,13 +247,13 @@ function renderCart(){
   let html="";
   cart.forEach(p=>{
     html += `
-    <div>
+    <div class="item">
       <img src="${p.image}" width="50">
       ${p.name} - ₹${p.price}
       <button onclick="removeCart(${p.id})">Remove</button>
     </div>`;
   });
-  document.getElementById("cart").innerHTML = html || "Cart Empty";
+  document.getElementById("cart").innerHTML = html || "Cart is Empty";
 }
 
 function toggleCart(){
@@ -243,12 +277,12 @@ function renderWish(){
   let html="";
   wish.forEach(p=>{
     html += `
-    <div>
+    <div class="item">
       <img src="${p.image}" width="50">
       ${p.name}
     </div>`;
   });
-  document.getElementById("wish").innerHTML = html || "Wishlist Empty";
+  document.getElementById("wish").innerHTML = html || "Wishlist is Empty";
 }
 
 function toggleWish(){
@@ -260,14 +294,18 @@ function buyNow(link){
   if(link && link !== "#"){
     window.open(link, "_blank");
   } else {
-    alert("No link available");
+    alert("No product link available");
   }
 }
 
-// INIT
-showProducts(products);
-renderCart();
-renderWish();
+// INIT (IMPORTANT FIX)
+function init(){
+  renderCart();
+  renderWish();
+  showProducts(products);
+}
+
+init();
 
 </script>
 
