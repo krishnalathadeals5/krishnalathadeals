@@ -78,10 +78,10 @@ font-weight:bold;
 100%{transform:translateX(-50%);}
 }
 
-/* GRID */
+/* GRID FIX (IMPORTANT FOR SEARCH IMAGES) */
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:12px;
 padding:12px;
 }
@@ -95,9 +95,10 @@ position:relative;
 cursor:pointer;
 }
 
+/* IMAGE FIX (NO COMPRESSION) */
 .card img{
 width:100%;
-height:160px;
+height:170px;
 object-fit:cover;
 display:block;
 }
@@ -188,6 +189,60 @@ font-size:14px;
 
 .buy{background:#28a745;color:white;}
 .cart{background:#ff9900;color:white;margin-left:10px;}
+
+/* POPUP */
+.popup{
+position:fixed;
+inset:0;
+background:white;
+display:none;
+z-index:10000;
+flex-direction:column;
+}
+
+.popup-header{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:#131921;
+color:white;
+}
+
+.popup-content{
+padding:10px;
+overflow:auto;
+}
+
+/* ITEM */
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+background:#f2f2f2;
+margin-bottom:10px;
+border-radius:10px;
+}
+
+/* RED REMOVE BUTTON FIX */
+.remove-btn{
+background:red;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.qty button{
+padding:5px 10px;
+margin:0 5px;
+}
+
+.total{
+padding:10px;
+font-weight:bold;
+}
 </style>
 </head>
 
@@ -196,8 +251,8 @@ font-size:14px;
 <div class="topbar">
 <div class="logo">Krishnalatha Deals</div>
 <div class="top-icons">
-<span>❤️ <span id="wishCount">0</span></span>
-<span>🛒 <span id="cartCount">0</span></span>
+<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
+<span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
@@ -224,7 +279,6 @@ font-size:14px;
 </div>
 </div>
 
-<!-- GRID -->
 <div class="container" id="grid"></div>
 
 <!-- DETAIL -->
@@ -235,6 +289,15 @@ font-size:14px;
 </div>
 
 <div class="detail-body" id="detailBody"></div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-header">
+<div id="popupTitle">List</div>
+<button onclick="closePopup()">Close</button>
+</div>
+<div class="popup-content" id="popupContent"></div>
 </div>
 
 <script>
@@ -253,6 +316,7 @@ const products=[
 ];
 
 let wish=[];
+let cart=[];
 
 /* RENDER */
 function render(list=products){
@@ -278,22 +342,15 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH FIX */
+/* SEARCH FIX (NO IMAGE STRETCH) */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(v)));
-}
-
-/* CLEAR SEARCH ON OPEN */
-function clearSearch(){
-document.getElementById("search").value="";
+let filtered = products.filter(p=>p.name.toLowerCase().includes(v));
+render(filtered);
 }
 
 /* DETAIL */
 function openDetail(name){
-
-clearSearch();
-
 let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
 
@@ -309,15 +366,11 @@ document.getElementById("detailBody").innerHTML=`
 <div class="discount">${d}% OFF</div>
 
 <button class="btn buy">Buy Now</button>
-<button class="btn cart">Add to Cart</button>
+<button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
 </div>
 `;
 
 document.getElementById("detailBox").style.display="block";
-}
-
-function closeDetail(){
-document.getElementById("detailBox").style.display="none";
 }
 
 /* WISHLIST */
@@ -326,12 +379,96 @@ let i=wish.indexOf(name);
 if(i>-1) wish.splice(i,1);
 else wish.push(name);
 
-document.getElementById("wishCount").innerText=wish.length;
+updateCounts();
 render();
 }
 
-/* INIT */
+/* CART */
+function addCart(name){
+let item=cart.find(x=>x.name===name);
+let p=products.find(x=>x.name===name);
+
+if(item) item.qty++;
+else cart.push({...p,qty:1});
+
+updateCounts();
+}
+
+/* POPUP */
+function openPopup(type){
+let c=document.getElementById("popupContent");
+document.getElementById("popup").style.display="flex";
+
+if(type==="wishlist"){
+document.getElementById("popupTitle").innerText="Wishlist";
+
+c.innerHTML = wish.length ? wish.map(n=>`
+<div class="item">
+<div>${n}</div>
+<button class="remove-btn" onclick="removeWish('${n}')">Remove</button>
+</div>
+`).join("") : "Empty";
+}
+
+if(type==="cart"){
+document.getElementById("popupTitle").innerText="Cart";
+
+let total=0;
+
+c.innerHTML = cart.map(p=>{
+total += p.price * p.qty;
+
+return `
+<div class="item">
+<div>${p.name}</div>
+
+<div class="qty">
+<button onclick="changeQty('${p.name}',-1)">-</button>
+${p.qty}
+<button onclick="changeQty('${p.name}',1)">+</button>
+</div>
+
+<button class="remove-btn" onclick="removeCart('${p.name}')">Remove</button>
+</div>`;
+}).join("");
+
+c.innerHTML += `<div class="total">Total: ₹${total}</div>`;
+}
+}
+
+/* REMOVE FIX */
+function removeWish(n){
+wish = wish.filter(x=>x!==n);
+updateCounts();
+openPopup("wishlist");
 render();
+}
+
+function removeCart(n){
+cart = cart.filter(x=>x.name!==n);
+updateCounts();
+openPopup("cart");
+}
+
+/* QTY */
+function changeQty(n,v){
+let i=cart.find(x=>x.name===n);
+if(!i) return;
+i.qty += v;
+if(i.qty<=0) cart = cart.filter(x=>x.name!==n);
+
+updateCounts();
+openPopup("cart");
+}
+
+/* COUNT FIX */
+function updateCounts(){
+document.getElementById("wishCount").innerText = wish.length;
+document.getElementById("cartCount").innerText = cart.length;
+}
+
+render();
+updateCounts();
 
 </script>
 
