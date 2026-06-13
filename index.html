@@ -19,20 +19,6 @@ header {
   right:10px;
 }
 
-.categories {
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:10px;
-}
-
-.cat {
-  background:#fff;
-  padding:8px 15px;
-  border-radius:20px;
-  cursor:pointer;
-}
-
 .products {
   display:flex;
   overflow-x:auto;
@@ -65,13 +51,6 @@ button {
   ❤️ <span onclick="openWish()">Wish</span>
 </div>
 
-<!-- Categories -->
-<div class="categories">
-  <div class="cat">🔥 Hot Deals</div>
-  <div class="cat">⚡ Today Deals</div>
-  <div class="cat">🎁 Offers</div>
-</div>
-
 <div id="products" class="products"></div>
 
 <h3>Cart</h3>
@@ -88,12 +67,12 @@ let products = [
   {id:2,name:"Plant Pot",price:299,old:499}
 ];
 
-// LOAD FROM STORAGE
+// LOAD DATA
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
-// SAVE FUNCTION
-function saveData(){
+// SAVE
+function save() {
   localStorage.setItem("cart", JSON.stringify(cart));
   localStorage.setItem("wish", JSON.stringify(wish));
 }
@@ -115,12 +94,24 @@ function showProducts(){
   document.getElementById("products").innerHTML = html;
 }
 
-// ADD CART
+// ADD CART (NO DUPLICATES)
 function addCart(id){
-  let p = products.find(x=>x.id===id);
-  cart.push(p);
-  saveData();
+  if(!cart.some(p => p.id === id)){
+    let p = products.find(x=>x.id===id);
+    cart.push(p);
+    save();
+  }
   openCart();
+}
+
+// ADD WISH (NO DUPLICATES)
+function addWish(id){
+  if(!wish.some(p => p.id === id)){
+    let p = products.find(x=>x.id===id);
+    wish.push(p);
+    save();
+  }
+  openWish();
 }
 
 // SHOW CART
@@ -130,14 +121,6 @@ function openCart(){
     html += `<div>${p.name}</div>`;
   });
   document.getElementById("cart").innerHTML = html;
-}
-
-// ADD WISH
-function addWish(id){
-  let p = products.find(x=>x.id===id);
-  wish.push(p);
-  saveData();
-  openWish();
 }
 
 // SHOW WISH
