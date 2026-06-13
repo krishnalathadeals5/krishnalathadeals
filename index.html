@@ -44,8 +44,42 @@ background:#131921;
 .search-box input{
 width:100%;
 padding:10px;
-border:none;
 border-radius:6px;
+border:none;
+outline:none;
+}
+
+/* SCROLL (RESTORED) */
+.scroll-wrapper{
+overflow:hidden;
+background:white;
+padding:10px 0;
+}
+
+.scroll-track{
+display:flex;
+gap:20px;
+width:max-content;
+animation:scroll 18s linear infinite;
+}
+
+.scroll-wrapper:hover .scroll-track{
+animation-play-state:paused;
+}
+
+.scroll-item{
+min-width:140px;
+background:#f4f4f4;
+padding:8px;
+border-radius:20px;
+text-align:center;
+font-weight:bold;
+font-size:13px;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
 }
 
 /* GRID */
@@ -105,7 +139,7 @@ font-size:12px;
 border-radius:20px;
 }
 
-/* DETAIL PAGE */
+/* DETAIL */
 .detail{
 position:fixed;
 inset:0;
@@ -157,114 +191,70 @@ cursor:pointer;
 .buy{background:#28a745;color:white;}
 .cart{background:#ff9900;color:white;}
 
-/* CART PANEL */
-.popup{
-position:fixed;
-inset:0;
-background:white;
-display:none;
-flex-direction:column;
-z-index:2000;
-}
-
-.popup-header{
-background:#131921;
-color:white;
-padding:12px;
-display:flex;
-justify-content:space-between;
-}
-
-.popup-content{
-padding:10px;
-overflow:auto;
-}
-
-.item{
-display:flex;
-gap:10px;
-padding:10px;
-background:#f2f2f2;
-margin-bottom:10px;
-border-radius:10px;
-align-items:center;
-}
-
-.item img{
-width:60px;
-height:60px;
-object-fit:cover;
-}
-
-.qty{
-display:flex;
-align-items:center;
-gap:5px;
-}
-
-.qty button{
-padding:4px 8px;
-}
-
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="topbar">
 <div class="logo">Krishnalatha Deals</div>
 <div class="top-icons">
-<span onclick="openCart()">🛒 <span id="cartCount">0</span></span>
-<span onclick="openWish()">❤️ <span id="wishCount">0</span></span>
+<span>❤️ <span id="wishCount">0</span></span>
+<span>🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
+<!-- SEARCH -->
 <div class="search-box">
 <input id="search" placeholder="Search products...">
 </div>
 
+<!-- SCROLL (FIXED) -->
+<div class="scroll-wrapper">
+<div class="scroll-track">
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New Arrivals</div>
+<div class="scroll-item">🏆 Top Rated</div>
+<div class="scroll-item">📦 Free Delivery</div>
+
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New Arrivals</div>
+<div class="scroll-item">🏆 Top Rated</div>
+<div class="scroll-item">📦 Free Delivery</div>
+</div>
+</div>
+
+<!-- GRID -->
 <div class="container" id="grid"></div>
 
 <!-- DETAIL -->
 <div class="detail" id="detail">
 <div class="detail-header">
-<span>Product</span>
+<span>Product Details</span>
 <button class="close-btn" onclick="closeDetail()">×</button>
 </div>
+
 <div class="detail-body" id="detailBody"></div>
-</div>
-
-<!-- CART -->
-<div class="popup" id="cartBox">
-<div class="popup-header">
-<span>Cart</span>
-<button onclick="closeCart()">Close</button>
-</div>
-<div class="popup-content" id="cartContent"></div>
-</div>
-
-<!-- WISHLIST -->
-<div class="popup" id="wishBox">
-<div class="popup-header">
-<span>Wishlist</span>
-<button onclick="closeWish()">Close</button>
-</div>
-<div class="popup-content" id="wishContent"></div>
 </div>
 
 <script>
 
 const products=[
-{name:"Kitchen Box",price:999,old:1499,img:"https://via.placeholder.com/300"},
-{name:"Towel Set",price:299,old:499,img:"https://via.placeholder.com/300"},
-{name:"Shoes",price:1499,old:1999,img:"https://via.placeholder.com/300"},
-{name:"Watch",price:1999,old:2499,img:"https://via.placeholder.com/300"},
-{name:"Bag",price:899,old:1299,img:"https://via.placeholder.com/300"},
-{name:"Diya",price:199,old:299,img:"https://via.placeholder.com/300"},
-{name:"Laptop",price:45999,old:50999,img:"https://via.placeholder.com/300"},
-{name:"Mobile",price:14999,old:16999,img:"https://via.placeholder.com/300"},
-{name:"Plant",price:299,old:499,img:"https://via.placeholder.com/300"},
-{name:"Headphones",price:1299,old:1999,img:"https://via.placeholder.com/300"}
+{name:"Kitchen Box",price:999,old:1499,img:"images/storage.jpg"},
+{name:"Towel Set",price:299,old:499,img:"images/towel.jpg"},
+{name:"Shoes",price:1499,old:1999,img:"images/shoes.jpg"},
+{name:"Watch",price:1999,old:2499,img:"images/watch.jpg"},
+{name:"Bag",price:899,old:1299,img:"images/bag.jpg"},
+{name:"Diya",price:199,old:299,img:"images/diya.jpg"},
+{name:"Laptop",price:45999,old:50999,img:"images/laptop.jpg"},
+{name:"Mobile",price:14999,old:16999,img:"images/mobile.jpg"},
+{name:"Plant",price:299,old:499,img:"images/plant.jpg"},
+{name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
 let wish=JSON.parse(localStorage.getItem("wish")||"[]");
@@ -275,12 +265,12 @@ localStorage.setItem("wish",JSON.stringify(wish));
 localStorage.setItem("cart",JSON.stringify(cart));
 }
 
-/* GRID */
-function render(){
+/* RENDER */
+function render(data=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
-products.forEach(p=>{
+data.forEach(p=>{
 let liked = wish.find(x=>x.name===p.name)?"active":"";
 let discount=Math.round((p.old-p.price)/p.old*100);
 
@@ -297,18 +287,27 @@ g.innerHTML+=`
 });
 }
 
+/* SEARCH */
+document.getElementById("search").addEventListener("input",function(){
+let v=this.value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
+});
+
 /* WISH */
 function toggleWish(name){
 let p=products.find(x=>x.name===name);
 let i=wish.findIndex(x=>x.name===name);
 if(i>-1) wish.splice(i,1);
 else wish.push(p);
-save(); update(); render();
+save();
+update();
+render();
 }
 
 /* DETAIL */
 function openDetail(name){
 let p=products.find(x=>x.name===name);
+
 document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}">
 <h2>${p.name}</h2>
@@ -325,63 +324,22 @@ function closeDetail(){
 document.getElementById("detail").style.display="none";
 }
 
-/* CART with QUANTITY */
+/* CART */
 function addCart(name){
+let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
 if(item) item.qty++;
-else cart.push({name,qty:1});
-save(); update();
+else cart.push({...p,qty:1});
+
+save();
+update();
 alert("Added to cart");
 }
 
-/* CART UI */
-function openCart(){
-let box=document.getElementById("cartBox");
-box.style.display="flex";
-
-let html="";
-cart.forEach((p,i)=>{
-let prod=products.find(x=>x.name===p.name);
-html+=`
-<div class="item">
-<img src="${prod.img}">
-<div>
-<b>${p.name}</b><br>₹${prod.price||prod.price}
-</div>
-<div class="qty">
-<button onclick="dec(${i})">-</button>
-${p.qty}
-<button onclick="inc(${i})">+</button>
-</div>
-</div>`;
-});
-
-document.getElementById("cartContent").innerHTML=html || "Empty";
-}
-
-function closeCart(){document.getElementById("cartBox").style.display="none";}
-
-/* QTY */
-function inc(i){cart[i].qty++;save();update();openCart();}
-function dec(i){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1);save();update();openCart();}
-
-/* WISH */
-function openWish(){
-let box=document.getElementById("wishBox");
-box.style.display="flex";
-
-document.getElementById("wishContent").innerHTML=
-wish.map(p=>`
-<div class="item">
-<img src="${p.img}">
-<div>${p.name}</div>
-</div>
-`).join("") || "Empty";
-}
-function closeWish(){document.getElementById("wishBox").style.display="none";}
-
 /* BUY */
-function buyNow(name){alert("Buying "+name);}
+function buyNow(name){
+alert("Buying "+name);
+}
 
 /* UPDATE COUNTS */
 function update(){
