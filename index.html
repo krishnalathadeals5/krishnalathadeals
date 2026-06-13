@@ -19,6 +19,20 @@ header {
   right:10px;
 }
 
+.categories {
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px;
+}
+
+.cat {
+  background:#fff;
+  padding:8px 15px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
 .products {
   display:flex;
   overflow-x:auto;
@@ -51,6 +65,13 @@ button {
   ❤️ <span onclick="openWish()">Wish</span>
 </div>
 
+<!-- Categories -->
+<div class="categories">
+  <div class="cat">🔥 Hot Deals</div>
+  <div class="cat">⚡ Today Deals</div>
+  <div class="cat">🎁 Offers</div>
+</div>
+
 <div id="products" class="products"></div>
 
 <h3>Cart</h3>
@@ -61,14 +82,23 @@ button {
 
 <script>
 
+// PRODUCTS
 let products = [
   {id:1,name:"Stylish Bag",price:899,old:1299},
   {id:2,name:"Plant Pot",price:299,old:499}
 ];
 
-let cart = [];
-let wish = [];
+// LOAD FROM STORAGE
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
+// SAVE FUNCTION
+function saveData(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("wish", JSON.stringify(wish));
+}
+
+// SHOW PRODUCTS
 function showProducts(){
   let html="";
   products.forEach(p=>{
@@ -85,12 +115,15 @@ function showProducts(){
   document.getElementById("products").innerHTML = html;
 }
 
+// ADD CART
 function addCart(id){
   let p = products.find(x=>x.id===id);
   cart.push(p);
+  saveData();
   openCart();
 }
 
+// SHOW CART
 function openCart(){
   let html="";
   cart.forEach(p=>{
@@ -99,12 +132,15 @@ function openCart(){
   document.getElementById("cart").innerHTML = html;
 }
 
+// ADD WISH
 function addWish(id){
   let p = products.find(x=>x.id===id);
   wish.push(p);
+  saveData();
   openWish();
 }
 
+// SHOW WISH
 function openWish(){
   let html="";
   wish.forEach(p=>{
@@ -113,7 +149,10 @@ function openWish(){
   document.getElementById("wish").innerHTML = html;
 }
 
+// INIT
 showProducts();
+openCart();
+openWish();
 
 </script>
 
