@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Krishnalatha Deals</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 body{
 margin:0;
@@ -14,24 +16,24 @@ background:#f5f6fa;
 
 /* HEADER */
 .topbar{
-background:#131921;
+background:linear-gradient(90deg,#131921,#1f2a38);
 color:white;
 display:flex;
 justify-content:space-between;
-padding:12px;
+padding:14px;
 position:sticky;
 top:0;
 z-index:999;
 }
 
 .logo{
-font-size:20px;
+font-size:22px;
 font-weight:800;
 color:#ffb84d;
 }
 
 .top-icons span{
-margin-left:10px;
+margin-left:12px;
 cursor:pointer;
 font-weight:bold;
 }
@@ -44,8 +46,38 @@ background:#131921;
 .search-box input{
 width:100%;
 padding:10px;
-border:none;
 border-radius:6px;
+border:none;
+outline:none;
+}
+
+/* SCROLL */
+.scroll-wrapper{
+overflow:hidden;
+background:white;
+padding:10px 0;
+}
+.scroll-track{
+display:flex;
+gap:20px;
+width:max-content;
+animation:scroll 18s linear infinite;
+}
+.scroll-wrapper:hover .scroll-track{
+animation-play-state:paused;
+}
+.scroll-item{
+min-width:160px;
+background:#f4f4f4;
+padding:8px;
+border-radius:20px;
+text-align:center;
+font-weight:bold;
+font-size:13px;
+}
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
 }
 
 /* GRID */
@@ -79,6 +111,19 @@ text-align:center;
 .price{
 color:green;
 font-weight:bold;
+margin-top:5px;
+}
+
+/* BADGE */
+.discount{
+position:absolute;
+top:8px;
+left:8px;
+background:red;
+color:white;
+padding:5px 8px;
+font-size:12px;
+border-radius:20px;
 }
 
 /* HEART */
@@ -91,7 +136,10 @@ border-radius:50%;
 padding:6px;
 cursor:pointer;
 }
-.heart.active{background:red;color:white;}
+.heart.active{
+background:red;
+color:white;
+}
 
 /* POPUP */
 .popup{
@@ -100,16 +148,15 @@ inset:0;
 background:white;
 display:none;
 flex-direction:column;
-z-index:2000;
+z-index:9999;
 }
 
 .popup-header{
-background:#131921;
-color:white;
-padding:12px;
 display:flex;
 justify-content:space-between;
-align-items:center;
+padding:15px;
+background:#131921;
+color:white;
 }
 
 .popup-content{
@@ -117,30 +164,31 @@ padding:10px;
 overflow:auto;
 }
 
-.item{
+.popup-item{
 display:flex;
 gap:10px;
-align-items:center;
 padding:10px;
 background:#f2f2f2;
 margin-bottom:10px;
 border-radius:10px;
+align-items:center;
 }
 
-.item img{
-width:60px;
-height:60px;
+.popup-item img{
+width:70px;
+height:70px;
 object-fit:cover;
 }
 
-.btn{
-padding:6px 10px;
+.popup-item button{
+margin-left:auto;
+padding:5px 10px;
+background:red;
+color:white;
 border:none;
 border-radius:6px;
 cursor:pointer;
 }
-
-.remove{background:red;color:white;}
 
 /* DETAIL */
 .detail{
@@ -149,24 +197,26 @@ inset:0;
 background:white;
 display:none;
 flex-direction:column;
-z-index:3000;
+z-index:10000;
 }
 
 .detail-header{
 background:#131921;
 color:white;
+padding:12px;
 display:flex;
 justify-content:space-between;
-padding:12px;
+align-items:center;
 }
 
 .close-btn{
-background:red;
-border:none;
-color:white;
 width:32px;
 height:32px;
 border-radius:50%;
+border:none;
+background:#ff4d4d;
+color:white;
+font-size:18px;
 cursor:pointer;
 }
 
@@ -179,18 +229,39 @@ width:100%;
 border-radius:10px;
 }
 
-.action{
+.action-btn{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
 border-radius:6px;
 cursor:pointer;
+font-size:15px;
 }
 
 .buy{background:#28a745;color:white;}
 .cart{background:#ff9900;color:white;}
 
+/* CART ITEMS */
+.cart-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f2f2f2;
+padding:10px;
+margin-bottom:10px;
+border-radius:10px;
+}
+
+.qty button{
+padding:5px 10px;
+margin:0 5px;
+}
+
+.total{
+padding:10px;
+font-weight:bold;
+}
 </style>
 </head>
 
@@ -201,8 +272,8 @@ cursor:pointer;
 <div class="logo">Krishnalatha Deals</div>
 
 <div class="top-icons">
-<span onclick="openWish()">❤️ <span id="wishCount">0</span></span>
-<span onclick="openCart()">🛒 <span id="cartCount">0</span></span>
+<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
+<span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
@@ -211,35 +282,40 @@ cursor:pointer;
 <input id="search" placeholder="Search products...">
 </div>
 
+<!-- SCROLL -->
+<div class="scroll-wrapper">
+<div class="scroll-track">
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New Arrivals</div>
+<div class="scroll-item">🏆 Top Rated</div>
+<div class="scroll-item">📦 Free Delivery</div>
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">💰 Best Price</div>
+</div>
+</div>
+
 <!-- GRID -->
 <div class="container" id="grid"></div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-header">
+<div id="popupTitle">List</div>
+<button onclick="closePopup()">Close</button>
+</div>
+<div class="popup-content" id="popupContent"></div>
+</div>
 
 <!-- DETAIL -->
 <div class="detail" id="detailBox">
 <div class="detail-header">
-<span>Product</span>
+<div>Product Details</div>
 <button class="close-btn" onclick="closeDetail()">×</button>
 </div>
-
 <div class="detail-body" id="detailBody"></div>
-</div>
-
-<!-- CART -->
-<div class="popup" id="cartBox">
-<div class="popup-header">
-<span>Cart</span>
-<button onclick="closeCart()">Close</button>
-</div>
-<div class="popup-content" id="cartContent"></div>
-</div>
-
-<!-- WISHLIST -->
-<div class="popup" id="wishBox">
-<div class="popup-header">
-<span>Wishlist</span>
-<button onclick="closeWish()">Close</button>
-</div>
-<div class="popup-content" id="wishContent"></div>
 </div>
 
 <script>
@@ -257,8 +333,8 @@ const products=[
 {name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
-let wish=JSON.parse(localStorage.getItem("wish")||"[]");
-let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+let wish = JSON.parse(localStorage.getItem("wish")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function save(){
 localStorage.setItem("wish",JSON.stringify(wish));
@@ -266,19 +342,23 @@ localStorage.setItem("cart",JSON.stringify(cart));
 }
 
 /* RENDER */
-function render(){
+function render(data=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
-products.forEach(p=>{
-let liked = wish.find(x=>x.name===p.name)?"active":"";
+data.forEach(p=>{
+
+let liked = wish.find(x=>x.name===p.name) ? "active" : "";
+let discount = Math.round(((p.old-p.price)/p.old)*100);
 
 g.innerHTML+=`
-<div class="card">
-<div class="heart ${liked}" onclick="event.stopPropagation();toggleWish('${p.name}')">❤</div>
+<div class="card" onclick="openDetail('${p.name}')">
 
-<!-- CLICK IMAGE OPENS DETAIL -->
-<img src="${p.img}" onclick="openDetail('${p.name}')">
+<div class="discount">${discount}% OFF</div>
+
+<div class="heart ${liked}" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
+
+<img src="${p.img}">
 
 <div class="card-content">
 <h3>${p.name}</h3>
@@ -288,13 +368,38 @@ g.innerHTML+=`
 });
 }
 
-/* WISH */
+/* SEARCH */
+document.getElementById("search").addEventListener("input",function(){
+let v=this.value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
+});
+
+/* WISHLIST */
 function toggleWish(name){
 let p=products.find(x=>x.name===name);
 let i=wish.findIndex(x=>x.name===name);
+
 if(i>-1) wish.splice(i,1);
 else wish.push(p);
-save(); update(); render();
+
+save();
+updateCounts();
+render();
+}
+
+/* CART (MULTI QTY FIX) */
+function addCart(name){
+let p=products.find(x=>x.name===name);
+let item=cart.find(x=>x.name===name);
+
+if(item){
+item.qty++;
+} else {
+cart.push({...p, qty:1});
+}
+
+save();
+updateCounts();
 }
 
 /* DETAIL */
@@ -304,10 +409,10 @@ let p=products.find(x=>x.name===name);
 document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}">
 <h2>${p.name}</h2>
-<p><b>₹${p.price}</b> <del>${p.old}</del></p>
+<p style="font-size:18px;color:green;">₹${p.price}</p>
 
-<button class="action buy" onclick="buyNow('${p.name}')">Buy Now</button>
-<button class="action cart" onclick="addCart('${p.name}')">Add to Cart</button>
+<button class="action-btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
+<button class="action-btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
 `;
 
 document.getElementById("detailBox").style.display="flex";
@@ -317,102 +422,94 @@ function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* CART */
-function addCart(name){
-let p=products.find(x=>x.name===name);
-
-let item=cart.find(x=>x.name===name);
-if(item) item.qty++;
-else cart.push({...p,qty:1});
-
-save(); update();
+/* BUY */
+function buyNow(name){
+alert("Buying " + name);
 }
 
-/* CART OPEN */
-function openCart(){
-document.getElementById("cartBox").style.display="flex";
+/* POPUP */
+function openPopup(type){
+let box=document.getElementById("popup");
+let content=document.getElementById("popupContent");
 
-document.getElementById("cartContent").innerHTML=
-cart.map((p,i)=>`
-<div class="item">
+box.style.display="flex";
+
+if(type==="wishlist"){
+content.innerHTML = wish.map(p=>`
+<div class="popup-item">
 <img src="${p.img}">
-<div style="flex:1">
-<b>${p.name}</b><br>₹${p.price}
+<div><b>${p.name}</b></div>
+<button onclick="removeWish('${p.name}')">Remove</button>
 </div>
+`).join("");
+}
 
+if(type==="cart"){
+let total=0;
+
+content.innerHTML = cart.map(p=>{
+total += p.price * p.qty;
+return `
+<div class="cart-item">
 <div>
-Qty: ${p.qty}
+<b>${p.name}</b><br>
+₹${p.price}
 </div>
 
-<button class="btn remove" onclick="removeCart(${i})">X</button>
+<div class="qty">
+<button onclick="changeQty('${p.name}',-1)">-</button>
+${p.qty}
+<button onclick="changeQty('${p.name}',1)">+</button>
 </div>
-`).join("") || "Empty";
-}
 
-function closeCart(){
-document.getElementById("cartBox").style.display="none";
-}
-
-/* WISHLIST OPEN */
-function openWish(){
-document.getElementById("wishBox").style.display="flex";
-
-document.getElementById("wishContent").innerHTML=
-wish.map((p,i)=>`
-<div class="item">
-<img src="${p.img}">
-<div style="flex:1">${p.name}</div>
-<button class="btn remove" onclick="removeWish(${i})">X</button>
+<button onclick="removeCart('${p.name}')">X</button>
 </div>
-`).join("") || "Empty";
+`;
+}).join("");
+
+content.innerHTML += `<div class="total">Total: ₹${total}</div>`;
+}
 }
 
-function closeWish(){
-document.getElementById("wishBox").style.display="none";
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
 
 /* REMOVE */
-function removeWish(i){
-wish.splice(i,1);
-save(); update(); openWish(); render();
+function removeWish(name){
+wish=wish.filter(x=>x.name!==name);
+save(); updateCounts(); openPopup("wishlist");
+render();
 }
 
-function removeCart(i){
-cart.splice(i,1);
-save(); update(); openCart();
+function removeCart(name){
+cart=cart.filter(x=>x.name!==name);
+save(); updateCounts(); openPopup("cart");
 }
 
-/* BUY */
-function buyNow(name){
-alert("Buying "+name);
+/* QTY */
+function changeQty(name,val){
+let item=cart.find(x=>x.name===name);
+if(!item) return;
+
+item.qty += val;
+if(item.qty<=0){
+cart = cart.filter(x=>x.name!==name);
 }
 
-/* UPDATE COUNTS */
-function update(){
+save();
+openPopup("cart");
+updateCounts();
+}
+
+/* COUNTS */
+function updateCounts(){
 document.getElementById("wishCount").innerText=wish.length;
-document.getElementById("cartCount").innerText=cart.reduce((a,b)=>a+b.qty,0);
+document.getElementById("cartCount").innerText=cart.length;
 }
-
-/* SEARCH */
-document.getElementById("search").addEventListener("input",function(){
-let v=this.value.toLowerCase();
-let f=products.filter(p=>p.name.toLowerCase().includes(v));
-let g=document.getElementById("grid");
-g.innerHTML="";
-f.forEach(p=>{
-g.innerHTML+=`
-<div class="card">
-<img src="${p.img}" onclick="openDetail('${p.name}')">
-<div class="card-content">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
-</div>
-</div>`;
-});
-});
 
 render();
-update();
+updateCounts();
 
 </script>
 
