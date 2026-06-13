@@ -12,28 +12,22 @@ header {
   padding:15px;
   text-align:center;
   font-size:20px;
-  font-weight:bold;
 }
 
+/* TOP BAR */
 .top {
   position:fixed;
   top:10px;
   right:10px;
+  font-size:16px;
 }
-.top span {
-  margin:0 5px;
+
+.top span{
   cursor:pointer;
-  font-weight:bold;
+  margin-left:10px;
 }
 
-.search {
-  padding:10px;
-}
-.search input {
-  width:100%;
-  padding:10px;
-}
-
+/* PRODUCTS */
 .products {
   display:flex;
   overflow-x:auto;
@@ -46,8 +40,6 @@ header {
   background:white;
   padding:10px;
   border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  text-align:center;
 }
 
 .card img {
@@ -67,30 +59,40 @@ button {
   cursor:pointer;
 }
 
-.popup {
+/* MODAL */
+.modal {
   position:fixed;
-  top:0;
-  right:-100%;
-  width:300px;
+  top:0; left:0;
+  width:100%;
   height:100%;
   background:white;
-  transition:0.3s;
-  padding:10px;
+  display:none;
   overflow:auto;
-}
-.popup.active {
-  right:0;
+  padding:15px;
 }
 
 .close {
+  font-size:20px;
   cursor:pointer;
-  color:red;
+  float:right;
 }
 
-.item {
-  border-bottom:1px solid #eee;
-  padding:5px 0;
+/* SOCIAL */
+.social {
+  text-align:center;
+  padding:15px;
 }
+
+.social a {
+  margin:10px;
+  font-size:20px;
+  text-decoration:none;
+}
+
+.fb { color:#1877f2; }
+.insta { color:#e1306c; }
+.wa { color:#25d366; }
+
 </style>
 </head>
 
@@ -99,55 +101,62 @@ button {
 <header>KrishnaLatha Deals</header>
 
 <div class="top">
-  🛒 <span onclick="toggleCart()">Cart</span>
-  ❤️ <span onclick="toggleWish()">Wish</span>
-</div>
-
-<div class="search">
-  <input type="text" placeholder="Search..." onkeyup="searchProducts(this.value)">
+  🛒 <span onclick="openCart()">Cart (<span id="cartCount">0</span>)</span>
+  ❤️ <span onclick="openWish()">Wish (<span id="wishCount">0</span>)</span>
 </div>
 
 <div id="products" class="products"></div>
 
-<div id="cartBox" class="popup">
-  <span class="close" onclick="toggleCart()">❌ Close</span>
+<!-- CART -->
+<div id="cartModal" class="modal">
+  <span class="close" onclick="closeCart()">❌</span>
   <h3>Cart</h3>
   <div id="cart"></div>
 </div>
 
-<div id="wishBox" class="popup">
-  <span class="close" onclick="toggleWish()">❌ Close</span>
+<!-- WISHLIST -->
+<div id="wishModal" class="modal">
+  <span class="close" onclick="closeWish()">❌</span>
   <h3>Wishlist</h3>
   <div id="wish"></div>
 </div>
 
+<!-- SOCIAL -->
+<div class="social">
+  <a href="#" class="fb">Facebook</a>
+  <a href="#" class="insta">Instagram</a>
+  <a href="#" class="wa">WhatsApp</a>
+</div>
+
 <script>
 
-// PRODUCTS
+// SAMPLE PRODUCTS (WORKING)
 let products = [
-  {id:1,name:"Towel Set",image:"https://via.placeholder.com/150",price:299,oldPrice:999,link:"https://amazon.in"},
-  {id:2,name:"Kitchen Box",image:"https://via.placeholder.com/150",price:499,oldPrice:1299,link:"https://amazon.in"}
+  {id:1, name:"Towel Set", price:299, oldPrice:999, image:"https://via.placeholder.com/150", link:"#"},
+  {id:2, name:"Kitchen Box", price:499, oldPrice:1299, image:"https://via.placeholder.com/150", link:"#"}
 ];
-
-// RESET BROKEN DATA (AUTO FIX)
-if(!localStorage.getItem("fixed")){
-  localStorage.clear();
-  localStorage.setItem("fixed","yes");
-}
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
+// SAVE
 function save(){
   localStorage.setItem("cart", JSON.stringify(cart));
   localStorage.setItem("wish", JSON.stringify(wish));
+  updateCount();
+}
+
+// COUNT
+function updateCount(){
+  document.getElementById("cartCount").innerText = cart.length;
+  document.getElementById("wishCount").innerText = wish.length;
 }
 
 // SHOW PRODUCTS
-function showProducts(list){
+function showProducts(){
   let html="";
-  list.forEach(p=>{
-    let heart = wish.some(w=>w.id===p.id) ? "💖" : "🤍";
+  products.forEach(p=>{
+    let inWish = wish.some(x=>x.id===p.id);
 
     html += `
     <div class="card">
@@ -156,80 +165,105 @@ function showProducts(list){
       <div>₹${p.price} <del>₹${p.oldPrice}</del></div>
 
       <button onclick="addCart(${p.id})">Add to Cart</button>
-      <button onclick="toggleWishlist(${p.id})">${heart} Wishlist</button>
+
+      <button onclick="toggleWish(${p.id})">
+        ${inWish ? "❤️ Remove" : "🤍 Wishlist"}
+      </button>
+
       <button onclick="buyNow('${p.link}')">Buy Now</button>
-    </div>`;
+    </div>
+    `;
   });
 
   document.getElementById("products").innerHTML = html;
 }
 
-// SEARCH
-function searchProducts(val){
-  let filtered = products.filter(p=>p.name.toLowerCase().includes(val.toLowerCase()));
-  showProducts(filtered);
-}
-
 // CART
 function addCart(id){
+  let item = products.find(x=>x.id===id);
+
   if(!cart.some(p=>p.id===id)){
-    cart.push(products.find(x=>x.id===id));
-    save();
+    cart.push(item);
+  } else {
+    cart = cart.filter(p=>p.id!==id);
   }
-  renderCart();
+
+  save();
+  openCart();
+}
+
+function openCart(){
+  document.getElementById("cartModal").style.display="block";
+
+  let html="";
+  cart.forEach(p=>{
+    html += `
+      <div>
+        ${p.name} - ₹${p.price}
+        <button onclick="removeCart(${p.id})">Remove</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("cart").innerHTML = html || "Cart is empty";
+}
+
+function closeCart(){
+  document.getElementById("cartModal").style.display="none";
 }
 
 function removeCart(id){
   cart = cart.filter(p=>p.id!==id);
   save();
-  renderCart();
-}
-
-function renderCart(){
-  let html="";
-  cart.forEach(p=>{
-    html += `<div class="item">${p.name} - ₹${p.price} <button onclick="removeCart(${p.id})">X</button></div>`;
-  });
-  document.getElementById("cart").innerHTML = html || "Cart Empty";
-}
-
-function toggleCart(){
-  document.getElementById("cartBox").classList.toggle("active");
+  openCart();
 }
 
 // WISHLIST
-function toggleWishlist(id){
+function toggleWish(id){
+  let item = products.find(x=>x.id===id);
+
   if(wish.some(p=>p.id===id)){
     wish = wish.filter(p=>p.id!==id);
   } else {
-    wish.push(products.find(x=>x.id===id));
+    wish.push(item);
   }
+
   save();
-  renderWish();
-  showProducts(products);
+  showProducts();
 }
 
-function renderWish(){
+function openWish(){
+  document.getElementById("wishModal").style.display="block";
+
   let html="";
   wish.forEach(p=>{
-    html += `<div class="item">${p.name}</div>`;
+    html += `
+      <div>
+        ${p.name}
+        <button onclick="toggleWish(${p.id})">Remove</button>
+      </div>
+    `;
   });
-  document.getElementById("wish").innerHTML = html || "Wishlist Empty";
+
+  document.getElementById("wish").innerHTML = html || "Wishlist is empty";
 }
 
-function toggleWish(){
-  document.getElementById("wishBox").classList.toggle("active");
+function closeWish(){
+  document.getElementById("wishModal").style.display="none";
 }
 
 // BUY
 function buyNow(link){
-  window.open(link,"_blank");
+  if(link && link !== "#"){
+    window.open(link, "_blank");
+  } else {
+    alert("Affiliate link not added");
+  }
 }
 
 // INIT
-renderCart();
-renderWish();
-showProducts(products);
+showProducts();
+updateCount();
 
 </script>
 
