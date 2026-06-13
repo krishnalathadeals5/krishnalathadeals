@@ -15,7 +15,6 @@ header {
   font-weight:bold;
 }
 
-/* TOP BAR */
 .top {
   position:fixed;
   top:10px;
@@ -27,22 +26,18 @@ header {
   font-weight:bold;
 }
 
-/* SEARCH */
 .search {
   padding:10px;
 }
 .search input {
   width:100%;
   padding:10px;
-  border-radius:5px;
-  border:1px solid #ccc;
 }
 
-/* PRODUCTS */
 .products {
   display:flex;
   overflow-x:auto;
-  gap:12px;
+  gap:10px;
   padding:10px;
 }
 
@@ -61,30 +56,17 @@ header {
   object-fit:contain;
 }
 
-.price {
-  font-size:16px;
-  margin:5px 0;
-}
-
-.price del {
-  color:gray;
-  font-size:13px;
-}
-
-/* BUTTON */
 button {
   width:100%;
-  margin-top:6px;
+  margin-top:5px;
   padding:8px;
   border:none;
   background:#2874f0;
   color:white;
   border-radius:5px;
   cursor:pointer;
-  font-weight:bold;
 }
 
-/* POPUP */
 .popup {
   position:fixed;
   top:0;
@@ -95,7 +77,6 @@ button {
   transition:0.3s;
   padding:10px;
   overflow:auto;
-  box-shadow:-2px 0 10px rgba(0,0,0,0.2);
 }
 .popup.active {
   right:0;
@@ -104,25 +85,11 @@ button {
 .close {
   cursor:pointer;
   color:red;
-  font-weight:bold;
 }
 
-/* ITEM LIST */
 .item {
   border-bottom:1px solid #eee;
   padding:5px 0;
-}
-
-/* SOCIAL */
-.social {
-  text-align:center;
-  margin:15px;
-}
-.social a {
-  margin:5px;
-  font-size:18px;
-  text-decoration:none;
-  font-weight:bold;
 }
 </style>
 </head>
@@ -137,55 +104,37 @@ button {
 </div>
 
 <div class="search">
-  <input type="text" placeholder="Search products..." onkeyup="searchProducts(this.value)">
+  <input type="text" placeholder="Search..." onkeyup="searchProducts(this.value)">
 </div>
 
 <div id="products" class="products"></div>
 
-<!-- CART -->
 <div id="cartBox" class="popup">
   <span class="close" onclick="toggleCart()">❌ Close</span>
   <h3>Cart</h3>
   <div id="cart"></div>
 </div>
 
-<!-- WISHLIST -->
 <div id="wishBox" class="popup">
   <span class="close" onclick="toggleWish()">❌ Close</span>
   <h3>Wishlist</h3>
   <div id="wish"></div>
 </div>
 
-<!-- SOCIAL -->
-<div class="social">
-  <a href="#" style="color:#1877f2">Facebook</a>
-  <a href="#" style="color:#e4405f">Instagram</a>
-  <a href="#" style="color:#25d366">WhatsApp</a>
-</div>
-
 <script>
 
-// ✅ DEMO PRODUCTS
+// PRODUCTS
 let products = [
-  {
-    id:1,
-    name:"Towel Set",
-    image:"https://via.placeholder.com/150",
-    price:299,
-    oldPrice:999,
-    link:"https://amazon.in"
-  },
-  {
-    id:2,
-    name:"Kitchen Box",
-    image:"https://via.placeholder.com/150",
-    price:499,
-    oldPrice:1299,
-    link:"https://amazon.in"
-  }
+  {id:1,name:"Towel Set",image:"https://via.placeholder.com/150",price:299,oldPrice:999,link:"https://amazon.in"},
+  {id:2,name:"Kitchen Box",image:"https://via.placeholder.com/150",price:499,oldPrice:1299,link:"https://amazon.in"}
 ];
 
-// STORAGE
+// RESET BROKEN DATA (AUTO FIX)
+if(!localStorage.getItem("fixed")){
+  localStorage.clear();
+  localStorage.setItem("fixed","yes");
+}
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
@@ -204,10 +153,7 @@ function showProducts(list){
     <div class="card">
       <img src="${p.image}">
       <div>${p.name}</div>
-
-      <div class="price">
-        ₹${p.price} <del>₹${p.oldPrice}</del>
-      </div>
+      <div>₹${p.price} <del>₹${p.oldPrice}</del></div>
 
       <button onclick="addCart(${p.id})">Add to Cart</button>
       <button onclick="toggleWishlist(${p.id})">${heart} Wishlist</button>
@@ -220,21 +166,17 @@ function showProducts(list){
 
 // SEARCH
 function searchProducts(val){
-  let filtered = products.filter(p =>
-    p.name.toLowerCase().includes(val.toLowerCase())
-  );
+  let filtered = products.filter(p=>p.name.toLowerCase().includes(val.toLowerCase()));
   showProducts(filtered);
 }
 
 // CART
 function addCart(id){
   if(!cart.some(p=>p.id===id)){
-    let item = products.find(x=>x.id===id);
-    cart.push(item);
+    cart.push(products.find(x=>x.id===id));
     save();
   }
   renderCart();
-  toggleCart();
 }
 
 function removeCart(id){
@@ -246,14 +188,9 @@ function removeCart(id){
 function renderCart(){
   let html="";
   cart.forEach(p=>{
-    html += `
-    <div class="item">
-      <img src="${p.image}" width="50">
-      ${p.name} - ₹${p.price}
-      <button onclick="removeCart(${p.id})">Remove</button>
-    </div>`;
+    html += `<div class="item">${p.name} - ₹${p.price} <button onclick="removeCart(${p.id})">X</button></div>`;
   });
-  document.getElementById("cart").innerHTML = html || "Cart is Empty";
+  document.getElementById("cart").innerHTML = html || "Cart Empty";
 }
 
 function toggleCart(){
@@ -265,8 +202,7 @@ function toggleWishlist(id){
   if(wish.some(p=>p.id===id)){
     wish = wish.filter(p=>p.id!==id);
   } else {
-    let item = products.find(x=>x.id===id);
-    wish.push(item);
+    wish.push(products.find(x=>x.id===id));
   }
   save();
   renderWish();
@@ -276,13 +212,9 @@ function toggleWishlist(id){
 function renderWish(){
   let html="";
   wish.forEach(p=>{
-    html += `
-    <div class="item">
-      <img src="${p.image}" width="50">
-      ${p.name}
-    </div>`;
+    html += `<div class="item">${p.name}</div>`;
   });
-  document.getElementById("wish").innerHTML = html || "Wishlist is Empty";
+  document.getElementById("wish").innerHTML = html || "Wishlist Empty";
 }
 
 function toggleWish(){
@@ -291,21 +223,13 @@ function toggleWish(){
 
 // BUY
 function buyNow(link){
-  if(link && link !== "#"){
-    window.open(link, "_blank");
-  } else {
-    alert("No product link available");
-  }
+  window.open(link,"_blank");
 }
 
-// INIT (IMPORTANT FIX)
-function init(){
-  renderCart();
-  renderWish();
-  showProducts(products);
-}
-
-init();
+// INIT
+renderCart();
+renderWish();
+showProducts(products);
 
 </script>
 
