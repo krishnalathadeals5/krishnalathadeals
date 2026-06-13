@@ -111,7 +111,6 @@ header {
 
 .top-icons span {
   margin-left: 10px;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -136,12 +135,13 @@ let allProducts = [];
 let cart = [];
 let wishlist = [];
 
+/* LOAD */
 async function loadProducts() {
   const res = await fetch(API);
   const data = await res.json();
 
   allProducts = data.map(p => ({
-    id: Number(p.id),
+    id: Number(p.id), // FIXED
     name: (p.name || "").trim(),
     image: (p.image || "").trim(),
     price: Number(p.price),
@@ -152,16 +152,21 @@ async function loadProducts() {
   displayProducts(allProducts);
 }
 
+/* DISPLAY */
 function displayProducts(products) {
   const container = document.getElementById("products");
   container.innerHTML = "";
 
   products.forEach(p => {
+    const isWish = wishlist.some(w => w.id === p.id);
+
     const div = document.createElement("div");
     div.className = "card";
 
     div.innerHTML = `
-      <div class="wishlist" onclick="toggleWishlist(this, ${p.id})">🤍</div>
+      <div class="wishlist" onclick="toggleWishlist(this, ${p.id})">
+        ${isWish ? "❤️" : "🤍"}
+      </div>
 
       <img src="${p.image}" onerror="this.src='https://via.placeholder.com/300'">
 
@@ -185,24 +190,26 @@ function displayProducts(products) {
   });
 }
 
+/* CART */
 function addCart(id) {
-  const product = allProducts.find(p => p.id == id);
+  const product = allProducts.find(p => p.id === id);
 
-  if (!cart.find(p => p.id == id)) {
+  if (!cart.some(p => p.id === id)) {
     cart.push(product);
   }
 
   document.getElementById("cartCount").innerText = cart.length;
 }
 
+/* WISHLIST */
 function toggleWishlist(el, id) {
-  const exists = wishlist.find(p => p.id == id);
+  const exists = wishlist.some(p => p.id === id);
 
   if (exists) {
-    wishlist = wishlist.filter(p => p.id != id);
+    wishlist = wishlist.filter(p => p.id !== id);
     el.innerText = "🤍";
   } else {
-    const product = allProducts.find(p => p.id == id);
+    const product = allProducts.find(p => p.id === id);
     wishlist.push(product);
     el.innerText = "❤️";
   }
@@ -210,10 +217,12 @@ function toggleWishlist(el, id) {
   document.getElementById("wishCount").innerText = wishlist.length;
 }
 
+/* BUY */
 function buyNow(link) {
   window.open(link, "_blank");
 }
 
+/* SEARCH */
 document.getElementById("search").addEventListener("input", function() {
   const value = this.value.toLowerCase();
 
@@ -224,6 +233,7 @@ document.getElementById("search").addEventListener("input", function() {
   displayProducts(filtered);
 });
 
+/* INIT */
 loadProducts();
 </script>
 
