@@ -48,7 +48,7 @@ border:none;
 border-radius:6px;
 }
 
-/* SCROLL FIX (TRUE ENDLESS LOOP) */
+/* SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
@@ -73,7 +73,6 @@ font-size:13px;
 font-weight:bold;
 }
 
-/* seamless loop fix */
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-50%);}
@@ -96,15 +95,12 @@ position:relative;
 cursor:pointer;
 }
 
+/* FIX IMAGE ISSUE (IMPORTANT) */
 .card img{
 width:100%;
-height:150px;
+height:160px;
 object-fit:cover;
-}
-
-/* fallback fix */
-.card img[src=""], .card img:not([src]){
-display:none;
+display:block;
 }
 
 .card-content{
@@ -168,10 +164,12 @@ padding:15px;
 flex-wrap:wrap;
 }
 
+/* FIX DETAIL IMAGE */
 .detail-body img{
 width:320px;
 max-width:100%;
 border-radius:10px;
+object-fit:cover;
 }
 
 .detail-info{
@@ -231,7 +229,6 @@ width:auto;
 <div class="scroll-item">🏆 Top</div>
 <div class="scroll-item">📦 Free</div>
 
-<!-- duplicated for smooth loop -->
 <div class="scroll-item">🔥 Deals</div>
 <div class="scroll-item">⚡ Fast</div>
 <div class="scroll-item">💰 Best Price</div>
@@ -271,7 +268,6 @@ const products=[
 ];
 
 let wish=[];
-let cart=[];
 
 /* RENDER */
 function render(list=products){
@@ -280,7 +276,7 @@ g.innerHTML="";
 
 list.forEach(p=>{
 
-let img = p.img ? p.img : fallbackImg;
+let img = p.img || fallbackImg;
 
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
@@ -297,14 +293,27 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH */
+/* SEARCH FIX */
 function searchProducts(){
-let v=document.getElementById("search").value.toLowerCase();
+let input = document.getElementById("search");
+let v = input.value.toLowerCase();
+
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
+
+// CLEAR SEARCH AFTER OPEN (OPTIONAL IMPROVEMENT)
+input.addEventListener("change", ()=>{
+if(document.activeElement !== input){
+input.value="";
+}
+});
 }
 
-/* RESET DETAIL */
+/* DETAIL */
 function openDetail(name){
+
+// CLEAR SEARCH WHEN OPEN PRODUCT (FIX)
+document.getElementById("search").value="";
+
 let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
 
@@ -331,14 +340,18 @@ function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* WISH FIX */
+/* WISHLIST */
+let wish=[];
+
 function toggleWish(name){
-let i=wish.findIndex(x=>x.name===name);
+let i=wish.indexOf(name);
 if(i>-1) wish.splice(i,1);
 else wish.push(name);
+
 document.getElementById("wishCount").innerText=wish.length;
 }
 
+/* INIT */
 render();
 
 </script>
