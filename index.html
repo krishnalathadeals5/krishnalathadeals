@@ -49,30 +49,34 @@ border-radius:6px;
 outline:none;
 }
 
-/* SCROLL */
+/* 🔥 FIXED SMOOTH SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
 padding:10px 0;
 }
+
 .scroll-track{
 display:flex;
 gap:15px;
 width:max-content;
-animation:scroll 20s linear infinite;
+animation:scroll 18s linear infinite;
+will-change:transform;
 }
+
 @keyframes scroll{
-0%{transform:translateX(100%);}
-100%{transform:translateX(-100%);}
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
 }
+
 .scroll-item{
 min-width:140px;
 background:#eee;
 padding:8px;
 border-radius:20px;
 text-align:center;
-font-weight:bold;
 font-size:13px;
+font-weight:bold;
 }
 
 /* GRID */
@@ -151,7 +155,7 @@ border-radius:50%;
 cursor:pointer;
 }
 
-/* AMAZON STYLE */
+/* AMAZON STYLE DETAIL */
 .detail-body{
 display:flex;
 gap:20px;
@@ -312,7 +316,6 @@ const products=[
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-/* SAVE */
 function save(){
 localStorage.setItem("wish",JSON.stringify(wish));
 localStorage.setItem("cart",JSON.stringify(cart));
@@ -324,7 +327,6 @@ let g=document.getElementById("grid");
 g.innerHTML="";
 
 list.forEach(p=>{
-
 let isW = wish.find(x=>x.name===p.name);
 
 g.innerHTML+=`
@@ -342,11 +344,10 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH FIX */
+/* SEARCH */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
-let filtered = products.filter(p=>p.name.toLowerCase().includes(v));
-render(filtered);
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
 }
 
 /* DETAIL */
@@ -378,9 +379,8 @@ function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* WISHLIST FIX */
+/* WISHLIST */
 function toggleWish(name){
-
 let i=wish.findIndex(x=>x.name===name);
 if(i>-1) wish.splice(i,1);
 else wish.push({name});
@@ -390,9 +390,8 @@ updateCounts();
 render();
 }
 
-/* CART FIX */
+/* CART */
 function addCart(name){
-
 let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
 
@@ -405,23 +404,19 @@ updateCounts();
 
 /* POPUP */
 function openPopup(type){
-
 let c=document.getElementById("popupContent");
 document.getElementById("popup").style.display="flex";
 
 if(type==="wishlist"){
-
 c.innerHTML = wish.length ? wish.map(p=>`
 <div class="item">
 <div>${p.name}</div>
 <button class="remove-btn" onclick="removeWish('${p.name}')">Remove</button>
 </div>
 `).join("") : "Empty";
-
 }
 
 if(type==="cart"){
-
 let total=0;
 
 c.innerHTML = cart.map(p=>{
@@ -470,10 +465,7 @@ let item=cart.find(x=>x.name===name);
 if(!item)return;
 
 item.qty += val;
-
-if(item.qty<=0){
-cart = cart.filter(x=>x.name!==name);
-}
+if(item.qty<=0) cart = cart.filter(x=>x.name!==name);
 
 save();
 updateCounts();
