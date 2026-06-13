@@ -464,25 +464,26 @@ document.getElementById("popup").style.display="flex";
 
 if(type==="wishlist"){
   c.innerHTML = wish.length ? wish.map(p=>`
-<div class="item">
+<div class="item" style="display:flex;align-items:center;gap:15px;padding:10px;">
 
-    <img src="${p.img}" style="width:80px;height:80px;object-fit:contain;">
+<img src="${p.img}" style="width:80px;height:80px;object-fit:contain;">
 
-    <div>
-        <div>${p.name}</div>
-        <div>₹${p.price}</div>
-    </div>
+<div style="flex:1;">
+<div>${p.name}</div>
+<div>₹${p.price}</div>
+</div>
 
-    <button onclick="addCart('${p.name}')">Add To Cart</button>
+<button onclick="addCart('${p.name}')">
+Add To Cart
+</button>
 
-    <button class="remove-btn"
-        onclick="removeWish('${p.name}')">
-        Remove
-    </button>
+<button class="remove-btn"
+onclick="removeWish('${p.name}')">
+Remove
+</button>
 
 </div>
 `).join("") : "Empty";
-  `).join("") : "Empty";
 
   return;
 }
