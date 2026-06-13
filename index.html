@@ -78,7 +78,7 @@ font-weight:bold;
 100%{transform:translateX(-50%);}
 }
 
-/* GRID FIX (IMPORTANT FOR SEARCH IMAGES) */
+/* GRID */
 .container{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -95,7 +95,6 @@ position:relative;
 cursor:pointer;
 }
 
-/* IMAGE FIX (NO COMPRESSION) */
 .card img{
 width:100%;
 height:170px;
@@ -224,7 +223,6 @@ margin-bottom:10px;
 border-radius:10px;
 }
 
-/* RED REMOVE BUTTON FIX */
 .remove-btn{
 background:red;
 color:white;
@@ -342,15 +340,15 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH FIX (NO IMAGE STRETCH) */
+/* SEARCH */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
-let filtered = products.filter(p=>p.name.toLowerCase().includes(v));
-render(filtered);
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
 }
 
 /* DETAIL */
 function openDetail(name){
+
 let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
 
@@ -373,6 +371,10 @@ document.getElementById("detailBody").innerHTML=`
 document.getElementById("detailBox").style.display="block";
 }
 
+function closeDetail(){
+document.getElementById("detailBox").style.display="none";
+}
+
 /* WISHLIST */
 function toggleWish(name){
 let i=wish.indexOf(name);
@@ -383,25 +385,28 @@ updateCounts();
 render();
 }
 
-/* CART */
+/* CART FIX (WORKING PROPERLY) */
 function addCart(name){
-let item=cart.find(x=>x.name===name);
 let p=products.find(x=>x.name===name);
+let item=cart.find(x=>x.name===name);
 
-if(item) item.qty++;
-else cart.push({...p,qty:1});
+if(item){
+item.qty++;
+}else{
+cart.push({...p,qty:1});
+}
 
 updateCounts();
 }
 
-/* POPUP */
+/* POPUP OPEN/CLOSE FIX */
 function openPopup(type){
-let c=document.getElementById("popupContent");
 document.getElementById("popup").style.display="flex";
 
-if(type==="wishlist"){
-document.getElementById("popupTitle").innerText="Wishlist";
+let c=document.getElementById("popupContent");
+document.getElementById("popupTitle").innerText=type;
 
+if(type==="wishlist"){
 c.innerHTML = wish.length ? wish.map(n=>`
 <div class="item">
 <div>${n}</div>
@@ -411,8 +416,6 @@ c.innerHTML = wish.length ? wish.map(n=>`
 }
 
 if(type==="cart"){
-document.getElementById("popupTitle").innerText="Cart";
-
 let total=0;
 
 c.innerHTML = cart.map(p=>{
@@ -436,6 +439,11 @@ c.innerHTML += `<div class="total">Total: ₹${total}</div>`;
 }
 }
 
+/* CLOSE FIX */
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
 /* REMOVE FIX */
 function removeWish(n){
 wish = wish.filter(x=>x!==n);
@@ -453,7 +461,8 @@ openPopup("cart");
 /* QTY */
 function changeQty(n,v){
 let i=cart.find(x=>x.name===n);
-if(!i) return;
+if(!i)return;
+
 i.qty += v;
 if(i.qty<=0) cart = cart.filter(x=>x.name!==n);
 
@@ -461,7 +470,7 @@ updateCounts();
 openPopup("cart");
 }
 
-/* COUNT FIX */
+/* COUNTS */
 function updateCounts(){
 document.getElementById("wishCount").innerText = wish.length;
 document.getElementById("cartCount").innerText = cart.length;
