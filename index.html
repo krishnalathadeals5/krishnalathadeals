@@ -418,9 +418,17 @@ document.getElementById("detailBox").style.display="none";
 /* WISHLIST */
 function toggleWish(name){
 let i=wish.findIndex(x=>x.name===name);
-if(i>-1) wish.splice(i,1);
-else wish.push({name});
+if(i>-1){
+  wish.splice(i,1);
+}else{
+  let p = products.find(x=>x.name===name);
 
+  wish.push({
+    name:p.name,
+    img:p.img,
+    price:p.price
+  });
+}
 save();
 updateCounts();
 render();
