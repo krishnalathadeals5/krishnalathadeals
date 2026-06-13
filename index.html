@@ -451,12 +451,14 @@ let c=document.getElementById("popupContent");
 document.getElementById("popup").style.display="flex";
 
 if(type==="wishlist"){
-c.innerHTML = wish.length ? wish.map(p=>`
-<div class="item">
-<div>${p.name}</div>
-<button class="remove-btn" onclick="removeWish('${p.name}')">Remove</button>
-</div>
-`).join("") : "Empty";
+  c.innerHTML = wish.length ? wish.map(p=>`
+  <div class="item">
+    <div>${p.name}</div>
+    <button class="remove-btn" onclick="removeWish('${p.name}')">Remove</button>
+  </div>
+  `).join("") : "Empty";
+
+  return;
 }
 
 if(type==="cart"){
