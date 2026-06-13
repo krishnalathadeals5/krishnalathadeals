@@ -46,6 +46,7 @@ width:100%;
 padding:10px;
 border:none;
 border-radius:6px;
+outline:none;
 }
 
 /* SCROLL */
@@ -53,35 +54,31 @@ border-radius:6px;
 overflow:hidden;
 background:white;
 padding:10px 0;
-white-space:nowrap;
 }
-
 .scroll-track{
 display:flex;
+gap:15px;
 width:max-content;
-animation:scroll 18s linear infinite;
+animation:scroll 20s linear infinite;
 }
-
+@keyframes scroll{
+0%{transform:translateX(100%);}
+100%{transform:translateX(-100%);}
+}
 .scroll-item{
 min-width:140px;
-margin-right:15px;
 background:#eee;
 padding:8px;
 border-radius:20px;
 text-align:center;
-font-size:13px;
 font-weight:bold;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-50%);}
+font-size:13px;
 }
 
 /* GRID */
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
 gap:12px;
 padding:12px;
 }
@@ -97,9 +94,18 @@ cursor:pointer;
 
 .card img{
 width:100%;
-height:170px;
+height:160px;
 object-fit:cover;
-display:block;
+}
+
+.card-content{
+padding:10px;
+text-align:center;
+}
+
+.price{
+color:green;
+font-weight:bold;
 }
 
 /* HEART */
@@ -145,6 +151,7 @@ border-radius:50%;
 cursor:pointer;
 }
 
+/* AMAZON STYLE */
 .detail-body{
 display:flex;
 gap:20px;
@@ -156,7 +163,6 @@ flex-wrap:wrap;
 width:320px;
 max-width:100%;
 border-radius:10px;
-object-fit:cover;
 }
 
 .detail-info{
@@ -176,6 +182,7 @@ font-weight:bold;
 margin:10px 0;
 }
 
+/* BUTTONS */
 .btn{
 display:inline-block;
 padding:10px 14px;
@@ -212,7 +219,6 @@ padding:10px;
 overflow:auto;
 }
 
-/* ITEM */
 .item{
 display:flex;
 justify-content:space-between;
@@ -227,19 +233,9 @@ border-radius:10px;
 background:red;
 color:white;
 border:none;
-padding:6px 10px;
+padding:5px 10px;
 border-radius:6px;
 cursor:pointer;
-}
-
-.qty button{
-padding:5px 10px;
-margin:0 5px;
-}
-
-.total{
-padding:10px;
-font-weight:bold;
 }
 </style>
 </head>
@@ -313,8 +309,14 @@ const products=[
 {name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
-let wish=[];
-let cart=[];
+let wish = JSON.parse(localStorage.getItem("wish")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* SAVE */
+function save(){
+localStorage.setItem("wish",JSON.stringify(wish));
+localStorage.setItem("cart",JSON.stringify(cart));
+}
 
 /* RENDER */
 function render(list=products){
@@ -323,7 +325,7 @@ g.innerHTML="";
 
 list.forEach(p=>{
 
-let isW = wish.includes(p.name);
+let isW = wish.find(x=>x.name===p.name);
 
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
@@ -340,10 +342,11 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH */
+/* SEARCH FIX */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(v)));
+let filtered = products.filter(p=>p.name.toLowerCase().includes(v));
+render(filtered);
 }
 
 /* DETAIL */
@@ -363,7 +366,7 @@ document.getElementById("detailBody").innerHTML=`
 
 <div class="discount">${d}% OFF</div>
 
-<button class="btn buy">Buy Now</button>
+<button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
 <button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
 </div>
 `;
@@ -375,97 +378,104 @@ function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* WISHLIST */
+/* WISHLIST FIX */
 function toggleWish(name){
-let i=wish.indexOf(name);
-if(i>-1) wish.splice(i,1);
-else wish.push(name);
 
+let i=wish.findIndex(x=>x.name===name);
+if(i>-1) wish.splice(i,1);
+else wish.push({name});
+
+save();
 updateCounts();
 render();
 }
 
-/* CART FIX (WORKING PROPERLY) */
+/* CART FIX */
 function addCart(name){
+
 let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
 
-if(item){
-item.qty++;
-}else{
-cart.push({...p,qty:1});
-}
+if(item) item.qty++;
+else cart.push({...p,qty:1});
 
+save();
 updateCounts();
 }
 
-/* POPUP OPEN/CLOSE FIX */
+/* POPUP */
 function openPopup(type){
-document.getElementById("popup").style.display="flex";
 
 let c=document.getElementById("popupContent");
-document.getElementById("popupTitle").innerText=type;
+document.getElementById("popup").style.display="flex";
 
 if(type==="wishlist"){
-c.innerHTML = wish.length ? wish.map(n=>`
+
+c.innerHTML = wish.length ? wish.map(p=>`
 <div class="item">
-<div>${n}</div>
-<button class="remove-btn" onclick="removeWish('${n}')">Remove</button>
+<div>${p.name}</div>
+<button class="remove-btn" onclick="removeWish('${p.name}')">Remove</button>
 </div>
 `).join("") : "Empty";
+
 }
 
 if(type==="cart"){
+
 let total=0;
 
 c.innerHTML = cart.map(p=>{
 total += p.price * p.qty;
-
 return `
 <div class="item">
-<div>${p.name}</div>
+<div>${p.name} (₹${p.price})</div>
 
-<div class="qty">
+<div>
 <button onclick="changeQty('${p.name}',-1)">-</button>
 ${p.qty}
 <button onclick="changeQty('${p.name}',1)">+</button>
 </div>
 
-<button class="remove-btn" onclick="removeCart('${p.name}')">Remove</button>
+<button class="remove-btn" onclick="removeCart('${p.name}')">X</button>
 </div>`;
 }).join("");
 
-c.innerHTML += `<div class="total">Total: ₹${total}</div>`;
+c.innerHTML += `<div style="padding:10px;font-weight:bold;">Total: ₹${total}</div>`;
 }
 }
 
-/* CLOSE FIX */
 function closePopup(){
 document.getElementById("popup").style.display="none";
 }
 
-/* REMOVE FIX */
-function removeWish(n){
-wish = wish.filter(x=>x!==n);
+/* REMOVE */
+function removeWish(name){
+wish = wish.filter(x=>x.name!==name);
+save();
 updateCounts();
 openPopup("wishlist");
 render();
 }
 
-function removeCart(n){
-cart = cart.filter(x=>x.name!==n);
+function removeCart(name){
+cart = cart.filter(x=>x.name!==name);
+save();
 updateCounts();
 openPopup("cart");
 }
 
 /* QTY */
-function changeQty(n,v){
-let i=cart.find(x=>x.name===n);
-if(!i)return;
+function changeQty(name,val){
+let item=cart.find(x=>x.name===name);
+if(!item)return;
 
-i.qty += v;
-if(i.qty<=0) cart = cart.filter(x=>x.name!==n);
+item.qty += val;
 
+if(item.qty<=0){
+cart = cart.filter(x=>x.name!==name);
+}
+
+save();
 updateCounts();
 openPopup("cart");
 }
