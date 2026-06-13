@@ -364,8 +364,8 @@ let isW = wish.find(x=>x.name===p.name);
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
 
-<div class="heart ${isW?'active':''}" onclick="event.stopPropagation(); toggleWish('${p.name}')">❤</div>
-
+<div class="heart ${isW?'active':''}"
+onclick="event.stopPropagation(); event.preventDefault(); toggleWish('${p.name}'); return false;">❤</div>
 <img src="${p.img}">
 
 <div class="card-content">
