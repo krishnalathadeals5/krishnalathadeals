@@ -3,241 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals</title>
+<title>KrishnaLatha Deals</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#f5f6fa;
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f5f5f5;
 }
 
-/* HEADER */
-.topbar{
-background:#131921;
-color:white;
-padding:14px;
-font-size:22px;
-font-weight:800;
-color:#ffb84d;
+header {
+  background: #2874f0;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
 }
 
-/* SEARCH */
-.search-box{
-padding:10px;
-background:#131921;
-}
-.search-box input{
-width:100%;
-padding:10px;
-border:none;
-border-radius:6px;
-outline:none;
+.search-box {
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border-radius: 5px;
+  border: none;
 }
 
-/* GRID */
-.container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-gap:12px;
-padding:12px;
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 10px;
 }
 
-.card{
-background:white;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-cursor:pointer;
+.card {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
 }
 
-.card img{
-width:100%;
-height:150px;
-object-fit:cover;
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain; /* FIX IMAGE ISSUE */
 }
 
-.card h3{
-padding:10px;
-margin:0;
+.name {
+  font-size: 14px;
+  margin: 5px 0;
 }
 
-.card p{
-padding:0 10px 10px;
-margin:0;
+.price {
+  color: green;
+  font-weight: bold;
 }
 
-/* DETAIL */
-.detail{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:white;
-display:none;
-z-index:9999;
-overflow:auto;
+.old {
+  text-decoration: line-through;
+  color: gray;
+  font-size: 12px;
 }
 
-.detail-header{
-background:#131921;
-color:white;
-padding:12px;
-display:flex;
-justify-content:space-between;
+.btn {
+  background: #ff9f00;
+  border: none;
+  padding: 8px;
+  width: 100%;
+  margin-top: 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.close{
-background:red;
-border:none;
-color:white;
-width:30px;
-height:30px;
-border-radius:50%;
-cursor:pointer;
+.wishlist {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-/* AMAZON STYLE */
-.detail-body{
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-padding:20px;
-justify-content:center;
-align-items:center;
+.top-icons {
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
 
-.detail-body img{
-width:300px;
-height:300px;
-object-fit:contain;
-background:#fff;
-padding:10px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+.top-icons span {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 18px;
 }
-
-.detail-info{
-max-width:400px;
-}
-
-.old{
-text-decoration:line-through;
-color:gray;
-margin-left:8px;
-}
-
-.discount{
-color:green;
-font-weight:bold;
-margin:10px 0;
-}
-
-.btn{
-padding:10px 14px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-.buy{background:#28a745;color:white;}
-.cart{background:#ff9900;color:white;margin-left:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">Krishnalatha Deals</div>
+<header>KrishnaLatha Deals</header>
 
-<div class="search-box">
-<input id="search" placeholder="Search products..." oninput="searchProducts()">
+<div class="top-icons">
+  🛒 <span id="cartCount">0</span>
+  ❤️ <span id="wishCount">0</span>
 </div>
 
-<div class="container" id="grid"></div>
+<input type="text" id="search" class="search-box" placeholder="Search products...">
 
-<!-- DETAIL -->
-<div class="detail" id="detailBox">
-<div class="detail-header">
-<div>Product</div>
-<button class="close" onclick="closeDetail()">×</button>
-</div>
-<div class="detail-body" id="detailBody"></div>
-</div>
+<div class="products" id="products"></div>
 
 <script>
+const API = "https://script.google.com/macros/s/AKfycbzYhxE_0NfstLPwOpFB6e5hiRWW4mLW_YTrMaAJO5XGIyMvsGKvf1QPUCyT9QaNOWfoyw/exec";
 
-/* 🔥 IMPORTANT: images must be in SAME folder */
-const products=[
-{name:"Kitchen Box",price:999,old:1499,img:"storage.jpg"},
-{name:"Towel Set",price:299,old:499,img:"towel.jpg"},
-{name:"Shoes",price:1499,old:1999,img:"shoes.jpg"},
-{name:"Watch",price:1999,old:2499,img:"watch.jpg"},
-{name:"Bag",price:899,old:1299,img:"bag.jpg"},
-{name:"Diya",price:199,old:299,img:"diya.jpg"},
-{name:"Laptop",price:45999,old:50999,img:"laptop.jpg"},
-{name:"Mobile",price:14999,old:16999,img:"mobile.jpg"},
-{name:"Plant",price:299,old:499,img:"plant.jpg"},
-{name:"Headphones",price:1299,old:1999,img:"headphones.jpg"}
-];
+let allProducts = [];
+let cart = [];
+let wishlist = [];
 
-/* RENDER */
-function render(list){
-let g=document.getElementById("grid");
-g.innerHTML="";
+async function loadProducts() {
+  const res = await fetch(API);
+  const data = await res.json();
 
-list.forEach(p=>{
-g.innerHTML+=`
-<div class="card" onclick="openDetail('${p.name}')">
-<img src="${p.img}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
-<h3>${p.name}</h3>
-<p>₹${p.price}</p>
-</div>`;
+  // CLEAN DATA (fix WhatsApp / sheet issues)
+  allProducts = data.map(p => ({
+    ...p,
+    name: p.name.trim(),
+    image: p.image.trim()
+  }));
+
+  displayProducts(allProducts);
+}
+
+function displayProducts(products) {
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  products.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="wishlist" onclick="addWishlist(${p.id})">❤️</div>
+      <img src="${p.image}" onclick="scrollToProduct(this)">
+      <div class="name">${p.name}</div>
+      <div class="price">₹${p.price} <span class="old">₹${p.oldPrice}</span></div>
+      <button class="btn" onclick="addCart(${p.id})">Add to Cart</button>
+      <button class="btn" onclick="buyNow('${p.affiliateLink}')">Buy Now</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function addCart(id) {
+  cart.push(id);
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+function addWishlist(id) {
+  wishlist.push(id);
+  document.getElementById("wishCount").innerText = wishlist.length;
+}
+
+function buyNow(link) {
+  window.open(link, "_blank");
+}
+
+function scrollToProduct(el) {
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+document.getElementById("search").addEventListener("input", function() {
+  const value = this.value.toLowerCase();
+
+  const filtered = allProducts.filter(p =>
+    p.name.toLowerCase().includes(value)
+  );
+
+  displayProducts(filtered);
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
-}
 
-/* SEARCH FIX */
-function searchProducts(){
-let v=document.getElementById("search").value.toLowerCase();
-let filtered = products.filter(p=>p.name.toLowerCase().includes(v));
-render(filtered);
-}
-
-/* DETAIL */
-function openDetail(name){
-let p=products.find(x=>x.name===name);
-let d=Math.round(((p.old-p.price)/p.old)*100);
-
-document.getElementById("detailBody").innerHTML=`
-<img src="${p.img}" onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
-
-<div class="detail-info">
-<h2>${p.name}</h2>
-
-<div style="font-size:20px;margin:10px 0;">
-₹${p.price}
-<span class="old">₹${p.old}</span>
-</div>
-
-<div class="discount">${d}% OFF</div>
-
-<button class="btn buy">Buy Now</button>
-<button class="btn cart">Add to Cart</button>
-</div>
-`;
-
-document.getElementById("detailBox").style.display="block";
-}
-
-function closeDetail(){
-document.getElementById("detailBox").style.display="none";
-}
-
-/* INITIAL LOAD FIX */
-window.onload = function(){
-render(products);
-};
-
+loadProducts();
 </script>
 
 </body>
