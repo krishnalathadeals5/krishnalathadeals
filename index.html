@@ -12,7 +12,7 @@ font-family:Arial;
 background:#f5f6fa;
 }
 
-/* TOP */
+/* HEADER */
 .topbar{
 display:flex;
 justify-content:space-between;
@@ -26,7 +26,7 @@ z-index:999;
 
 .logo{
 font-size:22px;
-font-weight:bold;
+font-weight:800;
 color:#ffb84d;
 }
 
@@ -41,7 +41,6 @@ font-weight:bold;
 padding:10px;
 background:#131921;
 }
-
 .search-box input{
 width:100%;
 padding:10px;
@@ -50,7 +49,7 @@ border-radius:6px;
 outline:none;
 }
 
-/* SCROLL */
+/* 🔥 FIXED SMOOTH SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
@@ -62,6 +61,7 @@ display:flex;
 gap:15px;
 width:max-content;
 animation:scroll 18s linear infinite;
+will-change:transform;
 }
 
 @keyframes scroll{
@@ -122,7 +122,6 @@ border-radius:50%;
 padding:6px;
 cursor:pointer;
 }
-
 .heart.active{
 background:red;
 color:white;
@@ -156,6 +155,7 @@ border-radius:50%;
 cursor:pointer;
 }
 
+/* AMAZON STYLE DETAIL */
 .detail-body{
 display:flex;
 gap:20px;
@@ -186,12 +186,15 @@ font-weight:bold;
 margin:10px 0;
 }
 
+/* BUTTONS */
 .btn{
+display:inline-block;
 padding:10px 14px;
 margin-top:10px;
 border:none;
 border-radius:6px;
 cursor:pointer;
+font-size:14px;
 }
 
 .buy{background:#28a745;color:white;}
@@ -217,6 +220,7 @@ color:white;
 
 .popup-content{
 padding:10px;
+overflow:auto;
 }
 
 .item{
@@ -263,10 +267,13 @@ cursor:pointer;
 <div class="scroll-item">🆕 New</div>
 <div class="scroll-item">🏆 Top</div>
 <div class="scroll-item">📦 Free</div>
+
 <div class="scroll-item">🔥 Deals</div>
 <div class="scroll-item">⚡ Fast</div>
 <div class="scroll-item">💰 Best Price</div>
 <div class="scroll-item">🆕 New</div>
+<div class="scroll-item">🏆 Top</div>
+<div class="scroll-item">📦 Free</div>
 </div>
 </div>
 
@@ -293,13 +300,17 @@ cursor:pointer;
 
 <script>
 
-// PRODUCTS
-const products = [
-{name:"Kitchen Box",price:999,old:1499,img:"https://via.placeholder.com/300"},
-{name:"Towel Set",price:299,old:499,img:"https://via.placeholder.com/300"},
-{name:"Shoes",price:1499,old:1999,img:"https://via.placeholder.com/300"},
-{name:"Watch",price:1999,old:2499,img:"https://via.placeholder.com/300"},
-{name:"Bag",price:899,old:1299,img:"https://via.placeholder.com/300"}
+const products=[
+{name:"Kitchen Box",price:999,old:1499,img:"images/storage.jpg"},
+{name:"Towel Set",price:299,old:499,img:"images/towel.jpg"},
+{name:"Shoes",price:1499,old:1999,img:"images/shoes.jpg"},
+{name:"Watch",price:1999,old:2499,img:"images/watch.jpg"},
+{name:"Bag",price:899,old:1299,img:"images/bag.jpg"},
+{name:"Diya",price:199,old:299,img:"images/diya.jpg"},
+{name:"Laptop",price:45999,old:50999,img:"images/laptop.jpg"},
+{name:"Mobile",price:14999,old:16999,img:"images/mobile.jpg"},
+{name:"Plant",price:299,old:499,img:"images/plant.jpg"},
+{name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
@@ -329,7 +340,6 @@ g.innerHTML+=`
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
 </div>
-
 </div>`;
 });
 }
@@ -344,14 +354,10 @@ render(products.filter(p=>p.name.toLowerCase().includes(v)));
 function openDetail(name){
 
 let p=products.find(x=>x.name===name);
-if(!p) return;
-
 let d=Math.round(((p.old-p.price)/p.old)*100);
-let inWish = wish.find(x=>x.name===name);
 
 document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}">
-
 <div class="detail-info">
 <h2>${p.name}</h2>
 
@@ -361,14 +367,8 @@ document.getElementById("detailBody").innerHTML=`
 
 <div class="discount">${d}% OFF</div>
 
-<button class="btn buy" onclick="buyNow()">Buy Now</button>
-
+<button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
 <button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
-
-<button class="btn" onclick="toggleWish('${p.name}')">
-${inWish ? "❤️ Remove Wishlist" : "🤍 Wishlist"}
-</button>
-
 </div>
 `;
 
@@ -382,7 +382,6 @@ document.getElementById("detailBox").style.display="none";
 /* WISHLIST */
 function toggleWish(name){
 let i=wish.findIndex(x=>x.name===name);
-
 if(i>-1) wish.splice(i,1);
 else wish.push({name});
 
@@ -394,8 +393,6 @@ render();
 /* CART */
 function addCart(name){
 let p=products.find(x=>x.name===name);
-if(!p) return;
-
 let item=cart.find(x=>x.name===name);
 
 if(item) item.qty++;
@@ -403,7 +400,6 @@ else cart.push({...p,qty:1});
 
 save();
 updateCounts();
-alert("Added to cart");
 }
 
 /* POPUP */
@@ -423,14 +419,21 @@ c.innerHTML = wish.length ? wish.map(p=>`
 if(type==="cart"){
 let total=0;
 
-c.innerHTML = cart.length ? cart.map(p=>{
+c.innerHTML = cart.map(p=>{
 total += p.price * p.qty;
 return `
 <div class="item">
-<div>${p.name} (₹${p.price}) x ${p.qty}</div>
+<div>${p.name} (₹${p.price})</div>
+
+<div>
+<button onclick="changeQty('${p.name}',-1)">-</button>
+${p.qty}
+<button onclick="changeQty('${p.name}',1)">+</button>
+</div>
+
 <button class="remove-btn" onclick="removeCart('${p.name}')">X</button>
 </div>`;
-}).join("") : "Cart Empty";
+}).join("");
 
 c.innerHTML += `<div style="padding:10px;font-weight:bold;">Total: ₹${total}</div>`;
 }
@@ -456,18 +459,25 @@ updateCounts();
 openPopup("cart");
 }
 
-/* COUNT */
+/* QTY */
+function changeQty(name,val){
+let item=cart.find(x=>x.name===name);
+if(!item)return;
+
+item.qty += val;
+if(item.qty<=0) cart = cart.filter(x=>x.name!==name);
+
+save();
+updateCounts();
+openPopup("cart");
+}
+
+/* COUNTS */
 function updateCounts(){
 document.getElementById("wishCount").innerText = wish.length;
 document.getElementById("cartCount").innerText = cart.length;
 }
 
-/* BUY */
-function buyNow(){
-alert("Add affiliate link later");
-}
-
-/* INIT */
 render();
 updateCounts();
 
