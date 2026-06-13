@@ -49,24 +49,21 @@ border:none;
 outline:none;
 }
 
-/* SCROLL FIX */
+/* SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
 padding:10px 0;
 }
-
 .scroll-track{
 display:flex;
 gap:20px;
 width:max-content;
-animation:scroll 15s linear infinite;
+animation:scroll 18s linear infinite;
 }
-
 .scroll-wrapper:hover .scroll-track{
 animation-play-state:paused;
 }
-
 .scroll-item{
 min-width:160px;
 background:#f4f4f4;
@@ -76,7 +73,6 @@ text-align:center;
 font-weight:bold;
 font-size:13px;
 }
-
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-50%);}
@@ -115,32 +111,77 @@ color:green;
 font-weight:bold;
 }
 
-/* BADGE */
-.discount{
-position:absolute;
-top:8px;
-left:8px;
-background:red;
-color:white;
-padding:5px 8px;
-font-size:12px;
-border-radius:20px;
+/* DETAIL AMAZON STYLE */
+.detail{
+position:fixed;
+inset:0;
+background:white;
+display:none;
+z-index:9999;
+overflow:auto;
 }
 
-/* HEART */
-.heart{
-position:absolute;
-top:8px;
-right:8px;
-background:white;
-border-radius:50%;
-padding:6px;
-cursor:pointer;
-}
-.heart.active{
-background:red;
+.detail-header{
+display:flex;
+justify-content:space-between;
+padding:12px;
+background:#131921;
 color:white;
 }
+
+.close{
+background:red;
+border:none;
+color:white;
+width:35px;
+height:35px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.detail-body{
+display:flex;
+gap:20px;
+padding:15px;
+}
+
+/* IMAGE LEFT */
+.detail-body img{
+width:40%;
+border-radius:10px;
+object-fit:cover;
+}
+
+/* RIGHT SIDE */
+.detail-info{
+flex:1;
+}
+
+.old{
+text-decoration:line-through;
+color:gray;
+margin-left:8px;
+}
+
+.discount{
+color:green;
+font-weight:bold;
+margin:10px 0;
+}
+
+/* BUTTONS */
+.btn{
+display:block;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:15px;
+}
+
+.buy{background:#28a745;color:white;}
+.cart{background:#ff9900;color:white;}
 
 /* POPUP */
 .popup{
@@ -148,8 +189,8 @@ position:fixed;
 inset:0;
 background:white;
 display:none;
-flex-direction:column;
 z-index:9999;
+flex-direction:column;
 }
 
 .popup-header{
@@ -165,77 +206,25 @@ padding:10px;
 overflow:auto;
 }
 
-/* CART ITEM */
-.cart-item{
+.item{
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#f2f2f2;
 padding:10px;
+background:#f2f2f2;
 margin-bottom:10px;
 border-radius:10px;
 }
 
 .qty button{
 padding:5px 10px;
+margin:0 5px;
 }
 
-/* DETAIL FIX (IMPORTANT) */
-.detail{
-position:fixed;
-inset:0;
-background:white;
-display:none;
-flex-direction:column;
-z-index:10000;
-overflow:hidden;
+.total{
+padding:10px;
+font-weight:bold;
 }
-
-.detail-header{
-background:#131921;
-color:white;
-padding:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.close-btn{
-width:34px;
-height:34px;
-border-radius:50%;
-border:none;
-background:#ff4d4d;
-color:white;
-font-size:18px;
-cursor:pointer;
-}
-
-.detail-body{
-padding:12px;
-overflow-y:auto;
-flex:1;
-}
-
-.detail-body img{
-width:100%;
-max-height:300px;
-object-fit:contain;
-border-radius:10px;
-}
-
-.action-btn{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-font-size:15px;
-}
-
-.buy{background:#28a745;color:white;}
-.cart{background:#ff9900;color:white;}
 </style>
 </head>
 
@@ -244,8 +233,8 @@ font-size:15px;
 <div class="topbar">
 <div class="logo">Krishnalatha Deals</div>
 <div class="top-icons">
-<span>❤️ <span id="wishCount">0</span></span>
-<span>🛒 <span id="cartCount">0</span></span>
+<span onclick="openPopup('wishlist')">❤️ <span id="wishCount">0</span></span>
+<span onclick="openPopup('cart')">🛒 <span id="cartCount">0</span></span>
 </div>
 </div>
 
@@ -253,36 +242,36 @@ font-size:15px;
 <input id="search" placeholder="Search products...">
 </div>
 
-<!-- SCROLL -->
 <div class="scroll-wrapper">
 <div class="scroll-track">
 <div class="scroll-item">🔥 Deals</div>
-<div class="scroll-item">⚡ Fast Delivery</div>
+<div class="scroll-item">⚡ Fast</div>
 <div class="scroll-item">💰 Best Price</div>
-<div class="scroll-item">🆕 New Arrivals</div>
-<div class="scroll-item">🏆 Top Rated</div>
-<div class="scroll-item">📦 Free Delivery</div>
+<div class="scroll-item">🆕 New</div>
+<div class="scroll-item">🏆 Top</div>
+<div class="scroll-item">📦 Free</div>
 </div>
 </div>
 
 <div class="container" id="grid"></div>
 
-<!-- POPUP -->
-<div class="popup" id="popup">
-<div class="popup-header">
-<div>Cart / Wishlist</div>
-<button onclick="closePopup()">Close</button>
-</div>
-<div class="popup-content" id="popupContent"></div>
-</div>
-
 <!-- DETAIL -->
 <div class="detail" id="detailBox">
 <div class="detail-header">
-<div>Product Details</div>
-<button class="close-btn" onclick="closeDetail()">×</button>
+<div>Product</div>
+<button class="close" onclick="closeDetail()">×</button>
 </div>
+
 <div class="detail-body" id="detailBody"></div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-header">
+<div id="popupTitle">Cart</div>
+<button onclick="closePopup()">Close</button>
+</div>
+<div class="popup-content" id="popupContent"></div>
 </div>
 
 <script>
@@ -300,18 +289,17 @@ const products=[
 {name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
 ];
 
-let wish = [];
-let cart = [];
+let wish=[];
+let cart=[];
 
 /* RENDER */
-function render(){
+function render(data=products){
 let g=document.getElementById("grid");
 g.innerHTML="";
 
-products.forEach(p=>{
+data.forEach(p=>{
 g.innerHTML+=`
 <div class="card" onclick="openDetail('${p.name}')">
-<div class="discount">${Math.round((p.old-p.price)/p.old*100)}% OFF</div>
 <img src="${p.img}">
 <div class="card-content">
 <h3>${p.name}</h3>
@@ -321,29 +309,42 @@ g.innerHTML+=`
 });
 }
 
-/* DETAIL */
+/* SEARCH FIXED */
+document.getElementById("search").addEventListener("input",function(){
+let v=this.value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
+});
+
+/* DETAIL AMAZON STYLE */
 function openDetail(name){
 let p=products.find(x=>x.name===name);
-
-if(!p) return;
+let discount=Math.round(((p.old-p.price)/p.old)*100);
 
 document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}">
+<div class="detail-info">
 <h2>${p.name}</h2>
-<p style="color:green;font-size:18px;">₹${p.price}</p>
 
-<button class="action-btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
-<button class="action-btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
+<div>
+₹${p.price}
+<span class="old">₹${p.old}</span>
+</div>
+
+<div class="discount">${discount}% OFF</div>
+
+<button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
+<button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
+</div>
 `;
 
-document.getElementById("detailBox").style.display="flex";
+document.getElementById("detailBox").style.display="block";
 }
 
 function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
 
-/* CART */
+/* CART WITH QTY */
 function addCart(name){
 let p=products.find(x=>x.name===name);
 let item=cart.find(x=>x.name===name);
@@ -359,9 +360,8 @@ function buyNow(name){
 alert("Buying "+name);
 }
 
-/* POPUP */
+/* POPUP CART */
 function openPopup(type){
-
 let box=document.getElementById("popup");
 let content=document.getElementById("popupContent");
 
@@ -373,51 +373,38 @@ let total=0;
 content.innerHTML=cart.map(p=>{
 total+=p.price*p.qty;
 return `
-<div class="cart-item">
+<div class="item">
 <div>
-<b>${p.name}</b><br>
-₹${p.price} x ${p.qty}
+<b>${p.name}</b><br>₹${p.price}
 </div>
-<div>
+
+<div class="qty">
 <button onclick="changeQty('${p.name}',-1)">-</button>
 ${p.qty}
 <button onclick="changeQty('${p.name}',1)">+</button>
 </div>
-<button onclick="removeCart('${p.name}')">X</button>
-</div>
-`;
+</div>`;
 }).join("");
 
-content.innerHTML+=`<div><b>Total: ₹${total}</b></div>`;
-}
-
-if(type==="wishlist"){
-content.innerHTML="<p>Wishlist feature simple version</p>";
+content.innerHTML+=`<div class="total">Total: ₹${total}</div>`;
 }
 }
 
-function closePopup(){
-document.getElementById("popup").style.display="none";
-}
-
-/* CART FUNCTIONS */
+/* QTY */
 function changeQty(name,val){
 let item=cart.find(x=>x.name===name);
 if(!item) return;
 
 item.qty+=val;
-if(item.qty<=0){
-cart=cart.filter(x=>x.name!==name);
-}
+if(item.qty<=0) cart=cart.filter(x=>x.name!==name);
 
 updateCounts();
 openPopup("cart");
 }
 
-function removeCart(name){
-cart=cart.filter(x=>x.name!==name);
-updateCounts();
-openPopup("cart");
+/* CLOSE */
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
 
 /* COUNT */
