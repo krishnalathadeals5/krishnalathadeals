@@ -13,12 +13,28 @@ header {
   text-align:center;
 }
 
+/* TOP BAR */
 .top {
   position:fixed;
   top:10px;
   right:10px;
 }
 
+.top span {
+  margin:0 5px;
+  cursor:pointer;
+}
+
+/* SEARCH */
+.search {
+  padding:10px;
+}
+.search input {
+  width:100%;
+  padding:8px;
+}
+
+/* PRODUCTS */
 .products {
   display:flex;
   overflow-x:auto;
@@ -27,7 +43,7 @@ header {
 }
 
 .card {
-  min-width:180px;
+  min-width:200px;
   background:white;
   padding:10px;
   border-radius:10px;
@@ -43,9 +59,46 @@ button {
   width:100%;
   margin-top:5px;
   padding:8px;
+  border:none;
+  background:#2874f0;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+/* POPUP */
+.popup {
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:300px;
+  height:100%;
+  background:white;
+  transition:0.3s;
+  padding:10px;
+  overflow:auto;
+}
+
+.popup.active {
+  right:0;
+}
+
+.close {
+  cursor:pointer;
+  color:red;
+}
+
+/* SOCIAL */
+.social {
+  text-align:center;
+  margin:10px;
+}
+.social a {
+  margin:5px;
+  font-size:20px;
+  text-decoration:none;
 }
 </style>
-
 </head>
 
 <body>
@@ -53,111 +106,163 @@ button {
 <header>KrishnaLatha Deals</header>
 
 <div class="top">
-  🛒 <span onclick="openCart()">Cart</span>
-  ❤️ <span onclick="openWish()">Wish</span>
+  🛒 <span onclick="toggleCart()">Cart</span>
+  ❤️ <span onclick="toggleWish()">Wish</span>
 </div>
 
-<div id="products" class="products"></div>
+<div class="search">
+  <input type="text" placeholder="Search products..." onkeyup="searchProducts(this.value)">
+</div>
 
-<h3>Cart</h3>
-<div id="cart"></div>
+<div id="products" class="products">Loading...</div>
 
-<h3>Wishlist</h3>
-<div id="wish"></div>
+<!-- CART -->
+<div id="cartBox" class="popup">
+  <span class="close" onclick="toggleCart()">❌ Close</span>
+  <h3>Cart</h3>
+  <div id="cart"></div>
+</div>
+
+<!-- WISHLIST -->
+<div id="wishBox" class="popup">
+  <span class="close" onclick="toggleWish()">❌ Close</span>
+  <h3>Wishlist</h3>
+  <div id="wish"></div>
+</div>
+
+<!-- SOCIAL -->
+<div class="social">
+  <a href="#" style="color:#1877f2">Facebook</a>
+  <a href="#" style="color:#e4405f">Instagram</a>
+  <a href="#" style="color:#25d366">WhatsApp</a>
+</div>
 
 <script>
 
-// 🔥 YOUR GOOGLE SHEET API
+// 🔥 PUT YOUR API
 const API = "PASTE_YOUR_API_LINK_HERE";
 
 let products = [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 
-// SAVE
 function save(){
   localStorage.setItem("cart", JSON.stringify(cart));
   localStorage.setItem("wish", JSON.stringify(wish));
 }
 
-// LOAD PRODUCTS FROM SHEET
+// LOAD PRODUCTS
 async function loadProducts(){
-  try {
+  try{
     const res = await fetch(API);
     const data = await res.json();
 
     products = data.map(p => ({
       id: Number(p.id),
-      name: p.name || "No Name",
-      image: p.image || "https://via.placeholder.com/150",
-      price: Number(p.price) || 0,
-      oldPrice: Number(p.oldPrice) || 0,
-      link: p.affiliateLink || "#"
+      name: p.name,
+      image: p.image,
+      price: Number(p.price),
+      oldPrice: Number(p.oldPrice),
+      link: p.affiliateLink
     }));
 
-    showProducts();
+    showProducts(products);
 
-  } catch(e){
-    console.log("Error loading data", e);
+  } catch{
+    document.getElementById("products").innerHTML = "Error loading";
   }
 }
 
 // SHOW PRODUCTS
-function showProducts(){
-  let html="";
-  products.forEach(p=>{
+function showProducts(list){
+  let html = "";
+  list.forEach(p=>{
+    let heart = wish.some(w=>w.id===p.id) ? "💖" : "🤍";
+
     html += `
     <div class="card">
-      <img src="${p.image}" onerror="this.src='https://via.placeholder.com/150'">
-      
+      <img src="${p.image}">
       <div>${p.name}</div>
-
       <div>₹${p.price} <del>₹${p.oldPrice}</del></div>
 
       <button onclick="addCart(${p.id})">Add to Cart</button>
-      <button onclick="addWish(${p.id})">❤️ Wishlist</button>
+      <button onclick="toggleWishlist(${p.id})">${heart} Wishlist</button>
       <button onclick="buyNow('${p.link}')">Buy Now</button>
-    </div>
-    `;
+    </div>`;
   });
 
   document.getElementById("products").innerHTML = html;
 }
 
+// SEARCH
+function searchProducts(val){
+  let filtered = products.filter(p => 
+    p.name.toLowerCase().includes(val.toLowerCase())
+  );
+  showProducts(filtered);
+}
+
 // CART
 function addCart(id){
   if(!cart.some(p=>p.id===id)){
-    let p = products.find(x=>x.id===id);
-    cart.push(p);
+    let item = products.find(x=>x.id===id);
+    cart.push(item);
     save();
   }
-  openCart();
+  renderCart();
+  toggleCart();
 }
 
-function openCart(){
+function removeCart(id){
+  cart = cart.filter(p=>p.id!==id);
+  save();
+  renderCart();
+}
+
+function renderCart(){
   let html="";
   cart.forEach(p=>{
-    html += `<div>${p.name}</div>`;
+    html += `
+    <div>
+      <img src="${p.image}" width="50">
+      ${p.name} - ₹${p.price}
+      <button onclick="removeCart(${p.id})">Remove</button>
+    </div>`;
   });
-  document.getElementById("cart").innerHTML = html;
+  document.getElementById("cart").innerHTML = html || "Empty";
+}
+
+function toggleCart(){
+  document.getElementById("cartBox").classList.toggle("active");
 }
 
 // WISHLIST
-function addWish(id){
-  if(!wish.some(p=>p.id===id)){
-    let p = products.find(x=>x.id===id);
-    wish.push(p);
-    save();
+function toggleWishlist(id){
+  if(wish.some(p=>p.id===id)){
+    wish = wish.filter(p=>p.id!==id);
+  } else {
+    let item = products.find(x=>x.id===id);
+    wish.push(item);
   }
-  openWish();
+  save();
+  renderWish();
+  showProducts(products);
 }
 
-function openWish(){
+function renderWish(){
   let html="";
   wish.forEach(p=>{
-    html += `<div>${p.name}</div>`;
+    html += `
+    <div>
+      <img src="${p.image}" width="50">
+      ${p.name}
+    </div>`;
   });
-  document.getElementById("wish").innerHTML = html;
+  document.getElementById("wish").innerHTML = html || "Empty";
+}
+
+function toggleWish(){
+  document.getElementById("wishBox").classList.toggle("active");
 }
 
 // BUY
@@ -167,8 +272,8 @@ function buyNow(link){
 
 // INIT
 loadProducts();
-openCart();
-openWish();
+renderCart();
+renderWish();
 
 </script>
 
