@@ -494,8 +494,14 @@ let total=0;
 c.innerHTML = cart.map(p=>{
 total += p.price * p.qty;
 return `
-<div class="item">
-<div>${p.name} (₹${p.price})</div>
+<div class="item" style="display:flex;align-items:center;gap:15px;justify-content:space-between;">
+
+<img src="${p.img}" style="width:80px;height:80px;object-fit:contain;">
+
+<div style="flex:1;">
+<div>${p.name}</div>
+<div>₹${p.price}</div>
+</div>
 
 <div>
 <button onclick="changeQty('${p.name}',-1)">-</button>
@@ -503,7 +509,11 @@ ${p.qty}
 <button onclick="changeQty('${p.name}',1)">+</button>
 </div>
 
-<button class="remove-btn" onclick="removeCart('${p.name}')">X</button>
+<button class="remove-btn"
+onclick="removeCart('${p.name}')">
+✕
+</button>
+
 </div>`;
 }).join("");
 
