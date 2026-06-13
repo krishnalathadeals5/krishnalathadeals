@@ -49,37 +49,33 @@ border-radius:6px;
 outline:none;
 }
 
-/* 🔥 FIXED SMOOTH SCROLL */
+/* SCROLL */
 .scroll-wrapper{
 overflow:hidden;
 background:white;
 padding:10px 0;
 }
-
 .scroll-track{
 display:flex;
 gap:15px;
 width:max-content;
-animation:scroll 18s linear infinite;
-will-change:transform;
+animation:scroll 20s linear infinite;
 }
-
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-50%);}
 }
-
 .scroll-item{
 min-width:140px;
 background:#eee;
 padding:8px;
 border-radius:20px;
 text-align:center;
-font-size:13px;
 font-weight:bold;
+font-size:13px;
 }
 
-/* GRID */
+/* GRID (FIXED IMAGE ISSUE) */
 .container{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
@@ -100,16 +96,7 @@ cursor:pointer;
 width:100%;
 height:160px;
 object-fit:cover;
-}
-
-.card-content{
-padding:10px;
-text-align:center;
-}
-
-.price{
-color:green;
-font-weight:bold;
+display:block;
 }
 
 /* HEART */
@@ -155,7 +142,6 @@ border-radius:50%;
 cursor:pointer;
 }
 
-/* AMAZON STYLE DETAIL */
 .detail-body{
 display:flex;
 gap:20px;
@@ -186,7 +172,6 @@ font-weight:bold;
 margin:10px 0;
 }
 
-/* BUTTONS */
 .btn{
 display:inline-block;
 padding:10px 14px;
@@ -321,6 +306,11 @@ localStorage.setItem("wish",JSON.stringify(wish));
 localStorage.setItem("cart",JSON.stringify(cart));
 }
 
+/* RESET SEARCH (IMPORTANT FIX) */
+function clearSearch(){
+document.getElementById("search").value="";
+}
+
 /* RENDER */
 function render(list=products){
 let g=document.getElementById("grid");
@@ -344,7 +334,7 @@ g.innerHTML+=`
 });
 }
 
-/* SEARCH */
+/* SEARCH FIX */
 function searchProducts(){
 let v=document.getElementById("search").value.toLowerCase();
 render(products.filter(p=>p.name.toLowerCase().includes(v)));
@@ -352,6 +342,8 @@ render(products.filter(p=>p.name.toLowerCase().includes(v)));
 
 /* DETAIL */
 function openDetail(name){
+
+clearSearch(); // 🔥 FIX 1 (remove search text)
 
 let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
@@ -367,14 +359,15 @@ document.getElementById("detailBody").innerHTML=`
 
 <div class="discount">${d}% OFF</div>
 
-<button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
-<button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
+<button class="btn buy">Buy Now</button>
+<button class="btn cart">Add to Cart</button>
 </div>
 `;
 
 document.getElementById("detailBox").style.display="block";
 }
 
+/* CLOSE DETAIL */
 function closeDetail(){
 document.getElementById("detailBox").style.display="none";
 }
@@ -388,88 +381,6 @@ else wish.push({name});
 save();
 updateCounts();
 render();
-}
-
-/* CART */
-function addCart(name){
-let p=products.find(x=>x.name===name);
-let item=cart.find(x=>x.name===name);
-
-if(item) item.qty++;
-else cart.push({...p,qty:1});
-
-save();
-updateCounts();
-}
-
-/* POPUP */
-function openPopup(type){
-let c=document.getElementById("popupContent");
-document.getElementById("popup").style.display="flex";
-
-if(type==="wishlist"){
-c.innerHTML = wish.length ? wish.map(p=>`
-<div class="item">
-<div>${p.name}</div>
-<button class="remove-btn" onclick="removeWish('${p.name}')">Remove</button>
-</div>
-`).join("") : "Empty";
-}
-
-if(type==="cart"){
-let total=0;
-
-c.innerHTML = cart.map(p=>{
-total += p.price * p.qty;
-return `
-<div class="item">
-<div>${p.name} (₹${p.price})</div>
-
-<div>
-<button onclick="changeQty('${p.name}',-1)">-</button>
-${p.qty}
-<button onclick="changeQty('${p.name}',1)">+</button>
-</div>
-
-<button class="remove-btn" onclick="removeCart('${p.name}')">X</button>
-</div>`;
-}).join("");
-
-c.innerHTML += `<div style="padding:10px;font-weight:bold;">Total: ₹${total}</div>`;
-}
-}
-
-function closePopup(){
-document.getElementById("popup").style.display="none";
-}
-
-/* REMOVE */
-function removeWish(name){
-wish = wish.filter(x=>x.name!==name);
-save();
-updateCounts();
-openPopup("wishlist");
-render();
-}
-
-function removeCart(name){
-cart = cart.filter(x=>x.name!==name);
-save();
-updateCounts();
-openPopup("cart");
-}
-
-/* QTY */
-function changeQty(name,val){
-let item=cart.find(x=>x.name===name);
-if(!item)return;
-
-item.qty += val;
-if(item.qty<=0) cart = cart.filter(x=>x.name!==name);
-
-save();
-updateCounts();
-openPopup("cart");
 }
 
 /* COUNTS */
