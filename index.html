@@ -277,6 +277,14 @@ cursor:pointer;
 </div>
 </div>
 
+<div style="padding:10px;text-align:center;background:white;">
+<button onclick="filterCategory('All')">All</button>
+<button onclick="filterCategory('Home')">Home</button>
+<button onclick="filterCategory('Electronics')">Electronics</button>
+<button onclick="filterCategory('Bags')">Bags</button>
+<button onclick="filterCategory('Kitchen')">Kitchen</button>
+</div>
+
 <div class="container" id="grid"></div>
 
 <!-- DETAIL -->
@@ -316,7 +324,8 @@ name:p.name,
 price:Number(p.price),
 old:Number(p.oldPrice),
 img:p.image,
-link:p.affiliateLink
+link:p.affiliateLink,
+category:p.category || "Other"
 }));
 
 render();
@@ -506,7 +515,18 @@ function updateCounts(){
 document.getElementById("wishCount").innerText = wish.length;
 document.getElementById("cartCount").innerText = cart.length;
 }
+function filterCategory(category){
 
+if(category==="All"){
+render(products);
+return;
+}
+
+render(products.filter(
+p => p.category === category
+));
+
+}
 loadProducts();
 updateCounts();
 
