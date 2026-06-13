@@ -300,18 +300,36 @@ cursor:pointer;
 
 <script>
 
-const products=[
-{name:"Kitchen Box",price:999,old:1499,img:"images/storage.jpg"},
-{name:"Towel Set",price:299,old:499,img:"images/towel.jpg"},
-{name:"Shoes",price:1499,old:1999,img:"images/shoes.jpg"},
-{name:"Watch",price:1999,old:2499,img:"images/watch.jpg"},
-{name:"Bag",price:899,old:1299,img:"images/bag.jpg"},
-{name:"Diya",price:199,old:299,img:"images/diya.jpg"},
-{name:"Laptop",price:45999,old:50999,img:"images/laptop.jpg"},
-{name:"Mobile",price:14999,old:16999,img:"images/mobile.jpg"},
-{name:"Plant",price:299,old:499,img:"images/plant.jpg"},
-{name:"Headphones",price:1299,old:1999,img:"images/headphones.jpg"}
-];
+let products = [];
+
+async function loadProducts(){
+
+const url="https://script.google.com/macros/s/AKfycbzYhxE_0NfstLPwOpFB6e5hiRWW4mLW_YTrMaAJO5XGIyMvsGKvf1QPUCyT9QaNOWfoyw/exec";
+
+try{
+
+const res = await fetch(url);
+const data = await res.json();
+
+products = data.map(p=>({
+name:p.name,
+price:Number(p.price),
+old:Number(p.oldPrice),
+img:p.image,
+link:p.affiliateLink
+}));
+
+render();
+
+}catch(err){
+
+console.error(err);
+
+document.getElementById("grid").innerHTML=
+"<h2 style='padding:20px'>Unable to load products</h2>";
+
+}
+}
 
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -401,7 +419,18 @@ else cart.push({...p,qty:1});
 save();
 updateCounts();
 }
+function buyNow(name){
 
+let p=products.find(x=>x.name===name);
+
+if(!p || !p.link){
+alert("Affiliate link not available");
+return;
+}
+
+window.open(p.link,"_blank");
+
+}
 /* POPUP */
 function openPopup(type){
 let c=document.getElementById("popupContent");
@@ -478,7 +507,7 @@ document.getElementById("wishCount").innerText = wish.length;
 document.getElementById("cartCount").innerText = cart.length;
 }
 
-render();
+loadProducts();
 updateCounts();
 
 </script>
