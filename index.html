@@ -529,7 +529,9 @@ g.innerHTML+=`
 <div class="heart ${isW?'active':''}"
 onclick="event.stopPropagation(); event.preventDefault(); toggleWish('${p.name}'); return false;">❤</div>
 <img src="${p.img}">
-
+<div class="discount-badge">
+${Math.round(((p.old-p.price)/p.old)*100)}% OFF
+</div>
 <div class="card-content">
 <h3>${p.name}</h3>
 <div class="price">₹${p.price}</div>
