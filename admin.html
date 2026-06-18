@@ -214,7 +214,30 @@ loadProducts();
 }
 
 window.deleteProduct = deleteProduct;
+async function editProduct(id){
 
+const productRef = doc(db,"products",id);
+
+const productSnap = await getDoc(productRef);
+
+const product = productSnap.data();
+
+const newName = prompt(
+"Edit Product Name",
+product.name
+);
+
+if(newName === null) return;
+
+await updateDoc(productRef,{
+name:newName
+});
+
+loadProducts();
+
+}
+
+window.editProduct = editProduct;
 document.getElementById("productForm")
 .addEventListener("submit", async (e) => {
 
