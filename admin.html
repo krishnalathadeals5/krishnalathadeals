@@ -170,7 +170,8 @@ html += `
 <div class="product-card">
 <strong>${product.name || ""}</strong><br>
 Price: ${product.price || ""}<br>
-Category: ${product.category || ""}<br><br>
+Category: ${product.category || ""}<br>
+Status: ${product.status || "Active"}<br><br>
 
 <button type="button"
 onclick="editProduct('${productDoc.id}')">
