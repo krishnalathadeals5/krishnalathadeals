@@ -176,6 +176,15 @@ let html = "";
 snapshot.forEach((productDoc) => {
 
 const product = productDoc.data();
+const searchText =
+document.getElementById("searchBox").value.toLowerCase();
+
+if(
+searchText &&
+!(product.name || "").toLowerCase().includes(searchText)
+){
+return;
+}    
 if((product.status || "Active").toLowerCase() === "expired"){
     expiredCount++;
 }else{
