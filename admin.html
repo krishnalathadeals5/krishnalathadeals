@@ -118,7 +118,7 @@ Add Product
 Logout
 </button>
 <h3>Products</h3>
-
+<h3 id="productCount">Total Products: 0</h3>
 <div id="productList">
 Loading products...
 </div>
@@ -159,7 +159,8 @@ async function loadProducts() {
 try {
 
 const snapshot = await getDocs(collection(db,"products"));
-
+document.getElementById("productCount").innerHTML =
+"Total Products: " + snapshot.size;
 let html = "";
 
 snapshot.forEach((productDoc) => {
