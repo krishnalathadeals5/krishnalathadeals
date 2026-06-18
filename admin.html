@@ -130,7 +130,29 @@ appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+async function loadProducts() {
 
+const snapshot = await getDocs(collection(db, "products"));
+
+let html = "";
+
+snapshot.forEach((doc) => {
+
+const product = doc.data();
+
+html += `
+<div style="border:1px solid #ddd;padding:10px;margin-bottom:10px;background:white;">
+    <strong>${product.name || ""}</strong><br>
+    Price: ${product.price || ""}<br>
+    Category: ${product.category || ""}<br>
+</div>
+`;
+
+});
+
+document.getElementById("productList").innerHTML = html;
+
+}
 document.getElementById("productForm")
 .addEventListener("submit", async (e) => {
 
