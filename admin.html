@@ -237,7 +237,13 @@ document.getElementById("status").innerHTML =
 }
 
 });
+window.logout = function () {
 
+localStorage.removeItem("adminLoggedIn");
+
+window.location.href = "login.html";
+
+};
 loadProducts();
 
 </script>
