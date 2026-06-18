@@ -216,6 +216,8 @@ loadProducts();
 window.deleteProduct = deleteProduct;
 async function editProduct(id){
 
+try {
+
 const productRef = doc(db,"products",id);
 
 const productSnap = await getDoc(productRef);
@@ -232,12 +234,23 @@ if(newName === null) return;
 const newStatus = confirm(
 "Click OK = Active\n\nClick Cancel = Expired"
 ) ? "active" : "expired";
+
 await updateDoc(productRef,{
 name: newName,
 status: newStatus
 });
 
+alert("✅ Product Updated Successfully");
+
 loadProducts();
+
+} catch(error){
+
+console.error(error);
+
+alert("❌ " + error.message);
+
+}
 
 }
 
