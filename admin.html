@@ -1,3 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Krishnalatha Deals Admin</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+    padding:30px;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:15px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#ff9800;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.product-card{
+    border:1px solid #ddd;
+    padding:10px;
+    margin-bottom:10px;
+    background:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Krishnalatha Deals Admin</h1>
+
+<h3>Add Product</h3>
+
+<form id="productForm">
+
+<label>Product Name</label>
+<input type="text" id="name" required>
+
+<label>Price</label>
+<input type="text" id="price" required>
+
+<label>Original Price</label>
+<input type="text" id="originalPrice">
+
+<label>Image URL</label>
+<input type="text" id="image">
+
+<label>Category</label>
+
+<select id="category">
+<option value="Deals">Deals</option>
+<option value="Mobiles">Mobiles</option>
+<option value="Electronics">Electronics</option>
+<option value="Computers">Computers</option>
+<option value="Home">Home</option>
+<option value="Fashion">Fashion</option>
+<option value="Beauty">Beauty</option>
+<option value="Grocery">Grocery</option>
+<option value="Bags">Bags</option>
+<option value="Kids">Kids</option>
+<option value="Toys">Toys</option>
+<option value="Books">Books</option>
+<option value="Health">Health</option>
+<option value="Sports">Sports</option>
+<option value="Auto">Auto</option>
+</select>
+
+<label>Amazon Link</label>
+<input type="text" id="amazonLink">
+
+<button type="submit">
+Add Product
+</button>
+
+</form>
+
+<p id="status"></p>
+
+<h3>Products</h3>
+
+<div id="productList">
+Loading products...
+</div>
+
+</div>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -11,11 +125,6 @@ deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import {
-getAuth,
-onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 const firebaseConfig = {
 apiKey: "AIzaSyBnp4vvQwB8e2ZedPXmhScChGu-VX_xJYA",
 authDomain: "krishnalatha-deals.firebaseapp.com",
@@ -27,24 +136,12 @@ appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
-/* Protect Admin Page */
-onAuthStateChanged(auth, (user) => {
-
-if (!user) {
-window.location.href = "login.html";
-return;
-}
-
-loadProducts();
-
-});
-
-/* Load Products */
 async function loadProducts() {
 
-const snapshot = await getDocs(collection(db, "products"));
+try {
+
+const snapshot = await getDocs(collection(db,"products"));
 
 let html = "";
 
@@ -53,12 +150,13 @@ snapshot.forEach((productDoc) => {
 const product = productDoc.data();
 
 html += `
-<div style="border:1px solid #ddd;padding:10px;margin-bottom:10px;background:white;">
+<div class="product-card">
 <strong>${product.name || ""}</strong><br>
 Price: ${product.price || ""}<br>
 Category: ${product.category || ""}<br><br>
 
-<button type="button" onclick="deleteProduct('${productDoc.id}')">
+<button type="button"
+onclick="deleteProduct('${productDoc.id}')">
 Delete
 </button>
 
@@ -70,9 +168,17 @@ Delete
 document.getElementById("productList").innerHTML =
 html || "No products found";
 
+} catch(error){
+
+console.log(error);
+
+document.getElementById("productList").innerHTML =
+"Error loading products";
+
 }
 
-/* Delete Product */
+}
+
 async function deleteProduct(id){
 
 if(!confirm("Delete this product?")){
@@ -87,7 +193,6 @@ loadProducts();
 
 window.deleteProduct = deleteProduct;
 
-/* Add Product */
 document.getElementById("productForm")
 .addEventListener("submit", async (e) => {
 
@@ -102,7 +207,7 @@ price: document.getElementById("price").value,
 originalPrice: document.getElementById("originalPrice").value,
 image: document.getElementById("image").value,
 amazonLink: document.getElementById("amazonLink").value,
-category: document.getElementById("category").value || "Other",
+category: document.getElementById("category").value,
 createdAt: new Date()
 
 });
@@ -116,13 +221,18 @@ loadProducts();
 
 } catch(error){
 
-document.getElementById("status").innerHTML =
-"❌ Error: " + error.message;
-
 console.log(error);
+
+document.getElementById("status").innerHTML =
+"❌ " + error.message;
 
 }
 
 });
 
+loadProducts();
+
 </script>
+
+</body>
+</html>
