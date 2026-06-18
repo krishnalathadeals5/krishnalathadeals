@@ -163,6 +163,9 @@ try {
 const snapshot = await getDocs(collection(db,"products"));
 document.getElementById("productCount").innerHTML =
 "Total Products: " + snapshot.size;
+let activeCount = 0;
+let expiredCount = 0;
+
 let html = "";
 
 snapshot.forEach((productDoc) => {
