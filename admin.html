@@ -179,12 +179,20 @@ const product = productDoc.data();
 const searchText =
 document.getElementById("searchBox").value.toLowerCase();
 
+const searchableText =
+`
+${product.name || ""}
+${product.category || ""}
+${productDoc.id || ""}
+`
+.toLowerCase();
+
 if(
 searchText &&
-!(product.name || "").toLowerCase().includes(searchText)
+!searchableText.includes(searchText)
 ){
 return;
-}    
+}
 if((product.status || "Active").toLowerCase() === "expired"){
     expiredCount++;
 }else{
