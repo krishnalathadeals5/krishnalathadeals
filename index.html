@@ -570,7 +570,9 @@ products = [];
 snapshot.forEach((doc)=>{
 
 const p = doc.data();
-
+if(p.status === "Expired"){
+return;
+}
 products.push({
 name: p.name || "",
 price: Number(p.price || 0),
