@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <title>Krishnalatha Deals Admin</title>
@@ -51,22 +52,17 @@ button{
 
 <h3>Add Product</h3>
 
-<form>
+<form id="productForm">
 
-<label>Product Name</label>
-<input type="text">
+<label>Product Name</label> <input type="text" id="name" required>
 
-<label>Price</label>
-<input type="text">
+<label>Price</label> <input type="text" id="price" required>
 
-<label>Original Price</label>
-<input type="text">
+<label>Original Price</label> <input type="text" id="originalPrice">
 
-<label>Image URL</label>
-<input type="text">
+<label>Image URL</label> <input type="text" id="image">
 
-<label>Amazon Link</label>
-<input type="text">
+<label>Amazon Link</label> <input type="text" id="amazonLink">
 
 <button type="submit">
 Add Product
@@ -74,7 +70,65 @@ Add Product
 
 </form>
 
+<p id="status"></p>
+
 </div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyBnp4vvQwB8e2ZedPXmhScChGu-VX_xJYA",
+authDomain: "krishnalatha-deals.firebaseapp.com",
+projectId: "krishnalatha-deals",
+storageBucket: "krishnalatha-deals.firebasestorage.app",
+messagingSenderId: "390458780701",
+appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+document.getElementById("productForm")
+.addEventListener("submit", async (e) => {
+
+e.preventDefault();
+
+try {
+
+await addDoc(collection(db,"products"),{
+name: document.getElementById("name").value,
+price: document.getElementById("price").value,
+originalPrice: document.getElementById("originalPrice").value,
+image: document.getElementById("image").value,
+amazonLink: document.getElementById("amazonLink").value,
+createdAt: new Date()
+});
+
+document.getElementById("status").innerHTML =
+"✅ Product Added Successfully";
+
+document.getElementById("productForm").reset();
+
+} catch(error){
+
+document.getElementById("status").innerHTML =
+"❌ Error: " + error.message;
+
+console.log(error);
+
+}
+
+});
+
+</script>
 
 </body>
 </html>
