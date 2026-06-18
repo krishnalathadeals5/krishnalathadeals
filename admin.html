@@ -159,7 +159,7 @@ html += `
 document.getElementById("productList").innerHTML = html;
 
 }
-    window.deleteProduct = async function(id){
+    async function deleteProduct(id){
 
     if(!confirm("Delete this product?")){
         return;
