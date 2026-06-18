@@ -624,7 +624,7 @@ let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
 
 document.getElementById("detailBody").innerHTML=`
-<img src="${p.img}">
+<img src="${p.img}" onclick="openImageModal('${p.img}')">
 <div class="detail-info">
 <h2>${p.name}</h2>
 
