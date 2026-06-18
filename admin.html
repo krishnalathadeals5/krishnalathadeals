@@ -171,7 +171,11 @@ let html = "";
 snapshot.forEach((productDoc) => {
 
 const product = productDoc.data();
-
+if((product.status || "Active").toLowerCase() === "expired"){
+    expiredCount++;
+}else{
+    activeCount++;
+}
 html += `
 <div class="product-card">
 <strong>${product.name || ""}</strong><br>
