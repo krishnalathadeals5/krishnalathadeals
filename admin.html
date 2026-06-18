@@ -148,15 +148,26 @@ html += `
     Price: ${product.price || ""}<br>
     Category: ${product.category || ""}<br><br>
 
-    <button onclick="deleteProduct('${productDoc.id}')"
-        Delete
-    </button>
+    <button onclick="deleteProduct('${productDoc.id}')">
+    Delete
+</button>
 </div>
 `;
 
 });
 
 document.getElementById("productList").innerHTML = html;
+
+}
+    window.deleteProduct = async function(id){
+
+    if(!confirm("Delete this product?")){
+        return;
+    }
+
+    await deleteDoc(doc(db,"products",id));
+
+    loadProducts();
 
 }
 loadProducts();    
