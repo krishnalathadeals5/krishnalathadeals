@@ -547,21 +547,43 @@ let products = [];
 
 async function loadProducts(){
 
-const url="https://script.google.com/macros/s/AKfycbzYhxE_0NfstLPwOpFB6e5hiRWW4mLW_YTrMaAJO5XGIyMvsGKvf1QPUCyT9QaNOWfoyw/exec";
-
 try{
 
-const res = await fetch(url);
-const data = await res.json();
+const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
 
-products = data.map(p=>({
-name:p.name,
-price:Number(p.price),
-old:Number(p.oldPrice),
-img:p.image,
-link:p.affiliateLink,
-category:p.category || "Other"
-}));
+const { getFirestore, collection, getDocs }
+= await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+const firebaseConfig = {
+apiKey: "AIzaSyBnp4vvQwB8e2ZedPXmhScChGu-VX_xJYA",
+authDomain: "krishnalatha-deals.firebaseapp.com",
+projectId: "krishnalatha-deals",
+storageBucket: "krishnalatha-deals.firebasestorage.app",
+messagingSenderId: "390458780701",
+appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const snapshot = await getDocs(collection(db,"products"));
+
+products = [];
+
+snapshot.forEach((doc)=>{
+
+const p = doc.data();
+
+products.push({
+name: p.name || "",
+price: Number(p.price || 0),
+old: Number(p.originalPrice || p.price || 0),
+img: p.image || "",
+link: p.amazonLink || "",
+category: p.category || "Other"
+});
+
+});
 
 render();
 
@@ -569,10 +591,11 @@ render();
 
 console.error(err);
 
-document.getElementById("grid").innerHTML=
+document.getElementById("grid").innerHTML =
 "<h2 style='padding:20px'>Unable to load products</h2>";
 
 }
+
 }
 
 let wish = JSON.parse(localStorage.getItem("wish")) || [];
