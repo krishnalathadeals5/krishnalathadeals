@@ -138,15 +138,19 @@ const snapshot = await getDocs(collection(db, "products"));
 
 let html = "";
 
-snapshot.forEach((doc) => {
+snapshot.forEach((productDoc) => {
 
-const product = doc.data();
+const product = productDoc.data();
 
 html += `
 <div style="border:1px solid #ddd;padding:10px;margin-bottom:10px;background:white;">
     <strong>${product.name || ""}</strong><br>
     Price: ${product.price || ""}<br>
-    Category: ${product.category || ""}<br>
+    Category: ${product.category || ""}<br><br>
+
+    <button onclick="deleteProduct('${productDoc.id}')"
+        Delete
+    </button>
 </div>
 `;
 
