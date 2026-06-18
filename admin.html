@@ -229,13 +229,9 @@ product.name
 
 if(newName === null) return;
 
-const newStatus = prompt(
-"Status (Active or Expired)",
-product.status || "Active"
-);
-
-if(newStatus === null) return;
-
+const newStatus = confirm(
+"Click OK = Active\n\nClick Cancel = Expired"
+) ? "active" : "expired";
 await updateDoc(productRef,{
 name: newName,
 status: newStatus
