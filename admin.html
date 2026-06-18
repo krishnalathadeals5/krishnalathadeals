@@ -53,6 +53,12 @@ button{
 
 <body>
 
+<script>
+if(localStorage.getItem("adminLoggedIn") !== "true"){
+    window.location.href = "login.html";
+}
+</script>
+
 <div class="container">
 
 <h1>Krishnalatha Deals Admin</h1>
