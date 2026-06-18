@@ -229,8 +229,16 @@ product.name
 
 if(newName === null) return;
 
+const newStatus = prompt(
+"Status (Active or Expired)",
+product.status || "Active"
+);
+
+if(newStatus === null) return;
+
 await updateDoc(productRef,{
-name:newName
+name: newName,
+status: newStatus
 });
 
 loadProducts();
