@@ -753,14 +753,16 @@ render();
 
 /* CART */
 function addCart(name){
-let p=products.find(x=>x.name===name);
-let item=cart.find(x=>x.name===name);
+  let p = products.find(x=>x.name===name);
+  let item = cart.find(x=>x.name===name);
 
-if(item) item.qty++;
-else if(p) cart.push({...p,qty:1});
+  if(item) item.qty++;
+  else if(p) cart.push({...p, qty:1});
 
-save();
-updateCounts();
+  save();
+  updateCounts();
+
+  updateButtonCount(name); // ✅ ADD THIS LINE
 }
 function buyNow(name){
 
