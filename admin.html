@@ -307,7 +307,30 @@ ${(() => {
         product.meeshoPrice
     ].filter(p => p !== null && p !== undefined);
 
-    const bestPrice = prices.length ? Math.min(...prices) : "N/A";
+    ${(() => {
+    const prices = [
+        { name: "Amazon", value: product.amazonPrice, link: product.amazonLink, color:"#ff9900" },
+        { name: "Flipkart", value: product.flipkartPrice, link: product.flipkartLink, color:"#2874f0" },
+        { name: "Myntra", value: product.myntraPrice, link: product.myntraLink, color:"#ff3f6c" },
+        { name: "Meesho", value: product.meeshoPrice, link: product.meeshoLink, color:"#9c27b0" }
+    ].filter(p => p.value !== null && p.value !== undefined);
+
+    const best = prices.length ? prices.reduce((a,b)=> a.value < b.value ? a : b) : null;
+
+    return `
+    <strong>Best Price: ₹${best ? best.value : "N/A"} ${best ? "🔥" : ""}</strong><br>
+
+    ${prices.map(p => `
+        <div style="
+            padding:5px;
+            margin:3px 0;
+            ${best && p.value === best.value ? "background:#d4edda; font-weight:bold;" : ""}
+        ">
+        ${p.name}: ₹${p.value}
+        </div>
+    `).join("")}
+    `;
+})()}
 
     return `
     <strong>Best Price: ₹${bestPrice}</strong><br>
