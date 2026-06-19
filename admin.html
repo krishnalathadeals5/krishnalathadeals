@@ -262,7 +262,7 @@ if((product.status || "Active").toLowerCase() === "expired"){
     activeCount++;
 }
 html += `
-<div class="product-card">
+<div class="product-card" style="${product.status === 'Expired' ? 'opacity:0.5;' : ''}">
 
 
 <img src="${product.image || ''}"
