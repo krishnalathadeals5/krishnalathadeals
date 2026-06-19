@@ -233,14 +233,18 @@ if (selectedCategory && product.category !== selectedCategory) {
 }
 if (searchValue) {
 
-    const fullData = (
+   const fullData = (
     (product.name || "") + " " +
     (product.id || "") + " " +
     (product.category || "") + " " +
     (product.price || "") + " " +
     (product.originalPrice || "") + " " +
-    (product.status || "")
-).toLowerCase();
+    (product.status || "") + " " +
+    (product.amazonLink || "")
+)
+.toString()
+.toLowerCase()
+.replace(/\s+/g, " ");
 console.log("DATA:", fullData, "SEARCH:", searchValue);
 
     if (!fullData.includes(searchValue)) {
