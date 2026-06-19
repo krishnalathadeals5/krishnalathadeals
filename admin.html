@@ -184,20 +184,7 @@ products.push({
 id: productDoc.id,
 ...productDoc.data()
 });
-const sortPrice =
-document.getElementById("sortPrice").value;
 
-if(sortPrice === "low"){
-products.sort((a,b) =>
-Number(a.price) - Number(b.price)
-);
-}
-
-if(sortPrice === "high"){
-products.sort((a,b) =>
-Number(b.price) - Number(a.price)
-);
-}
 
 
 
