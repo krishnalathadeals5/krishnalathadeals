@@ -219,6 +219,7 @@ if (searchValue) {
     (product.originalPrice || "") + " " +
     (product.status || "")
 ).toLowerCase();
+console.log("DATA:", fullData, "SEARCH:", searchValue);
 
     if (!fullData.includes(searchValue)) {
         return;
