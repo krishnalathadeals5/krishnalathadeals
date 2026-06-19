@@ -659,8 +659,8 @@ ${p.old > 0 ? Math.round(((p.old-p.price)/p.old)*100) : 0}% OFF
 <div class="price">₹${p.price}</div>
 <div class="old-price">₹${p.old}</div>
 
-<button class="deal-btn" style="margin-top:auto;" onclick="event.stopPropagation(); addCart('${p.name}')">
-Add to Cart (<span id="btnCartCount_${p.name.replace(/\s/g,'')}">0</span>)
+<button class="deal-btn" style="margin-top:auto;" onclick="event.stopPropagation(); openDetail('${p.name}')">
+View Deal
 </button>
 </div>
 </div>`;
@@ -718,8 +718,8 @@ onclick="event.stopPropagation()"
 class="btn meesho">Buy Now</a>
 ` : ""}
 
-<button class="btn cart" onclick="addCart('${p.name}')">
-Add to Cart (<span id="btnCartCount">${cart.length}</span>)
+<button class="btn cart" onclick="window.open('${p.meeshoLink}','_blank')">
+View Deal
 </button>
 
 </div>
@@ -792,8 +792,8 @@ if(type==="wishlist"){
 <div>₹${p.price}</div>
 </div>
 
-<button onclick="addCart('${p.name}')">
-Add To Cart
+<button onclick="window.open('${p.meeshoLink}','_blank')">
+View Deal
 </button>
 
 <button class="remove-btn"
