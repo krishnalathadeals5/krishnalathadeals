@@ -664,7 +664,7 @@ let d=Math.round(((p.old-p.price)/p.old)*100);
 
 document.getElementById("detailBody").innerHTML=`
 <img src="${p.img}" onclick="openImageModal('${p.img}')">
-<div class="detail-info">
+<div class="detail-info" style="display:flex;flex-direction:column;gap:10px;">
 <h2>${p.name}</h2>
 
 <div>
@@ -698,6 +698,7 @@ onclick="event.stopPropagation()"
 class="btn meesho">Meesho</a>
 ` : ""}
 
+</div>
 </div>
 
  
