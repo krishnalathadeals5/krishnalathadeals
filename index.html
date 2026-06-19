@@ -868,10 +868,15 @@ p => p.category === category
 ));
 
 }
- function openImageModal(src){
-    document.getElementById("modalImage").src = src;
-    document.getElementById("imageModal").style.display = "flex";
-}
+function openImageModal(src){
+    let img = document.getElementById("modalImage");
+    let modal = document.getElementById("imageModal");
+
+    if(img && modal){
+        img.src = src;
+        modal.style.display = "flex";
+    }
+} 
 
 function closeImageModal(){
     document.getElementById("imageModal").style.display = "none";
