@@ -186,8 +186,21 @@ id: productDoc.id,
 });
 
 });
+const sortPrice =
+document.getElementById("sortPrice").value;
 
-const product = productDoc.data();
+if(sortPrice === "low"){
+products.sort((a,b) =>
+Number(a.price) - Number(b.price)
+);
+}
+
+if(sortPrice === "high"){
+products.sort((a,b) =>
+Number(b.price) - Number(a.price)
+);
+}
+
 const searchText =
 document.getElementById("searchBox").value.toLowerCase();
 
