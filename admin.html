@@ -200,12 +200,7 @@ if (sortValue === "high") {
 
 
 
-if(
-searchText &&
-!searchableText.includes(searchText)
-){
-return;
-}
+
 if((product.status || "Active").toLowerCase() === "expired"){
     expiredCount++;
 }else{
