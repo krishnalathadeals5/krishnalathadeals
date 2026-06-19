@@ -675,9 +675,25 @@ document.getElementById("detailBody").innerHTML=`
 
 <div class="buy-buttons">
 
+ <div class="buy-buttons">
+
   ${p.amazonLink ? `
-  <a href="${p.amazonLink}" target="_blank" class="btn amazon">Amazon</a>
+    <a href="${p.amazonLink}" target="_blank" class="btn amazon">Amazon</a>
   ` : ""}
+
+  ${p.flipkartLink ? `
+    <a href="${p.flipkartLink}" target="_blank" class="btn flipkart">Flipkart</a>
+  ` : ""}
+
+  ${p.myntraLink ? `
+    <a href="${p.myntraLink}" target="_blank" class="btn myntra">Myntra</a>
+  ` : ""}
+
+  ${p.meeshoLink ? `
+    <a href="${p.meeshoLink}" target="_blank" class="btn meesho">Meesho</a>
+  ` : ""}
+
+</div>
 
   ${p.flipkartLink ? `
   <a href="${p.flipkartLink}" target="_blank" class="btn flipkart">Flipkart</a>
