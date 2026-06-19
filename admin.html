@@ -226,6 +226,11 @@ const searchValue = document.getElementById("searchBox").value.trim().toLowerCas
 
 products.forEach((product) => {
 
+const selectedCategory = document.getElementById("filterCategory").value;
+
+if (selectedCategory && product.category !== selectedCategory) {
+    return;
+}
 if (searchValue) {
 
     const fullData = (
