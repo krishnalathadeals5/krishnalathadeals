@@ -203,7 +203,16 @@ if (sortValue === "high") {
 
 
 
+const searchValue = document.getElementById("searchBox").value.toLowerCase();
+
 products.forEach((product) => {
+
+if (
+    searchValue &&
+    !(product.name || "").toLowerCase().includes(searchValue)
+) {
+    return;
+}
     
 if((product.status || "Active").toLowerCase() === "expired"){
     expiredCount++;
