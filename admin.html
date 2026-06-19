@@ -207,11 +207,21 @@ const searchValue = document.getElementById("searchBox").value.toLowerCase();
 
 products.forEach((product) => {
 
-if (
-    searchValue &&
-    !(product.name || "").toLowerCase().includes(searchValue)
-) {
-    return;
+if (searchValue) {
+
+    const name = (product.name || "").toLowerCase();
+    const id = (product.id || "").toLowerCase();
+    const category = (product.category || "").toLowerCase();
+    const price = (product.price || "").toString().toLowerCase();
+
+    if (
+        !name.includes(searchValue) &&
+        !id.includes(searchValue) &&
+        !category.includes(searchValue) &&
+        !price.includes(searchValue)
+    ) {
+        return;
+    }
 }
     
 if((product.status || "Active").toLowerCase() === "expired"){
