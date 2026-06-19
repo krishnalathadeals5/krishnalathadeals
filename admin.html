@@ -284,6 +284,12 @@ Category: ${product.category || ""}<br>
 
 Status: ${product.status || "Active"}<br><br>
 
+<a href="${product.amazonLink || '#'}" target="_blank">
+<button style="background:green;margin-bottom:5px;">
+View Product
+</button>
+</a>
+
 <button type="button"
 onclick="editProduct('${product.id}')">
 Edit
