@@ -211,14 +211,14 @@ products.forEach((product) => {
 
 if (searchValue) {
 
-    const fullData = `
-        ${product.name || ""}
-        ${product.id || ""}
-        ${product.category || ""}
-        ${product.price || ""}
-        ${product.originalPrice || ""}
-        ${product.status || ""}
-    `.toLowerCase();
+    const fullData = (
+    (product.name || "") + " " +
+    (product.id || "") + " " +
+    (product.category || "") + " " +
+    (product.price || "") + " " +
+    (product.originalPrice || "") + " " +
+    (product.status || "")
+).toLowerCase();
 
     if (!fullData.includes(searchValue)) {
         return;
