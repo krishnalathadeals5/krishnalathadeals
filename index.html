@@ -578,11 +578,14 @@ name: p.name || "",
 price: Number(p.price || 0),
 old: Number(p.originalPrice || p.price || 0),
 img: p.image || "",
-link: p.amazonLink || "",
+
+amazonLink: p.amazonLink || "",
+flipkartLink: p.flipkartLink || "",
+myntraLink: p.myntraLink || "",
+
 category: p.category || "Other",
 status: p.status || "Active"
 });
-
 });
 
 render();
