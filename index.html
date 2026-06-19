@@ -686,9 +686,19 @@ document.getElementById("detailBody").innerHTML=`
        class="btn flipkart">Flipkart</a>
   ` : ""}
 
+  ${p.myntraLink ? `
+    <a href="${p.myntraLink}" target="_blank"
+       onclick="event.stopPropagation()"
+       class="btn myntra">Myntra</a>
+  ` : ""}
 
+  ${p.meeshoLink ? `
+    <a href="${p.meeshoLink}" target="_blank"
+       onclick="event.stopPropagation()"
+       class="btn meesho">Meesho</a>
+  ` : ""}
 
-</div> 
+</div>
 
   ${p.myntraLink ? `
   <a href="${p.myntraLink}" target="_blank" class="btn myntra">Myntra</a>
