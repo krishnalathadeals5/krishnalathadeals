@@ -189,11 +189,11 @@ snapshot.forEach((productDoc) => {
 const sortValue = document.getElementById("sortPrice").value;
 
 if (sortValue === "low") {
-  products.sort((a, b) => Number(a.price) - Number(b.price));
+  products.sort((a, b) => parseFloat(a.price || 0) - parseFloat(b.price || 0));
 }
 
 if (sortValue === "high") {
-  products.sort((a, b) => Number(b.price) - Number(a.price));
+  products.sort((a, b) => parseFloat(b.price || 0) - parseFloat(a.price || 0));
 }
 // 🔼 SORT LOGIC END
 
