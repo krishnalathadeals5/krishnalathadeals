@@ -346,15 +346,21 @@ ${product.meeshoLink ? `
 
 </div>
 
+<div style="display:flex; gap:10px; margin-top:10px;">
+
 <button type="button"
-onclick="editProduct('${product.id}')">
+onclick="editProduct('${product.id}')"
+style="flex:1; background:#ff9800;">
 Edit
 </button>
 
 <button type="button"
-onclick="deleteProduct('${product.id}')">
+onclick="deleteProduct('${product.id}')"
+style="flex:1; background:red;">
 Delete
 </button>
+
+</div>
 
 </div>
 `;
