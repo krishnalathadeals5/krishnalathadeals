@@ -311,6 +311,12 @@ const newOriginalPrice = prompt(
 product.originalPrice || ""
 );
 
+if(newOriginalPrice === null) return;
+const newOriginalPrice = prompt(
+"Edit Original Price",
+product.originalPrice || ""
+);
+
 if(newOriginalPrice === null) return;    
 await updateDoc(productRef,{
 name: newName,
