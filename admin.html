@@ -194,11 +194,11 @@ products.push({
 const sortValue = document.getElementById("sortPrice").value;
 
 if (sortValue === "low") {
-  products.sort((a, b) => parseFloat(a.price || 0) - parseFloat(b.price || 0));
+  products.sort((a, b) => parseFloat(a.priceValue || 0) - parseFloat(b.priceValue || 0));
 }
 
 if (sortValue === "high") {
-  products.sort((a, b) => parseFloat(b.price || 0) - parseFloat(a.price || 0));
+  products.sort((a, b) => parseFloat(b.priceValue || 0) - parseFloat(a.priceValue || 0));
 }
 // 🔼 SORT LOGIC END
 
