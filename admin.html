@@ -209,17 +209,16 @@ products.forEach((product) => {
 
 if (searchValue) {
 
-    const name = (product.name || "").toLowerCase();
-    const id = (product.id || "").toLowerCase();
-    const category = (product.category || "").toLowerCase();
-    const price = (product.price || "").toString().toLowerCase();
+    const fullData = `
+        ${product.name || ""}
+        ${product.id || ""}
+        ${product.category || ""}
+        ${product.price || ""}
+        ${product.originalPrice || ""}
+        ${product.status || ""}
+    `.toLowerCase();
 
-    if (
-        !name.includes(searchValue) &&
-        !id.includes(searchValue) &&
-        !category.includes(searchValue) &&
-        !price.includes(searchValue)
-    ) {
+    if (!fullData.includes(searchValue)) {
         return;
     }
 }
