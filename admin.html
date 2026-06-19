@@ -308,7 +308,8 @@ product.price || ""
 if(newPrice === null) return;
 await updateDoc(productRef,{
 name: newName,
-status: newStatus
+status: newStatus,
+price: newPrice
 });
 
 alert("✅ Product Updated Successfully");
