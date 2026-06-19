@@ -121,7 +121,12 @@ Logout
 type="text"
 id="searchBox"
 placeholder="Search Product..."
-onkeyup="loadProducts()">   
+onkeyup="loadProducts()">  
+ <select id="sortPrice" onchange="loadProducts()">
+<option value="">Sort By Price</option>
+<option value="low">Price: Low to High</option>
+<option value="high">Price: High to Low</option>
+</select>   
 <h3>Products</h3>
 <h3 id="productCount">Total Products: 0</h3>
  <h3 id="activeCount">Active Products: 0</h3>
