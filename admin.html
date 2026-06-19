@@ -299,7 +299,24 @@ margin-bottom:10px;
 
 ID: ${product.id}<br>
 
-Price: ${product.price || ""}<br>
+${(() => {
+    const prices = [
+        product.amazonPrice,
+        product.flipkartPrice,
+        product.myntraPrice,
+        product.meeshoPrice
+    ].filter(p => p !== null && p !== undefined);
+
+    const bestPrice = prices.length ? Math.min(...prices) : "N/A";
+
+    return `
+    <strong>Best Price: ₹${bestPrice}</strong><br>
+    Amazon: ₹${product.amazonPrice || "N/A"}<br>
+    Flipkart: ₹${product.flipkartPrice || "N/A"}<br>
+    Myntra: ₹${product.myntraPrice || "N/A"}<br>
+    Meesho: ₹${product.meeshoPrice || "N/A"}<br>
+    `;
+})()}
 
 Category: ${product.category || ""}<br>
 
