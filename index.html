@@ -582,6 +582,7 @@ img: p.image || "",
 amazonLink: p.amazonLink || "",
 flipkartLink: p.flipkartLink || "",
 myntraLink: p.myntraLink || "",
+meeshoLink: p.meeshoLink || "",
 
 category: p.category || "Other",
 status: p.status || "Active"
@@ -664,17 +665,22 @@ document.getElementById("detailBody").innerHTML=`
 
   ${p.amazonLink ? `
   <a href="${p.amazonLink}" target="_blank">
-    <button class="btn" style="background:#ff9900;">Amazon</button>
+    <button class="btn amazon">Amazon</button>
   </a>` : ""}
 
   ${p.flipkartLink ? `
   <a href="${p.flipkartLink}" target="_blank">
-    <button class="btn" style="background:#2874f0; color:white;">Flipkart</button>
+    <button class="btn flipkart">Flipkart</button>
   </a>` : ""}
 
   ${p.myntraLink ? `
   <a href="${p.myntraLink}" target="_blank">
-    <button class="btn" style="background:#ff3f6c; color:white;">Myntra</button>
+    <button class="btn myntra">Myntra</button>
+  </a>` : ""}
+
+  ${p.meeshoLink ? `
+  <a href="${p.meeshoLink}" target="_blank">
+    <button class="btn meesho">Meesho</button>
   </a>` : ""}
 
 </div>
