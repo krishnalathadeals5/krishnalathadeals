@@ -871,8 +871,15 @@ openPopup("cart");
 
 /* COUNTS */
 function updateCounts(){
+
 document.getElementById("wishCount").innerText = wish.length;
-document.getElementById("cartCount").innerText = cart.length;
+
+// ✅ count TOTAL quantity (not items)
+let total = 0;
+cart.forEach(item => total += item.qty);
+
+document.getElementById("cartCount").innerText = total;
+
 }
 function filterCategory(category){
 
