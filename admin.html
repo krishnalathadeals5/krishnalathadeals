@@ -222,7 +222,11 @@ if (sortValue === "high") {
 
 
 
-const searchValue = document.getElementById("searchBox").value.trim().toLowerCase();
+const searchValue = document.getElementById("searchBox")
+.value
+.toLowerCase()
+.trim()
+.replace(/\s+/g, " ");
 
 products.forEach((product) => {
 
