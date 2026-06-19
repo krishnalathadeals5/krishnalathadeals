@@ -918,7 +918,11 @@ function closeImageModal(){
   let el = document.getElementById(id);
 
   if(el){
-    el.innerText = item ? item.qty : 0;
+   if(item && item.qty > 0){
+  el.parentElement.innerHTML = "View Deal";
+} else {
+  el.innerText = 0;
+}
   }
 }
 loadProducts();
