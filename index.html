@@ -752,6 +752,10 @@ render();
 }
 
 /* CART */
+  function getQty(name){
+  let item = cart.find(p => p.name === name);
+  return item ? item.qty : 0;
+}
 function addCart(name){
   let p = products.find(x=>x.name===name);
   let item = cart.find(x=>x.name===name);
