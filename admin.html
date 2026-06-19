@@ -179,7 +179,7 @@ let products = [];
 let html = "";
 
 snapshot.forEach((productDoc) => {
-
+const product = productDoc.data();
 products.push({
 id: productDoc.id,
 ...productDoc.data()
