@@ -300,7 +300,12 @@ product.status || "Active"
 );
 
 if(newStatus === null) return;
+const newPrice = prompt(
+"Edit Price",
+product.price || ""
+);
 
+if(newPrice === null) return;
 await updateDoc(productRef,{
 name: newName,
 status: newStatus
