@@ -662,8 +662,9 @@ function openDetail(name){
 let p=products.find(x=>x.name===name);
 let d=Math.round(((p.old-p.price)/p.old)*100);
 
-document.getElementById("detailBody").innerHTML=`
+document.getElementById("detailBody").innerHTML = `
 <img src="${p.img}" onclick="openImageModal('${p.img}')">
+
 <div class="detail-info" style="display:flex;flex-direction:column;gap:10px;">
 <h2>${p.name}</h2>
 
@@ -672,6 +673,7 @@ document.getElementById("detailBody").innerHTML=`
 </div>
 
 <div class="discount">${d}% OFF</div>
+
 <div class="buy-buttons">
 
 ${p.amazonLink ? `
@@ -697,21 +699,14 @@ ${p.meeshoLink ? `
 onclick="event.stopPropagation()"
 class="btn meesho">Meesho</a>
 ` : ""}
+
 <button class="btn cart" onclick="addCart('${p.name}')">
 Add to Cart
 </button>
+
 </div>
-</div>
-
- 
-
-
-
-
-
 </div>
 `;
-
 document.getElementById("detailBox").style.display="block";
 }
 
