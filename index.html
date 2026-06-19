@@ -657,7 +657,24 @@ document.getElementById("detailBody").innerHTML=`
 
 <div class="discount">${d}% OFF</div>
 
-<button class="btn buy" onclick="buyNow('${p.name}')">Buy Now</button>
+<div class="buy-buttons">
+
+  ${p.amazonLink ? `
+  <a href="${p.amazonLink}" target="_blank">
+    <button class="btn" style="background:#ff9900;">Amazon</button>
+  </a>` : ""}
+
+  ${p.flipkartLink ? `
+  <a href="${p.flipkartLink}" target="_blank">
+    <button class="btn" style="background:#2874f0; color:white;">Flipkart</button>
+  </a>` : ""}
+
+  ${p.myntraLink ? `
+  <a href="${p.myntraLink}" target="_blank">
+    <button class="btn" style="background:#ff3f6c; color:white;">Myntra</button>
+  </a>` : ""}
+
+</div>
 <button class="btn cart" onclick="addCart('${p.name}')">Add to Cart</button>
 </div>
 `;
