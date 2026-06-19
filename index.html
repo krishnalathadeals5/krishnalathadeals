@@ -697,7 +697,9 @@ ${p.meeshoLink ? `
 onclick="event.stopPropagation()"
 class="btn meesho">Meesho</a>
 ` : ""}
-
+<button class="btn cart" onclick="addCart('${p.name}')">
+Add to Cart
+</button>
 </div>
 </div>
 
@@ -705,9 +707,9 @@ class="btn meesho">Meesho</a>
 
 
 
-<button class="btn cart" onclick="addCart('${p.name}')">
-Add to Cart
-</button>
+
+
+</div>
 `;
 
 document.getElementById("detailBox").style.display="block";
