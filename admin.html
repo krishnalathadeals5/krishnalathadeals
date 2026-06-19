@@ -425,7 +425,7 @@ try {
 
 await addDoc(collection(db,"products"),{
 
-name: document.getElementById("name").value.toLowerCase(),
+name: document.getElementById("name").value,
 price: document.getElementById("price").value,
 originalPrice: document.getElementById("originalPrice").value,
 image: document.getElementById("image").value,
