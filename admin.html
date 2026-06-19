@@ -218,6 +218,18 @@ Price: ${product.price || ""}<br>
 Category: ${product.category || ""}<br>
 
 Status: ${product.status || "Active"}<br><br>
+
+<button type="button"
+onclick="editProduct('${productDoc.id}')">
+Edit
+</button>
+
+<button type="button"
+onclick="deleteProduct('${productDoc.id}')">
+Delete
+</button>
+
+</div>
 `;
 <button type="button"
 onclick="editProduct('${productDoc.id}')">
