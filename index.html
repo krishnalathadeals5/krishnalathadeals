@@ -675,10 +675,7 @@ document.getElementById("detailBody").innerHTML=`
 
 <div class="buy-buttons">
 
-  ${p.amazonLink ? `
-  <a href="${p.amazonLink}" target="_blank">
-    <button class="btn amazon">Amazon</button>
-  </a>` : ""}
+  <a href="${p.amazonLink}" target="_blank" class="btn amazon">Amazon</a>
 
   ${p.flipkartLink ? `
   <a href="${p.flipkartLink}" target="_blank">
