@@ -175,10 +175,17 @@ document.getElementById("productCount").innerHTML =
 "Total Products: " + snapshot.size;
 let activeCount = 0;
 let expiredCount = 0;
-
+let products = [];
 let html = "";
 
 snapshot.forEach((productDoc) => {
+
+products.push({
+id: productDoc.id,
+...productDoc.data()
+});
+
+});
 
 const product = productDoc.data();
 const searchText =
