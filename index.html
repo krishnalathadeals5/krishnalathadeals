@@ -910,6 +910,17 @@ function openImageModal(src){
 function closeImageModal(){
     document.getElementById("imageModal").style.display = "none";
 } 
+  function updateButtonCount(name){
+  let item = cart.find(x => x.name === name);
+
+  let id = "btnCartCount_" + name.replace(/\s/g,'');
+
+  let el = document.getElementById(id);
+
+  if(el){
+    el.innerText = item ? item.qty : 0;
+  }
+}
 loadProducts();
 updateCounts();
 
