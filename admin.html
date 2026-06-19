@@ -312,12 +312,26 @@ product.originalPrice || ""
 );
 
 if(newOriginalPrice === null) return;
-const newOriginalPrice = prompt(
-"Edit Original Price",
-product.originalPrice || ""
+// CATEGORY
+const newCategory = prompt(
+"Edit Category",
+product.category || ""
 );
+if(newCategory === null) return;
 
-if(newOriginalPrice === null) return;    
+// IMAGE
+const newImage = prompt(
+"Edit Image URL",
+product.image || ""
+);
+if(newImage === null) return;
+
+// AMAZON LINK
+const newAmazonLink = prompt(
+"Edit Amazon Link",
+product.amazonLink || ""
+);
+if(newAmazonLink === null) return;   
 await updateDoc(productRef,{
 name: newName,
 status: newStatus,
