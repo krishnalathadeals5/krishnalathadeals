@@ -456,20 +456,28 @@ category: document.getElementById("category").value,
 status: document.getElementById("statusField").value,
 
 // ✅ AMAZON
-amazonPrice: document.getElementById("amazonPrice").value,
-amazonLink: document.getElementById("amazonLink").value,
+amazonPrice: document.getElementById("amazonPrice").value 
+    ? Number(document.getElementById("amazonPrice").value) 
+    : null,
+amazonLink: document.getElementById("amazonLink").value || "",
 
 // ✅ FLIPKART
-flipkartPrice: document.getElementById("flipkartPrice").value,
-flipkartLink: document.getElementById("flipkartLink").value,
+flipkartPrice: document.getElementById("flipkartPrice").value 
+    ? Number(document.getElementById("flipkartPrice").value) 
+    : null,
+flipkartLink: document.getElementById("flipkartLink").value || "",
 
 // ✅ MYNTRA
-myntraPrice: document.getElementById("myntraPrice").value,
-myntraLink: document.getElementById("myntraLink").value,
+myntraPrice: document.getElementById("myntraPrice").value 
+    ? Number(document.getElementById("myntraPrice").value) 
+    : null,
+myntraLink: document.getElementById("myntraLink").value || "",
 
 // ✅ MEESHO
-meeshoPrice: document.getElementById("meeshoPrice").value,
-meeshoLink: document.getElementById("meeshoLink").value,
+meeshoPrice: document.getElementById("meeshoPrice").value 
+    ? Number(document.getElementById("meeshoPrice").value) 
+    : null,
+meeshoLink: document.getElementById("meeshoLink").value || "",
 
 createdAt: new Date()
 
