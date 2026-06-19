@@ -659,7 +659,9 @@ ${p.old > 0 ? Math.round(((p.old-p.price)/p.old)*100) : 0}% OFF
 <div class="price">₹${p.price}</div>
 <div class="old-price">₹${p.old}</div>
 
-<button class="deal-btn" style="margin-top:auto;">View Deal</button>
+<button class="deal-btn" style="margin-top:auto;" onclick="event.stopPropagation(); addCart('${p.name}')">
+Add to Cart (<span id="btnCartCount_${p.name.replace(/\s/g,'')}">0</span>)
+</button>
 </div>
 </div>`;
 });
