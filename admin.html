@@ -185,7 +185,17 @@ id: productDoc.id,
 ...productDoc.data()
 });
 
+// 🔽 SORT LOGIC START
+const sortValue = document.getElementById("sortPrice").value;
 
+if (sortValue === "low") {
+  products.sort((a, b) => Number(a.price) - Number(b.price));
+}
+
+if (sortValue === "high") {
+  products.sort((a, b) => Number(b.price) - Number(a.price));
+}
+// 🔼 SORT LOGIC END
 
 
 const searchText =
