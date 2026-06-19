@@ -179,10 +179,12 @@ let products = [];
 let html = "";
 
 snapshot.forEach((productDoc) => {
-   products.push({
+   const data = productDoc.data();
+
+products.push({
     id: productDoc.id,
-    ...productDoc.data(),
-    price: (productDoc.data().price || "")
+    ...data,
+    priceValue: (data.price || "")
         .toString()
         .replace(/[^0-9.]/g, "")
 });
