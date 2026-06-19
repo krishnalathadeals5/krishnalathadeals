@@ -322,27 +322,27 @@ Category: ${product.category || ""}<br>
 
 Status: ${product.status || "Active"}<br><br>
 
-<div style="display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px;">
+<div class="buy-buttons">
 
-${product.amazonLink ? `
-<a href="${product.amazonLink}" target="_blank">
-<button style="background:#ff9900;">Amazon</button>
-</a>` : ""}
+  ${product.amazonLink ? `
+  <a href="${product.amazonLink}" target="_blank">
+    <button class="btn amazon">Amazon</button>
+  </a>` : ""}
 
-${product.flipkartLink ? `
-<a href="${product.flipkartLink}" target="_blank">
-<button style="background:#2874f0;">Flipkart</button>
-</a>` : ""}
+  ${product.flipkartLink ? `
+  <a href="${product.flipkartLink}" target="_blank">
+    <button class="btn flipkart">Flipkart</button>
+  </a>` : ""}
 
-${product.myntraLink ? `
-<a href="${product.myntraLink}" target="_blank">
-<button style="background:#ff3f6c;">Myntra</button>
-</a>` : ""}
+  ${product.myntraLink ? `
+  <a href="${product.myntraLink}" target="_blank">
+    <button class="btn myntra">Myntra</button>
+  </a>` : ""}
 
-${product.meeshoLink ? `
-<a href="${product.meeshoLink}" target="_blank">
-<button style="background:#9c27b0;">Meesho</button>
-</a>` : ""}
+  ${product.meeshoLink ? `
+  <a href="${product.meeshoLink}" target="_blank">
+    <button class="btn meesho">Meesho</button>
+  </a>` : ""}
 
 </div>
 
