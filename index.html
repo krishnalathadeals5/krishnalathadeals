@@ -871,15 +871,21 @@ openPopup("cart");
 
 /* QTY */
 function changeQty(name,val){
-let item=cart.find(x=>x.name===name);
-if(!item)return;
+  let item = cart.find(x=>x.name===name);
+  if(!item) return;
 
-item.qty += val;
-if(item.qty<=0) cart = cart.filter(x=>x.name!==name);
+  item.qty += val;
 
-save();
-updateCounts();
-openPopup("cart");
+  if(item.qty <= 0){
+    cart = cart.filter(x=>x.name!==name);
+  }
+
+  save();
+  updateCounts();
+
+  updateButtonCount(name); // ✅ IMPORTANT LINE
+
+  openPopup("cart");
 }
 
 /* COUNTS */
