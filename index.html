@@ -890,11 +890,14 @@ function changeQty(name,val){
   save();
   updateCounts();
 
-  updateButtonCount(name); // ✅ IMPORTANT LINE
+  updateButtonCount(name); // ✅ keep this
 
-  openPopup("cart");
+  // ✅ update qty number near + / -
+  let qtySpan = document.getElementById("qty_" + name.replace(/\s/g,''));
+  if(qtySpan) qtySpan.innerText = getQty(name);
+
+  // ❌ IMPORTANT: removed openPopup("cart");
 }
-
 /* COUNTS */
 function updateCounts(){
 
