@@ -883,26 +883,32 @@ openPopup("cart");
 }
 
 /* QTY */
-function changeQty(name,val){
-  let item = cart.find(x=>x.name===name);
-  if(!item) return;
+function changeQty(name, val){
+  let item = cart.find(x => x.name === name);
 
-  item.qty += val;
+  // if item not in cart and user clicks +
+  if(!item && val > 0){
+    let p = products.find(x => x.name === name);
+    if(p){
+      cart.push({ ...p, qty: 1 });
+    }
+  }else if(item){
+    item.qty += val;
 
-  if(item.qty <= 0){
-    cart = cart.filter(x=>x.name!==name);
+    if(item.qty <= 0){
+      cart = cart.filter(x => x.name !== name);
+    }
   }
 
   save();
   updateCounts();
+  updateButtonCount(name);
 
-  updateButtonCount(name); // ✅ keep this
-
-  // ✅ update qty number near + / -
-  let qtySpan = document.getElementById("qty_" + name.replace(/\s/g,''));
-  if(qtySpan) qtySpan.innerText = getQty(name);
-
-  // ❌ IMPORTANT: removed openPopup("cart");
+  let cleanName = name.replace(/\s/g,'');
+  let qtySpan = document.getElementById("qty_" + cleanName);
+  if(qtySpan){
+    qtySpan.innerText = getQty(name);
+  }
 }
 /* COUNTS */
 function updateCounts(){
