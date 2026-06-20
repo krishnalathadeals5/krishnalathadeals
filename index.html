@@ -940,7 +940,7 @@ function closeImageModal(){
   let btn = document.getElementById(id);
 
   if(btn){
-    btn.innerText = `Add to Cart (${getQty(name)})`;
+   btn.innerHTML = `Add to Cart (<span id="qty_${name}">${getQty(name)}</span>)`;
   }
 } 
 loadProducts();
