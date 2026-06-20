@@ -910,10 +910,16 @@ function changeQty(name, val){
   updateButtonCount(name);
 
   let cleanName = name.replace(/\s/g,'');
-  let qtySpan = document.getElementById("qty_" + cleanName);
-  if(qtySpan){
-    qtySpan.innerText = getQty(name);
-  }
+
+let detailQty = document.getElementById("detailQty_" + cleanName);
+if(detailQty){
+  detailQty.innerText = getQty(name);
+}
+
+let cartQty = document.getElementById("cartQty_" + cleanName);
+if(cartQty){
+  cartQty.innerText = getQty(name);
+}
 // if popup is open, refresh cart popup live
 let popup = document.getElementById("popup");
 if(popup && popup.style.display === "flex"){
