@@ -908,19 +908,12 @@ function changeQty(name, val){
   if(qtySpan){
     qtySpan.innerText = getQty(name);
   }
-
-  // optional: if cart popup is open, refresh it
-  let popup = document.getElementById("popup");
-  let popupTitle = document.getElementById("popupTitle");
-  if(
-    popup &&
-    popup.style.display === "flex" &&
-    popupTitle &&
-    popupTitle.innerText.toLowerCase().includes("cart")
-  ){
-    openPopup("cart");
-  }
+// if popup is open, refresh cart popup live
+let popup = document.getElementById("popup");
+if(popup && popup.style.display === "flex"){
+  openPopup("cart");
 }
+  }
   /* COUNTS */
 function updateCounts(){
 
