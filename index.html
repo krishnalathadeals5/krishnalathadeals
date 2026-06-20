@@ -886,7 +886,6 @@ openPopup("cart");
 function changeQty(name, val){
   let item = cart.find(x => x.name === name);
 
-  // if item not in cart and user clicks +
   if(!item && val > 0){
     let p = products.find(x => x.name === name);
     if(p){
@@ -909,8 +908,20 @@ function changeQty(name, val){
   if(qtySpan){
     qtySpan.innerText = getQty(name);
   }
+
+  // optional: if cart popup is open, refresh it
+  let popup = document.getElementById("popup");
+  let popupTitle = document.getElementById("popupTitle");
+  if(
+    popup &&
+    popup.style.display === "flex" &&
+    popupTitle &&
+    popupTitle.innerText.toLowerCase().includes("cart")
+  ){
+    openPopup("cart");
+  }
 }
-/* COUNTS */
+  /* COUNTS */
 function updateCounts(){
 
 document.getElementById("wishCount").innerText = wish.length;
