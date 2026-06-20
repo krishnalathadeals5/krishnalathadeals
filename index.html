@@ -718,9 +718,11 @@ onclick="event.stopPropagation()"
 class="btn meesho">Buy Now</a>
 ` : ""}
 
-<button class="btn cart" id="btn_${p.name.replace(/\s/g,'')}" onclick="addCart('${p.name}')">
-  Add to Cart (${getQty(p.name)})
-</button>
+<div class="qty-box">
+  <button onclick="changeQty('${p.name}', -1)">−</button>
+  <span id="qty_${p.name.replace(/\s/g,'')}">${getQty(p.name)}</span>
+  <button onclick="changeQty('${p.name}', 1)">+</button>
+</div>
 
 </div>
 </div>
