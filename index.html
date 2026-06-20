@@ -936,13 +936,13 @@ function closeImageModal(){
     document.getElementById("imageModal").style.display = "none";
 } 
  function updateButtonCount(name){
-  let id = "btn_" + name.replace(/\s/g,'');
-  let btn = document.getElementById(id);
+  let cleanName = name.replace(/\s/g,'');
+  let btn = document.getElementById("btn_" + cleanName);
 
   if(btn){
-   btn.innerHTML = `Add to Cart (<span id="qty_${name}">${getQty(name)}</span>)`;
+    btn.innerHTML = `Add to Cart (<span id="qty_${cleanName}">${getQty(name)}</span>)`;
   }
-} 
+}
 loadProducts();
 updateCounts();
 
