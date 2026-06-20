@@ -917,21 +917,14 @@ function openImageModal(src){
 function closeImageModal(){
     document.getElementById("imageModal").style.display = "none";
 } 
-  function updateButtonCount(name){
-  let item = cart.find(x => x.name === name);
+ function updateButtonCount(name){
+  let id = "btn_" + name.replace(/\s/g,'');
+  let btn = document.getElementById(id);
 
-  let id = "btnCartCount_" + name.replace(/\s/g,'');
-
-  let el = document.getElementById(id);
-
-  if(el){
-   if(item && item.qty > 0){
-  el.parentElement.innerHTML = "View Deal";
-} else {
-  el.innerText = 0;
-}
+  if(btn){
+    btn.innerText = `Add to Cart (${getQty(name)})`;
   }
-}
+} 
 loadProducts();
 updateCounts();
 
