@@ -781,10 +781,16 @@ function addCart(name){
 
   // update qty span near + / -
   let cleanName = name.replace(/\s/g,'');
-  let qtySpan = document.getElementById("qty_" + cleanName);
-  if(qtySpan){
-    qtySpan.innerText = getQty(name);
-  }
+
+let detailQty = document.getElementById("detailQty_" + cleanName);
+if(detailQty){
+  detailQty.innerText = getQty(name);
+}
+
+let cartQty = document.getElementById("cartQty_" + cleanName);
+if(cartQty){
+  cartQty.innerText = getQty(name);
+}
 }
 function buyNow(name){
 
