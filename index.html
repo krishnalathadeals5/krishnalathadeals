@@ -766,19 +766,25 @@ render();
   return item ? item.qty : 0;
 }
 function addCart(name){
-  let p = products.find(x=>x.name===name);
-  let item = cart.find(x=>x.name===name);
+  let p = products.find(x => x.name === name);
+  let item = cart.find(x => x.name === name);
 
- if(item){
-  item.qty += 1;
-}else if(p){
-  cart.push({...p, qty:1});
-}
+  if(item){
+    item.qty += 1;
+  }else if(p){
+    cart.push({ ...p, qty: 1 });
+  }
 
   save();
   updateCounts();
+  updateButtonCount(name);
 
-  updateButtonCount(name); // ✅ ADD THIS LINE
+  // update qty span near + / -
+  let cleanName = name.replace(/\s/g,'');
+  let qtySpan = document.getElementById("qty_" + cleanName);
+  if(qtySpan){
+    qtySpan.innerText = getQty(name);
+  }
 }
 function buyNow(name){
 
