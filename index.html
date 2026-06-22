@@ -7,117 +7,125 @@
 <title>Krishnalatha Deals</title>
 
 <style>
+
 body{
   margin:0;
-  background: radial-gradient(circle at center, #0b3d2e, #021d16);
-  font-family: 'Segoe UI', sans-serif;
-  color:#d4af37;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
-  overflow:hidden;
+  background: radial-gradient(circle at center, #0a3b2f, #021d16);
+  font-family: 'Georgia', serif;
+  color:#d4af37;
 }
 
-/* GOLD BORDER */
+/* MAIN BOX */
 .container{
   width:90%;
-  max-width:400px;
-  padding:25px;
+  max-width:380px;
+  padding:30px;
   border:2px solid #d4af37;
   border-radius:20px;
   text-align:center;
   position:relative;
-  box-shadow:0 0 25px rgba(212,175,55,0.5);
+  box-shadow:0 0 40px rgba(212,175,55,0.5);
+}
+
+/* CORNER DESIGN */
+.container::before,
+.container::after{
+  content:"";
+  position:absolute;
+  width:40px;
+  height:40px;
+  border:2px solid #d4af37;
+}
+
+.container::before{
+  top:-2px;
+  left:-2px;
+  border-right:none;
+  border-bottom:none;
+}
+
+.container::after{
+  bottom:-2px;
+  right:-2px;
+  border-left:none;
+  border-top:none;
 }
 
 /* LOGO */
 .logo{
-  font-size:55px;
-  font-weight:bold;
-  border:3px solid #d4af37;
-  border-radius:50%;
-  width:120px;
-  height:120px;
+  position:relative;
+  width:130px;
+  height:130px;
   margin:auto;
+  border-radius:50%;
+  border:3px solid #d4af37;
   display:flex;
-  align-items:center;
   justify-content:center;
-  box-shadow:0 0 20px #d4af37;
-  animation: glow 2s infinite alternate;
+  align-items:center;
+  font-size:45px;
+  font-weight:bold;
+  box-shadow:0 0 25px #d4af37;
 }
 
-@keyframes glow{
-  from{ box-shadow:0 0 10px #d4af37; }
-  to{ box-shadow:0 0 40px #ffd700; }
+/* CROWN */
+.logo::before{
+  content:"👑";
+  position:absolute;
+  top:-35px;
+  font-size:30px;
 }
 
 /* TITLE */
 h1{
-  margin-top:20px;
-  font-size:28px;
+  margin-top:25px;
+  font-size:26px;
   letter-spacing:2px;
 }
 
-/* TAGLINE */
-.tagline{
+/* SUBTEXT */
+.sub{
   margin-top:10px;
-  font-size:14px;
   color:#eee;
-}
-
-/* ICON ROW */
-.icons{
-  margin:20px 0;
-  display:flex;
-  justify-content:space-around;
-  font-size:22px;
-}
-
-.icons span{
-  background:rgba(255,255,255,0.1);
-  padding:10px;
-  border-radius:10px;
-}
-
-/* LOADING */
-.loader{
-  margin-top:25px;
-}
-
-.spinner{
-  border:5px solid rgba(255,255,255,0.2);
-  border-top:5px solid #d4af37;
-  border-radius:50%;
-  width:45px;
-  height:45px;
-  margin:auto;
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-  100%{ transform:rotate(360deg); }
-}
-
-.loading-text{
-  margin-top:15px;
   font-size:14px;
+}
+
+/* DIVIDER */
+.line{
+  width:60%;
+  height:2px;
+  background:#d4af37;
+  margin:20px auto;
+}
+
+/* LOADING BAR */
+.loader{
+  width:100%;
+  height:8px;
+  background:#333;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#d4af37,#ffd700);
+  animation:load 3s linear forwards;
+}
+
+@keyframes load{
+  100%{width:100%;}
+}
+
+/* LOADING TEXT */
+.loading-text{
+  margin-top:10px;
+  font-size:13px;
   color:#ccc;
-}
-
-/* PARTICLES */
-.particle{
-  position:absolute;
-  width:6px;
-  height:6px;
-  background:#ffd700;
-  border-radius:50%;
-  animation: float 6s infinite;
-}
-
-@keyframes float{
-  0%{ transform:translateY(0); opacity:1;}
-  100%{ transform:translateY(-600px); opacity:0;}
 }
 
 </style>
@@ -129,41 +137,26 @@ h1{
 
   <div class="logo">KD</div>
 
-  <h1>KRISHNALATHA DEALS</h1>
+  <h1>KRISHNALATHA<br>DEALS</h1>
 
-  <div class="tagline">
-    BEST DEALS, BIG SAVINGS! <br>
+  <div class="sub">
+    BEST DEALS, BIG SAVINGS!<br>
     One Destination. Endless Savings.
   </div>
 
-  <div class="icons">
-    <span>🛍️</span>
-    <span>🏷️</span>
-    <span>🛒</span>
-    <span>🎁</span>
-  </div>
+  <div class="line"></div>
 
   <div class="loader">
-    <div class="spinner"></div>
-    <div class="loading-text">Loading Best Deals...</div>
+    <div class="bar"></div>
   </div>
+
+  <div class="loading-text">Loading...</div>
 
 </div>
 
-<!-- PARTICLES SCRIPT -->
 <script>
-for(let i=0;i<25;i++){
-  let p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.top=Math.random()*100+"%";
-  p.style.animationDuration=(3+Math.random()*5)+"s";
-  document.body.appendChild(p);
-}
-
-// AUTO REDIRECT (3 sec)
 setTimeout(()=>{
-  window.location.href="home.html"; // change if needed
+  window.location.href="home.html";
 },3000);
 </script>
 
