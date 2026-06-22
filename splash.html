@@ -3,182 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Krishnalatha Deals</title>
 
 <style>
-
-/* BACKGROUND */
 body{
   margin:0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at center, #062d1a, #001a10);
   height:100vh;
   display:flex;
-  justify-content:center;
   align-items:center;
-  background: radial-gradient(circle at center, #0d4d3a, #021d16 70%);
-  font-family: 'Georgia', serif;
+  justify-content:center;
   overflow:hidden;
 }
 
-/* MAIN CARD */
+/* CENTER BOX */
 .container{
-  width:340px;
-  padding:30px 25px;
   text-align:center;
-  border-radius:18px;
+  padding:40px 30px;
+  border-radius:20px;
+  border:2px solid gold;
+  width:300px;
+  color:white;
   position:relative;
-  border:1.5px solid rgba(212,175,55,0.7);
-  background: linear-gradient(145deg, rgba(0,40,30,0.95), rgba(0,20,15,0.98));
-  
-  /* 🔥 PREMIUM GLOW */
+
   box-shadow: 
-    0 0 40px rgba(212,175,55,0.5),
+    0 0 40px rgba(212,175,55,0.6),
     0 0 80px rgba(0,255,150,0.15),
-    inset 0 0 20px rgba(212,175,55,0.15);
+    inset 0 0 20px rgba(212,175,55,0.2);
 
-  /* 🔥 ZOOM ENTRY */
   animation: zoomIn 0.8s ease;
-}
-
-/* ZOOM ANIMATION */
-@keyframes zoomIn{
-  from{
-    transform: scale(0.9);
-    opacity:0;
-  }
-  to{
-    transform: scale(1);
-    opacity:1;
-  }
-}
-
-/* CORNER DESIGN */
-.container::before,
-.container::after{
-  content:"";
-  position:absolute;
-  width:40px;
-  height:40px;
-  border:2px solid #d4af37;
-}
-
-.container::before{
-  top:10px;
-  left:10px;
-  border-right:none;
-  border-bottom:none;
-}
-
-.container::after{
-  bottom:10px;
-  right:10px;
-  border-left:none;
-  border-top:none;
 }
 
 /* LOGO */
 .logo{
-  width:110px;
-  height:110px;
-  margin:auto;
+  font-size:40px;
+  font-weight:bold;
+  color:gold;
+  border:2px solid gold;
   border-radius:50%;
-  border:2px solid #d4af37;
+  width:80px;
+  height:80px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:38px;
-  color:#ffd700;
-  position:relative;
-  box-shadow:0 0 25px rgba(255,215,0,0.6);
-  animation: glow 2s infinite alternate;
-}
+  margin:0 auto 15px;
 
-/* CROWN */
-.logo::before{
-  content:"👑";
-  position:absolute;
-  top:-22px;
-  font-size:22px;
-}
-
-/* LOGO GLOW */
-@keyframes glow{
-  from{ box-shadow:0 0 15px #d4af37; }
-  to{ box-shadow:0 0 45px #ffd700; }
+  box-shadow:0 0 15px gold;
 }
 
 /* TITLE */
-h1{
-  margin-top:20px;
-  font-size:26px;
-  letter-spacing:2px;
-  color:#d4af37;
+.title{
+  font-size:22px;
+  font-weight:bold;
+  color:gold;
+  margin-bottom:10px;
+  letter-spacing:1px;
 }
 
-/* TAGLINE */
-.tagline{
-  margin-top:8px;
-  font-size:13px;
+/* SUBTEXT */
+.subtitle{
+  font-size:14px;
   color:#ddd;
-  line-height:1.6;
-}
-
-/* GOLD LINE */
-.line{
-  width:70%;
-  height:2px;
-  margin:18px auto;
-  background: linear-gradient(to right, transparent, #d4af37, transparent);
+  margin-bottom:20px;
 }
 
 /* PROGRESS BAR */
-.progress-container{
+.progress{
   width:100%;
-  height:6px;
-  background:rgba(255,255,255,0.1);
-  border-radius:10px;
+  height:10px;
+  background:#222;
+  border-radius:20px;
   overflow:hidden;
+  margin-bottom:10px;
 }
 
 .progress-bar{
   height:100%;
   width:0%;
-  background: linear-gradient(to right, #d4af37, #ffd700);
+  background:linear-gradient(to right, gold, orange);
+  border-radius:20px;
   animation: load 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* LOADING ANIMATION */
-@keyframes load{
-  0%{ width:0%; }
-  100%{ width:100%; }
+  box-shadow:0 0 10px gold;
 }
 
 /* LOADING TEXT */
 .loading{
-  margin-top:10px;
-  font-size:13px;
+  font-size:14px;
   color:#ccc;
 }
 
-/* PARTICLES */
-.particle{
-  position:absolute;
-  width:5px;
-  height:5px;
-  background:#ffd700;
-  border-radius:50%;
-  opacity:0.8;
-  animation: float linear infinite;
-}
-
-@keyframes float{
+/* ZOOM */
+@keyframes zoomIn{
   from{
-    transform: translateY(0);
-    opacity:1;
+    transform:scale(0.8);
+    opacity:0;
   }
   to{
-    transform: translateY(-800px);
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* LOADING BAR */
+@keyframes load{
+  from{width:0%;}
+  to{width:100%;}
+}
+
+/* 🎉 SIDE CRACKERS */
+.cracker{
+  position:absolute;
+  bottom:-50px;
+  width:6px;
+  height:120px;
+  background:linear-gradient(gold, transparent);
+  animation: blast 1.5s infinite ease-out;
+}
+
+.cracker.left{
+  left:10%;
+}
+
+.cracker.right{
+  right:10%;
+}
+
+@keyframes blast{
+  0%{
+    transform:translateY(0) scaleY(0.5);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(-300px) scaleY(1.5);
     opacity:0;
+  }
+}
+
+/* ✨ FALLING PARTICLES */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  top:-10px;
+  animation: fall linear infinite;
+  opacity:0.8;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(100vh);
   }
 }
 
@@ -187,44 +163,41 @@ h1{
 
 <body>
 
+<!-- PARTICLES -->
+<script>
+for(let i=0;i<40;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=(3+Math.random()*3)+"s";
+  p.style.opacity=Math.random();
+  document.body.appendChild(p);
+}
+</script>
+
+<!-- SIDE CRACKERS -->
+<div class="cracker left"></div>
+<div class="cracker right"></div>
+
+<!-- MAIN BOX -->
 <div class="container">
 
   <div class="logo">KD</div>
 
-  <h1>KRISHNALATHA<br>DEALS</h1>
+  <div class="title">KRISHNALATHA DEALS</div>
 
-  <div class="tagline">
-    BEST DEALS, BIG SAVINGS!<br>
+  <div class="subtitle">
+    Best Deals, Big Savings!<br>
     One Destination. Endless Savings.
   </div>
 
-  <div class="line"></div>
-
-  <div class="progress-container">
+  <div class="progress">
     <div class="progress-bar"></div>
   </div>
 
   <div class="loading">Loading...</div>
 
 </div>
-
-<!-- PARTICLES -->
-<script>
-for(let i=0;i<30;i++){
-  let p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.bottom="-10px";
-  p.style.animationDuration=(4+Math.random()*4)+"s";
-  p.style.opacity=Math.random();
-  document.body.appendChild(p);
-}
-
-// REDIRECT AFTER LOAD
-setTimeout(()=>{
-  window.location.href="home.html";
-},3000);
-</script>
 
 </body>
 </html>
