@@ -6,131 +6,108 @@
 <title>Krishnalatha Deals</title>
 
 <style>
-body{
-margin:0;
-overflow:hidden;
-font-family:Arial;
-background:radial-gradient(circle at center,#064e3b,#022c22);
-color:#fff;
+body {
+    margin: 0;
+    background: radial-gradient(circle at center, #063a26, #031f14);
+    font-family: Arial;
+    overflow: hidden;
 }
 
 /* CENTER CARD */
-.container{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-padding:40px;
-border-radius:20px;
-border:2px solid gold;
-box-shadow:0 0 30px gold;
-background:rgba(0,0,0,0.3);
-z-index:2;
+.card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    padding: 30px;
+    text-align: center;
+    border: 2px solid gold;
+    border-radius: 20px;
+    color: gold;
+    box-shadow: 0 0 40px rgba(255,215,0,0.4);
+    z-index: 2;
 }
 
 /* LOGO */
-.logo{
-width:120px;
-height:120px;
-border-radius:50%;
-border:3px solid gold;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:40px;
-font-weight:bold;
-margin:auto;
-box-shadow:0 0 20px gold;
+.logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid gold;
+    margin: auto;
+    line-height: 100px;
+    font-size: 40px;
+    font-weight: bold;
+    box-shadow: 0 0 20px gold;
 }
 
 /* TEXT */
-h1{
-color:gold;
-letter-spacing:2px;
+h1 { margin: 20px 0 10px; }
+p { font-size: 14px; }
+
+/* LOADER */
+.loader {
+    width: 100%;
+    height: 8px;
+    background: #333;
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+.loader span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: gold;
+    animation: load 3s linear forwards;
+}
+@keyframes load {
+    100% { width: 100%; }
 }
 
-.tagline{
-font-size:14px;
-opacity:0.8;
+/* PARTICLES (falling) */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: gold;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    from {
+        transform: translateY(-100px);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
 }
 
-/* LOADING BAR */
-.loading-bar{
-width:300px;
-height:10px;
-background:#333;
-border-radius:20px;
-margin:20px auto;
-overflow:hidden;
+/* CRACKERS (side bursts) */
+.cracker {
+    position: absolute;
+    width: 4px;
+    height: 20px;
+    background: gold;
+    animation: shoot 1s linear infinite;
+}
+@keyframes shoot {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-200px);
+        opacity: 0;
+    }
 }
 
-.loading-fill{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,gold,#ffd700);
-animation:load 4s infinite;
-}
-
-@keyframes load{
-0%{width:0%;}
-50%{width:100%;}
-100%{width:0%;}
-}
-
-/* FALLING PARTICLES */
-.particle{
-position:absolute;
-width:5px;
-height:5px;
-background:gold;
-border-radius:50%;
-opacity:0.8;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-0%{
-transform:translateY(-10px);
-opacity:1;
-}
-100%{
-transform:translateY(100vh);
-opacity:0;
-}
-}
-
-/* SIDE CRACKERS */
-.cracker{
-position:absolute;
-bottom:0;
-width:6px;
-height:6px;
-background:gold;
-border-radius:50%;
-animation:shoot 1.5s ease-out infinite;
-}
-
-@keyframes shoot{
-0%{
-transform:translateY(0) scale(1);
-opacity:1;
-}
-100%{
-transform:translateY(-300px) scale(0.5);
-opacity:0;
-}
-}
-
-/* LEFT SIDE */
-.left{
-left:20px;
-}
-
-/* RIGHT SIDE */
-.right{
-right:20px;
-}
+.left { left: 5%; bottom: 0; }
+.right { right: 5%; bottom: 0; }
 
 </style>
 </head>
@@ -139,55 +116,53 @@ right:20px;
 
 <!-- PARTICLES -->
 <script>
-for(let i=0;i<50;i++){
-let p=document.createElement("div");
-p.className="particle";
-p.style.left=Math.random()*100+"vw";
-p.style.animationDuration=(3+Math.random()*5)+"s";
-p.style.opacity=Math.random();
-document.body.appendChild(p);
+for (let i = 0; i < 40; i++) {
+    let p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = (3 + Math.random() * 5) + "s";
+    document.body.appendChild(p);
 }
 </script>
 
-<!-- CRACKERS LEFT -->
+<!-- CRACKERS -->
 <script>
-for(let i=0;i<15;i++){
-let c=document.createElement("div");
-c.className="cracker left";
-c.style.left=(10 + Math.random()*50)+"px";
-c.style.animationDelay=Math.random()*2+"s";
-document.body.appendChild(c);
+function createCracker(side) {
+    let c = document.createElement("div");
+    c.className = "cracker " + side;
+    c.style.left = side === "left" ? "5%" : "95%";
+    c.style.animationDuration = (0.8 + Math.random()) + "s";
+    document.body.appendChild(c);
+
+    setTimeout(() => c.remove(), 1000);
 }
+
+setInterval(() => createCracker("left"), 500);
+setInterval(() => createCracker("right"), 500);
 </script>
 
-<!-- CRACKERS RIGHT -->
+<!-- CARD -->
+<div class="card">
+    <div class="logo">KD</div>
+
+    <h1>KRISHNALATHA DEALS</h1>
+
+    <p>BEST DEALS, BIG SAVINGS!<br>
+    One Destination. Endless Savings.</p>
+
+    <div class="loader">
+        <span></span>
+    </div>
+
+    <p>Loading...</p>
+</div>
+
+<!-- REDIRECT -->
 <script>
-for(let i=0;i<15;i++){
-let c=document.createElement("div");
-c.className="cracker right";
-c.style.right=(10 + Math.random()*50)+"px";
-c.style.animationDelay=Math.random()*2+"s";
-document.body.appendChild(c);
-}
+setTimeout(() => {
+    window.location.href = "welcome.html";
+}, 3500);
 </script>
-
-<!-- MAIN CARD -->
-<div class="container">
-<div class="logo">KD</div>
-
-<h1>KRISHNALATHA DEALS</h1>
-
-<div class="tagline">
-BEST DEALS, BIG SAVINGS!<br>
-One Destination. Endless Savings.
-</div>
-
-<div class="loading-bar">
-<div class="loading-fill"></div>
-</div>
-
-<p>Loading...</p>
-</div>
 
 </body>
 </html>
