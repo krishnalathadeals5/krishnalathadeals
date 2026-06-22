@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishnalatha Deals</title>
 
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg, #0b6b3a, #0f7f45, #085c31);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      text-align:center;
+      overflow:hidden;
+    }
+
+    .splash-container{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .logo-circle{
+      width:140px;
+      height:140px;
+      border:3px solid #d4af37;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:52px;
+      font-weight:800;
+      color:#d4af37;
+      box-shadow:0 0 20px rgba(212,175,55,0.35);
+      margin-bottom:24px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .brand{
+      font-size:42px;
+      font-weight:800;
+      color:#f4d06f;
+      letter-spacing:1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .tagline{
+      margin-top:14px;
+      font-size:20px;
+      color:#fff6d5;
+      font-weight:500;
+    }
+
+    .loader{
+      margin-top:28px;
+      width:180px;
+      height:6px;
+      background: rgba(255,255,255,0.2);
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .loader span{
+      display:block;
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, #d4af37, #ffd86b);
+      border-radius:999px;
+      animation: loading 2.2s linear forwards;
+    }
+
+    @keyframes loading{
+      from{ width:0%; }
+      to{ width:100%; }
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform: translateY(15px);
+      }
+      to{
+        opacity:1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px){
+      .logo-circle{
+        width:110px;
+        height:110px;
+        font-size:40px;
+      }
+
+      .brand{
+        font-size:30px;
+      }
+
+      .tagline{
+        font-size:16px;
+      }
+
+      .loader{
+        width:140px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="splash-container">
+    <div class="logo-circle">KD</div>
+    <div class="brand">Krishnalatha Deals</div>
+    <div class="tagline">Best Deals, Big Savings!</div>
+
+    <div class="loader">
+      <span></span>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "welcome.html";
+    }, 2200);
+  </script>
+
+</body>
+</html>
