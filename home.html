@@ -246,84 +246,6 @@
       font-size: 16px;
     }
 
-      /* ===== BOTTOM SOCIAL ===== */
-    .bottom-social {
-      max-width: 1200px;
-      margin: 20px auto 0;
-      padding: 0 16px 24px;
-    }
-
-    .bottom-social-wrap {
-      background: white;
-      border: 1px solid #edf0f4;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .bottom-social-text h3 {
-      font-size: 20px;
-      color: #0b6b3a;
-      margin-bottom: 4px;
-      font-weight: 800;
-    }
-
-    .bottom-social-text p {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .bottom-social-icons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .bottom-social-link {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 800;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-      transition: 0.25s;
-    }
-
-    .bottom-social-link:hover {
-      transform: translateY(-2px);
-    }
-
-    .wa { background: #25D366; }
-    .tg { background: #229ED9; }
-    .yt { background: #FF0000; }
-    .ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
-
-    @media (max-width: 700px) {
-      .bottom-social-wrap {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .bottom-social-text h3 {
-        font-size: 18px;
-      }
-
-      .bottom-social-icons {
-        width: 100%;
-      }
-    }
     /* ===== PLATFORM SECTION ===== */
     .platform-grid {
       display: grid;
@@ -382,13 +304,11 @@
       box-shadow: 0 8px 18px rgba(0,0,0,0.08);
     }
 
-    /* Original brand color style logos */
     .amazon-logo {
       background: #131921;
       color: #ff9900;
       font-size: 34px;
       font-weight: 900;
-      letter-spacing: 1px;
     }
 
     .flipkart-logo {
@@ -401,9 +321,8 @@
     .meesho-logo {
       background: #9c27b0;
       color: #ffffff;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 900;
-      letter-spacing: 0.5px;
     }
 
     .myntra-logo {
@@ -417,9 +336,9 @@
     .ajio-logo {
       background: #111111;
       color: #ffffff;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
 
     .platform-card h3 {
@@ -563,7 +482,7 @@
     /* ===== CTA ===== */
     .cta-section {
       max-width: 1200px;
-      margin: 34px auto 40px;
+      margin: 34px auto 24px;
       padding: 0 16px;
     }
 
@@ -600,12 +519,76 @@
       box-shadow: 0 10px 24px rgba(255,152,0,0.24);
     }
 
+    /* ===== BOTTOM SOCIAL ===== */
+    .bottom-social {
+      max-width: 1200px;
+      margin: 10px auto 0;
+      padding: 0 16px 24px;
+    }
+
+    .bottom-social-wrap {
+      background: white;
+      border: 1px solid #edf0f4;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-social-text h3 {
+      font-size: 20px;
+      color: #0b6b3a;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .bottom-social-text p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .bottom-social-icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-social-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      transition: 0.25s;
+    }
+
+    .bottom-social-link:hover {
+      transform: translateY(-2px);
+    }
+
+    .wa { background: #25D366; }
+    .tg { background: #229ED9; }
+    .yt { background: #FF0000; }
+    .ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+
     /* ===== FOOTER ===== */
     footer {
       background: #061f12;
       color: #e6f0ea;
       padding: 26px 16px;
-      margin-top: 20px;
+      margin-top: 0;
     }
 
     .footer-wrap {
@@ -671,10 +654,6 @@
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .social-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
       .feature-strip {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -721,16 +700,25 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .social-grid {
-        grid-template-columns: 1fr;
-      }
-
       .feature-strip {
         grid-template-columns: 1fr;
       }
 
       .footer-wrap {
         grid-template-columns: 1fr;
+      }
+
+      .bottom-social-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .bottom-social-text h3 {
+        font-size: 18px;
+      }
+
+      .bottom-social-icons {
+        width: 100%;
       }
     }
 
@@ -812,44 +800,6 @@
     </div>
   </section>
 
-  <!-- SOCIAL -->
-  <section class="section">
-    <h2 class="section-title">Join Us for Latest Updates</h2>
-    <p class="section-subtitle">
-      Follow Krishnalatha Deals on social platforms for new deals and updates.
-    </p>
-
-    <div class="social-grid">
-      <a href="#" class="social-card">
-        <div class="social-icon wa">🟢</div>
-        <h3>WhatsApp</h3>
-        <p>Get fast deal updates and shopping alerts.</p>
-        <span class="social-btn">Join Channel</span>
-      </a>
-
-      <a href="#" class="social-card">
-        <div class="social-icon tg">✈️</div>
-        <h3>Telegram</h3>
-        <p>Daily curated deals and best price updates.</p>
-        <span class="social-btn">Join Now</span>
-      </a>
-
-      <a href="#" class="social-card">
-        <div class="social-icon yt">▶</div>
-        <h3>YouTube</h3>
-        <p>Watch product highlights and best deal videos.</p>
-        <span class="social-btn">Visit Channel</span>
-      </a>
-
-      <a href="#" class="social-card">
-        <div class="social-icon ig">◎</div>
-        <h3>Instagram</h3>
-        <p>Follow for trending deals, offers and updates.</p>
-        <span class="social-btn">Follow Page</span>
-      </a>
-    </div>
-  </section>
-
   <!-- PLATFORMS -->
   <section class="section" id="platforms">
     <h2 class="section-title">Shop From Top Platforms</h2>
@@ -858,7 +808,6 @@
     </p>
 
     <div class="platform-grid">
-      <!-- AMAZON -->
       <a href="amazon.html" class="platform-card active-platform">
         <div class="platform-logo amazon-logo">a</div>
         <h3>Amazon</h3>
@@ -866,7 +815,6 @@
         <span class="platform-action">Open Deals</span>
       </a>
 
-      <!-- FLIPKART -->
       <a href="#" class="platform-card" onclick="comingSoon(event, 'Flipkart')">
         <div class="platform-logo flipkart-logo">F</div>
         <h3>Flipkart</h3>
@@ -874,7 +822,6 @@
         <span class="platform-action">Coming Soon</span>
       </a>
 
-      <!-- MEESHO -->
       <a href="#" class="platform-card" onclick="comingSoon(event, 'Meesho')">
         <div class="platform-logo meesho-logo">M</div>
         <h3>Meesho</h3>
@@ -882,7 +829,6 @@
         <span class="platform-action">Coming Soon</span>
       </a>
 
-      <!-- MYNTRA -->
       <a href="#" class="platform-card" onclick="comingSoon(event, 'Myntra')">
         <div class="platform-logo myntra-logo">M</div>
         <h3>Myntra</h3>
@@ -890,7 +836,6 @@
         <span class="platform-action">Coming Soon</span>
       </a>
 
-      <!-- AJIO -->
       <a href="#" class="platform-card" onclick="comingSoon(event, 'Ajio')">
         <div class="platform-logo ajio-logo">AJIO</div>
         <h3>Ajio</h3>
@@ -993,6 +938,7 @@
       <a href="amazon.html" class="cta-btn">Go to Amazon Deals</a>
     </div>
   </section>
+
   <!-- BOTTOM SOCIAL -->
   <section class="bottom-social">
     <div class="bottom-social-wrap">
@@ -1009,6 +955,7 @@
       </div>
     </div>
   </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-wrap">
