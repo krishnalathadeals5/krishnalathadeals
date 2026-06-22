@@ -27,11 +27,29 @@ body{
   text-align:center;
   border-radius:18px;
   position:relative;
-  border:1.5px solid rgba(212,175,55,0.6);
-  background: linear-gradient(145deg, rgba(0,40,30,0.9), rgba(0,20,15,0.95));
+  border:1.5px solid rgba(212,175,55,0.7);
+  background: linear-gradient(145deg, rgba(0,40,30,0.95), rgba(0,20,15,0.98));
+  
+  /* 🔥 PREMIUM GLOW */
   box-shadow: 
-    0 0 25px rgba(212,175,55,0.4),
-    inset 0 0 20px rgba(212,175,55,0.1);
+    0 0 40px rgba(212,175,55,0.5),
+    0 0 80px rgba(0,255,150,0.15),
+    inset 0 0 20px rgba(212,175,55,0.15);
+
+  /* 🔥 ZOOM ENTRY */
+  animation: zoomIn 0.8s ease;
+}
+
+/* ZOOM ANIMATION */
+@keyframes zoomIn{
+  from{
+    transform: scale(0.9);
+    opacity:0;
+  }
+  to{
+    transform: scale(1);
+    opacity:1;
+  }
 }
 
 /* CORNER DESIGN */
@@ -83,7 +101,7 @@ body{
   font-size:22px;
 }
 
-/* GLOW ANIMATION */
+/* LOGO GLOW */
 @keyframes glow{
   from{ box-shadow:0 0 15px #d4af37; }
   to{ box-shadow:0 0 45px #ffd700; }
@@ -126,9 +144,10 @@ h1{
   height:100%;
   width:0%;
   background: linear-gradient(to right, #d4af37, #ffd700);
-  animation: load 3s linear forwards;
+  animation: load 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* LOADING ANIMATION */
 @keyframes load{
   0%{ width:0%; }
   100%{ width:100%; }
@@ -149,7 +168,7 @@ h1{
   background:#ffd700;
   border-radius:50%;
   opacity:0.8;
-  animation: float 6s infinite linear;
+  animation: float linear infinite;
 }
 
 @keyframes float{
