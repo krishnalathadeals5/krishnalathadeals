@@ -8,8 +8,8 @@
 <style>
 body{
   margin:0;
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at center, #062d1a, #001a10);
+  font-family: Arial;
+  background: radial-gradient(circle, #063d27, #021a12);
   height:100vh;
   display:flex;
   align-items:center;
@@ -17,7 +17,7 @@ body{
   overflow:hidden;
 }
 
-/* CENTER BOX */
+/* MAIN BOX */
 .container{
   text-align:center;
   padding:40px 30px;
@@ -26,18 +26,19 @@ body{
   width:300px;
   color:white;
   position:relative;
+  z-index:2;
 
   box-shadow: 
-    0 0 40px rgba(212,175,55,0.6),
-    0 0 80px rgba(0,255,150,0.15),
-    inset 0 0 20px rgba(212,175,55,0.2);
+    0 0 40px rgba(255,215,0,0.6),
+    0 0 80px rgba(0,255,150,0.2),
+    inset 0 0 20px rgba(255,215,0,0.2);
 
   animation: zoomIn 0.8s ease;
 }
 
 /* LOGO */
 .logo{
-  font-size:40px;
+  font-size:36px;
   font-weight:bold;
   color:gold;
   border:2px solid gold;
@@ -48,113 +49,97 @@ body{
   align-items:center;
   justify-content:center;
   margin:0 auto 15px;
-
   box-shadow:0 0 15px gold;
 }
 
-/* TITLE */
+/* TEXT */
 .title{
-  font-size:22px;
-  font-weight:bold;
+  font-size:20px;
   color:gold;
   margin-bottom:10px;
-  letter-spacing:1px;
+  font-weight:bold;
 }
 
-/* SUBTEXT */
 .subtitle{
-  font-size:14px;
+  font-size:13px;
   color:#ddd;
   margin-bottom:20px;
 }
 
-/* PROGRESS BAR */
+/* PROGRESS */
 .progress{
   width:100%;
   height:10px;
   background:#222;
   border-radius:20px;
   overflow:hidden;
-  margin-bottom:10px;
 }
 
 .progress-bar{
   height:100%;
   width:0%;
   background:linear-gradient(to right, gold, orange);
-  border-radius:20px;
-  animation: load 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: load 3s ease forwards;
   box-shadow:0 0 10px gold;
 }
 
-/* LOADING TEXT */
-.loading{
-  font-size:14px;
-  color:#ccc;
-}
-
-/* ZOOM */
+/* ANIMATIONS */
 @keyframes zoomIn{
-  from{
-    transform:scale(0.8);
-    opacity:0;
-  }
-  to{
-    transform:scale(1);
-    opacity:1;
-  }
+  from{transform:scale(0.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
 }
 
-/* LOADING BAR */
 @keyframes load{
-  from{width:0%;}
   to{width:100%;}
 }
 
-/* 🎉 SIDE CRACKERS */
+/* 🎆 CRACKERS */
 .cracker{
   position:absolute;
-  bottom:-50px;
-  width:6px;
-  height:120px;
-  background:linear-gradient(gold, transparent);
-  animation: blast 1.5s infinite ease-out;
+  bottom:0;
+  width:4px;
+  height:0;
+  background:gold;
+  box-shadow:0 0 10px gold;
 }
 
-.cracker.left{
+.left-cracker{
   left:10%;
+  animation: shootLeft 2s infinite;
 }
 
-.cracker.right{
+.right-cracker{
   right:10%;
+  animation: shootRight 2s infinite;
 }
 
-@keyframes blast{
-  0%{
-    transform:translateY(0) scaleY(0.5);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(-300px) scaleY(1.5);
-    opacity:0;
-  }
+@keyframes shootLeft{
+  0%{height:0; transform:translateY(0);}
+  50%{height:150px; transform:translateY(-200px);}
+  100%{height:0; transform:translateY(-300px); opacity:0;}
 }
 
-/* ✨ FALLING PARTICLES */
-.particle{
+@keyframes shootRight{
+  0%{height:0; transform:translateY(0);}
+  50%{height:150px; transform:translateY(-200px);}
+  100%{height:0; transform:translateY(-300px); opacity:0;}
+}
+
+/* ✨ SPARK PARTICLES (TOP FALL) */
+.spark{
   position:absolute;
   width:6px;
   height:6px;
   background:gold;
   border-radius:50%;
   top:-10px;
-  animation: fall linear infinite;
   opacity:0.8;
+  animation: fall linear infinite;
 }
 
 @keyframes fall{
   to{
-    transform:translateY(100vh);
+    transform:translateY(110vh);
   }
 }
 
@@ -163,25 +148,12 @@ body{
 
 <body>
 
-<!-- PARTICLES -->
-<script>
-for(let i=0;i<40;i++){
-  let p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.animationDuration=(3+Math.random()*3)+"s";
-  p.style.opacity=Math.random();
-  document.body.appendChild(p);
-}
-</script>
-
-<!-- SIDE CRACKERS -->
-<div class="cracker left"></div>
-<div class="cracker right"></div>
+<!-- CRACKERS -->
+<div class="cracker left-cracker"></div>
+<div class="cracker right-cracker"></div>
 
 <!-- MAIN BOX -->
 <div class="container">
-
   <div class="logo">KD</div>
 
   <div class="title">KRISHNALATHA DEALS</div>
@@ -195,9 +167,20 @@ for(let i=0;i<40;i++){
     <div class="progress-bar"></div>
   </div>
 
-  <div class="loading">Loading...</div>
-
+  <p style="color:#ccc;">Loading...</p>
 </div>
+
+<!-- FALLING SPARKS SCRIPT -->
+<script>
+for(let i=0;i<50;i++){
+  let s=document.createElement("div");
+  s.className="spark";
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(3 + Math.random()*3)+"s";
+  s.style.opacity=Math.random();
+  document.body.appendChild(s);
+}
+</script>
 
 </body>
 </html>
