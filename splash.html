@@ -17,16 +17,6 @@ body{
   overflow:hidden;
 }
 
-/* PARTICLES LAYER */
-#particles{
-  position:absolute;
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  z-index:1;
-}
-
 /* MAIN BOX */
 .container{
   text-align:center;
@@ -103,24 +93,24 @@ body{
   to{width:100%;}
 }
 
-/* 🎆 CRACKERS (VISIBLE NOW) */
+/* 🎆 CRACKERS (PURE CSS - ALWAYS WORKS) */
 .cracker{
   position:absolute;
   bottom:0;
   width:6px;
-  height:120px;
+  height:150px;
   background:linear-gradient(gold, transparent);
-  z-index:3;
+  opacity:0;
 }
 
-.left-cracker{
-  left:8%;
-  animation: shoot 1.5s infinite;
+.left{
+  left:10%;
+  animation: shoot 2s infinite;
 }
 
-.right-cracker{
-  right:8%;
-  animation: shoot 1.5s infinite 0.7s;
+.right{
+  right:10%;
+  animation: shoot 2s infinite 1s;
 }
 
 @keyframes shoot{
@@ -129,27 +119,45 @@ body{
     opacity:1;
   }
   100%{
-    transform:translateY(-400px);
+    transform:translateY(-500px);
     opacity:0;
   }
 }
 
-/* ✨ FALLING PARTICLES */
-.spark{
+/* ✨ GOLD RAIN (NO JS) */
+.rain{
   position:absolute;
-  width:6px;
-  height:6px;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  overflow:hidden;
+  z-index:1;
+}
+
+.rain span{
+  position:absolute;
+  width:4px;
+  height:15px;
   background:gold;
-  border-radius:50%;
-  top:-10px;
   opacity:0.8;
   animation: fall linear infinite;
 }
 
+.rain span:nth-child(1){left:5%; animation-duration:3s;}
+.rain span:nth-child(2){left:15%; animation-duration:4s;}
+.rain span:nth-child(3){left:25%; animation-duration:5s;}
+.rain span:nth-child(4){left:35%; animation-duration:3.5s;}
+.rain span:nth-child(5){left:45%; animation-duration:4.5s;}
+.rain span:nth-child(6){left:55%; animation-duration:3.2s;}
+.rain span:nth-child(7){left:65%; animation-duration:4.2s;}
+.rain span:nth-child(8){left:75%; animation-duration:5.2s;}
+.rain span:nth-child(9){left:85%; animation-duration:3.8s;}
+.rain span:nth-child(10){left:95%; animation-duration:4.8s;}
+
 @keyframes fall{
-  to{
-    transform:translateY(110vh);
-  }
+  0%{top:-20px;}
+  100%{top:100vh;}
 }
 
 </style>
@@ -157,14 +165,17 @@ body{
 
 <body>
 
-<!-- PARTICLES -->
-<div id="particles"></div>
+<!-- GOLD RAIN -->
+<div class="rain">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
 
 <!-- CRACKERS -->
-<div class="cracker left-cracker"></div>
-<div class="cracker right-cracker"></div>
+<div class="cracker left"></div>
+<div class="cracker right"></div>
 
-<!-- MAIN BOX -->
+<!-- MAIN -->
 <div class="container">
   <div class="logo">KD</div>
 
@@ -181,20 +192,6 @@ body{
 
   <p style="color:#ccc;">Loading...</p>
 </div>
-
-<!-- SCRIPT -->
-<script>
-const container = document.getElementById("particles");
-
-for(let i=0;i<60;i++){
-  let s=document.createElement("div");
-  s.className="spark";
-  s.style.left=Math.random()*100+"%";
-  s.style.animationDuration=(3 + Math.random()*3)+"s";
-  s.style.opacity=Math.random();
-  container.appendChild(s);
-}
-</script>
 
 </body>
 </html>
