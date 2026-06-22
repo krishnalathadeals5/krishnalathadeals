@@ -7,157 +7,129 @@
 
 <style>
 body{
-  margin:0;
-  font-family: Arial;
-  background: radial-gradient(circle, #063d27, #021a12);
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
+margin:0;
+overflow:hidden;
+font-family:Arial;
+background:radial-gradient(circle at center,#064e3b,#022c22);
+color:#fff;
 }
 
-/* MAIN BOX */
+/* CENTER CARD */
 .container{
-  text-align:center;
-  padding:40px 30px;
-  border-radius:20px;
-  border:2px solid gold;
-  width:320px;
-  color:white;
-  position:relative;
-  z-index:2;
-
-  box-shadow: 
-    0 0 40px rgba(255,215,0,0.6),
-    0 0 80px rgba(0,255,150,0.2),
-    inset 0 0 20px rgba(255,215,0,0.2);
-
-  animation: zoomIn 0.8s ease;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+padding:40px;
+border-radius:20px;
+border:2px solid gold;
+box-shadow:0 0 30px gold;
+background:rgba(0,0,0,0.3);
+z-index:2;
 }
 
 /* LOGO */
 .logo{
-  font-size:36px;
-  font-weight:bold;
-  color:gold;
-  border:2px solid gold;
-  border-radius:50%;
-  width:80px;
-  height:80px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 15px;
-  box-shadow:0 0 15px gold;
+width:120px;
+height:120px;
+border-radius:50%;
+border:3px solid gold;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+font-weight:bold;
+margin:auto;
+box-shadow:0 0 20px gold;
 }
 
 /* TEXT */
-.title{
-  font-size:20px;
-  color:gold;
-  margin-bottom:10px;
-  font-weight:bold;
+h1{
+color:gold;
+letter-spacing:2px;
 }
 
-.subtitle{
-  font-size:13px;
-  color:#ddd;
-  margin-bottom:20px;
+.tagline{
+font-size:14px;
+opacity:0.8;
 }
 
-/* PROGRESS */
-.progress{
-  width:100%;
-  height:10px;
-  background:#222;
-  border-radius:20px;
-  overflow:hidden;
+/* LOADING BAR */
+.loading-bar{
+width:300px;
+height:10px;
+background:#333;
+border-radius:20px;
+margin:20px auto;
+overflow:hidden;
 }
 
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:linear-gradient(to right, gold, orange);
-  animation: load 3s ease forwards;
-  box-shadow:0 0 10px gold;
-}
-
-/* ANIMATION */
-@keyframes zoomIn{
-  from{transform:scale(0.8);opacity:0;}
-  to{transform:scale(1);opacity:1;}
+.loading-fill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,gold,#ffd700);
+animation:load 4s infinite;
 }
 
 @keyframes load{
-  to{width:100%;}
+0%{width:0%;}
+50%{width:100%;}
+100%{width:0%;}
 }
 
-/* 🎆 CRACKERS (PURE CSS - ALWAYS WORKS) */
+/* FALLING PARTICLES */
+.particle{
+position:absolute;
+width:5px;
+height:5px;
+background:gold;
+border-radius:50%;
+opacity:0.8;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-10px);
+opacity:1;
+}
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+}
+
+/* SIDE CRACKERS */
 .cracker{
-  position:absolute;
-  bottom:0;
-  width:6px;
-  height:150px;
-  background:linear-gradient(gold, transparent);
-  opacity:0;
-}
-
-.left{
-  left:10%;
-  animation: shoot 2s infinite;
-}
-
-.right{
-  right:10%;
-  animation: shoot 2s infinite 1s;
+position:absolute;
+bottom:0;
+width:6px;
+height:6px;
+background:gold;
+border-radius:50%;
+animation:shoot 1.5s ease-out infinite;
 }
 
 @keyframes shoot{
-  0%{
-    transform:translateY(0);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(-500px);
-    opacity:0;
-  }
+0%{
+transform:translateY(0) scale(1);
+opacity:1;
+}
+100%{
+transform:translateY(-300px) scale(0.5);
+opacity:0;
+}
 }
 
-/* ✨ GOLD RAIN (NO JS) */
-.rain{
-  position:absolute;
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  overflow:hidden;
-  z-index:1;
+/* LEFT SIDE */
+.left{
+left:20px;
 }
 
-.rain span{
-  position:absolute;
-  width:4px;
-  height:15px;
-  background:gold;
-  opacity:0.8;
-  animation: fall linear infinite;
-}
-
-.rain span:nth-child(1){left:5%; animation-duration:3s;}
-.rain span:nth-child(2){left:15%; animation-duration:4s;}
-.rain span:nth-child(3){left:25%; animation-duration:5s;}
-.rain span:nth-child(4){left:35%; animation-duration:3.5s;}
-.rain span:nth-child(5){left:45%; animation-duration:4.5s;}
-.rain span:nth-child(6){left:55%; animation-duration:3.2s;}
-.rain span:nth-child(7){left:65%; animation-duration:4.2s;}
-.rain span:nth-child(8){left:75%; animation-duration:5.2s;}
-.rain span:nth-child(9){left:85%; animation-duration:3.8s;}
-.rain span:nth-child(10){left:95%; animation-duration:4.8s;}
-
-@keyframes fall{
-  0%{top:-20px;}
-  100%{top:100vh;}
+/* RIGHT SIDE */
+.right{
+right:20px;
 }
 
 </style>
@@ -165,32 +137,56 @@ body{
 
 <body>
 
-<!-- GOLD RAIN -->
-<div class="rain">
-  <span></span><span></span><span></span><span></span><span></span>
-  <span></span><span></span><span></span><span></span><span></span>
+<!-- PARTICLES -->
+<script>
+for(let i=0;i<50;i++){
+let p=document.createElement("div");
+p.className="particle";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(3+Math.random()*5)+"s";
+p.style.opacity=Math.random();
+document.body.appendChild(p);
+}
+</script>
+
+<!-- CRACKERS LEFT -->
+<script>
+for(let i=0;i<15;i++){
+let c=document.createElement("div");
+c.className="cracker left";
+c.style.left=(10 + Math.random()*50)+"px";
+c.style.animationDelay=Math.random()*2+"s";
+document.body.appendChild(c);
+}
+</script>
+
+<!-- CRACKERS RIGHT -->
+<script>
+for(let i=0;i<15;i++){
+let c=document.createElement("div");
+c.className="cracker right";
+c.style.right=(10 + Math.random()*50)+"px";
+c.style.animationDelay=Math.random()*2+"s";
+document.body.appendChild(c);
+}
+</script>
+
+<!-- MAIN CARD -->
+<div class="container">
+<div class="logo">KD</div>
+
+<h1>KRISHNALATHA DEALS</h1>
+
+<div class="tagline">
+BEST DEALS, BIG SAVINGS!<br>
+One Destination. Endless Savings.
 </div>
 
-<!-- CRACKERS -->
-<div class="cracker left"></div>
-<div class="cracker right"></div>
+<div class="loading-bar">
+<div class="loading-fill"></div>
+</div>
 
-<!-- MAIN -->
-<div class="container">
-  <div class="logo">KD</div>
-
-  <div class="title">KRISHNALATHA DEALS</div>
-
-  <div class="subtitle">
-    Best Deals, Big Savings!<br>
-    One Destination. Endless Savings.
-  </div>
-
-  <div class="progress">
-    <div class="progress-bar"></div>
-  </div>
-
-  <p style="color:#ccc;">Loading...</p>
+<p>Loading...</p>
 </div>
 
 </body>
