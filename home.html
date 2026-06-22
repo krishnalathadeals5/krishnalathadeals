@@ -224,7 +224,7 @@
       margin: 0;
     }
 
-    /* ===== SOCIAL ===== */
+    /* ===== COMMON SECTION ===== */
     .section {
       max-width: 1200px;
       margin: 28px auto;
@@ -246,6 +246,7 @@
       font-size: 16px;
     }
 
+    /* ===== SOCIAL ===== */
     .social-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -352,18 +353,58 @@
     }
 
     .platform-logo {
-      width: 86px;
-      height: 86px;
-      border-radius: 20px;
-      background: #f8f9fb;
+      width: 92px;
+      height: 92px;
+      border-radius: 22px;
       margin: 0 auto 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      font-size: 30px;
       font-weight: 900;
-      color: #0b6b3a;
+      color: white;
       border: 1px solid #eef2f5;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+
+    /* Original brand color style logos */
+    .amazon-logo {
+      background: #131921;
+      color: #ff9900;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .flipkart-logo {
+      background: #2874f0;
+      color: #ffe500;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .meesho-logo {
+      background: #9c27b0;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .myntra-logo {
+      background: #ffffff;
+      color: #ff3f6c;
+      font-size: 34px;
+      font-weight: 900;
+      border: 2px solid #f0f0f0;
+    }
+
+    .ajio-logo {
+      background: #111111;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 2px;
     }
 
     .platform-card h3 {
@@ -376,7 +417,7 @@
       color: #666;
       font-size: 14px;
       line-height: 1.5;
-      min-height: 42px;
+      min-height: 64px;
     }
 
     .platform-action {
@@ -795,157 +836,55 @@
   </section>
 
   <!-- PLATFORMS -->
-  <style>
-  /* =========================
-     PLATFORM SECTION
-  ========================== */
-  .platform-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:22px;
-    margin-top:30px;
-  }
+  <section class="section" id="platforms">
+    <h2 class="section-title">Shop From Top Platforms</h2>
+    <p class="section-subtitle">
+      Click a platform to explore its deals page.
+    </p>
 
-  .platform-card{
-    background:#ffffff;
-    border:2px solid #e8efe8;
-    border-radius:24px;
-    padding:26px 20px 22px;
-    text-decoration:none;
-    color:#123524;
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
-    transition:all 0.28s ease;
-    position:relative;
-    overflow:hidden;
-    text-align:center;
-  }
+    <div class="platform-grid">
+      <!-- AMAZON -->
+      <a href="amazon.html" class="platform-card active-platform">
+        <div class="platform-logo amazon-logo">a</div>
+        <h3>Amazon</h3>
+        <p>Open your current Amazon deals page with all products and categories.</p>
+        <span class="platform-action">Open Deals</span>
+      </a>
 
-  .platform-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 18px 40px rgba(0,0,0,0.14);
-    border-color:#d5e7d5;
-  }
+      <!-- FLIPKART -->
+      <a href="#" class="platform-card" onclick="comingSoon(event, 'Flipkart')">
+        <div class="platform-logo flipkart-logo">F</div>
+        <h3>Flipkart</h3>
+        <p>Flipkart deals page will be added next in the same premium style.</p>
+        <span class="platform-action">Coming Soon</span>
+      </a>
 
-  .platform-card h3{
-    margin:16px 0 12px;
-    font-size:30px;
-    font-weight:800;
-    color:#0b6f3a;
-  }
+      <!-- MEESHO -->
+      <a href="#" class="platform-card" onclick="comingSoon(event, 'Meesho')">
+        <div class="platform-logo meesho-logo">M</div>
+        <h3>Meesho</h3>
+        <p>Meesho deals and price comparison section will be added next.</p>
+        <span class="platform-action">Coming Soon</span>
+      </a>
 
-  .platform-card p{
-    font-size:22px;
-    line-height:1.55;
-    color:#475569;
-    margin:0 0 18px;
-    min-height:105px;
-  }
+      <!-- MYNTRA -->
+      <a href="#" class="platform-card" onclick="comingSoon(event, 'Myntra')">
+        <div class="platform-logo myntra-logo">M</div>
+        <h3>Myntra</h3>
+        <p>Fashion and lifestyle deals from Myntra will be added next.</p>
+        <span class="platform-action">Coming Soon</span>
+      </a>
 
-  .platform-logo{
-    width:130px;
-    height:130px;
-    margin:0 auto 10px;
-    background:#ffffff;
-    border-radius:28px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:
-      0 12px 28px rgba(0,0,0,0.10),
-      inset 0 0 0 1px rgba(0,0,0,0.04);
-    padding:18px;
-  }
+      <!-- AJIO -->
+      <a href="#" class="platform-card" onclick="comingSoon(event, 'Ajio')">
+        <div class="platform-logo ajio-logo">AJIO</div>
+        <h3>Ajio</h3>
+        <p>Ajio fashion deals page can be connected in the next phase.</p>
+        <span class="platform-action">Coming Soon</span>
+      </a>
+    </div>
+  </section>
 
-  .platform-logo img{
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
-    display:block;
-  }
-
-  /* Individual brand logo box styling */
-  .amazon-logo{
-    background:#ffffff;
-  }
-
-  .flipkart-logo{
-    background:#ffffff;
-  }
-
-  .meesho-logo{
-    background:#ffffff;
-  }
-
-  .myntra-logo{
-    background:#ffffff;
-  }
-
-  .ajio-logo{
-    background:#ffffff;
-  }
-
-  .platform-action{
-    display:inline-block;
-    background:linear-gradient(135deg,#ffb300,#f59e0b);
-    color:#ffffff;
-    font-size:22px;
-    font-weight:800;
-    padding:14px 28px;
-    border-radius:14px;
-    box-shadow:0 10px 24px rgba(245,158,11,0.25);
-  }
-
-  .active-platform{
-    border:2px solid #f4b000;
-    box-shadow:
-      0 18px 40px rgba(0,0,0,0.12),
-      0 0 0 3px rgba(244,176,0,0.10);
-  }
-
-  .active-platform::before{
-    content:"LIVE";
-    position:absolute;
-    top:14px;
-    right:14px;
-    background:#0b7a3d;
-    color:#fff;
-    font-size:16px;
-    font-weight:800;
-    padding:8px 12px;
-    border-radius:999px;
-    letter-spacing:0.5px;
-    box-shadow:0 6px 16px rgba(11,122,61,0.25);
-  }
-
-  /* Responsive */
-  @media (max-width: 768px){
-    .platform-card{
-      padding:22px 16px 18px;
-      border-radius:20px;
-    }
-
-    .platform-logo{
-      width:110px;
-      height:110px;
-      border-radius:22px;
-      padding:14px;
-    }
-
-    .platform-card h3{
-      font-size:24px;
-    }
-
-    .platform-card p{
-      font-size:18px;
-      min-height:auto;
-    }
-
-    .platform-action{
-      font-size:18px;
-      padding:12px 22px;
-    }
-  }
-</style>
   <!-- FEATURES -->
   <section class="feature-strip">
     <div class="feature-box">
