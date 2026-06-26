@@ -3,180 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals</title>
+
+<title>Splash</title>
 
 <style>
-body {
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at center, #063a26, #02150e);
+body{
+    margin:0;
+    background:#02150e;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial;
 }
 
-/* CARD */
-.card {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    padding: 30px;
-    text-align: center;
-    border-radius: 20px;
-    border: 2px solid gold;
-    color: gold;
-    background: rgba(0,0,0,0.25);
-    box-shadow: 0 0 40px rgba(255,215,0,0.6);
-    z-index: 10;
+/* Center Card */
+.card{
+    background:rgba(255,255,255,0.05);
+    border:2px solid gold;
+    border-radius:20px;
+    padding:40px;
+    text-align:center;
+    color:gold;
+    box-shadow:0 0 40px rgba(255,215,0,0.5);
+    z-index:2;
 }
 
-/* LOGO */
-.logo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 3px solid gold;
-    margin: auto;
-    line-height: 100px;
-    font-size: 40px;
-    font-weight: bold;
-    box-shadow: 0 0 25px gold;
+.logo{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    border:2px solid gold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    margin-bottom:15px;
+    font-size:28px;
 }
 
-/* TEXT */
-h1 { margin: 20px 0 10px; }
-p { font-size: 14px; }
-
-/* LOADER */
-.loader {
-    width: 100%;
-    height: 8px;
-    background: #333;
-    border-radius: 10px;
-    margin-top: 20px;
-    overflow: hidden;
-}
-.loader span {
-    display: block;
-    height: 100%;
-    width: 0%;
-    background: gold;
-    animation: load 3s linear forwards;
-}
-@keyframes load {
-    100% { width: 100%; }
+/* Progress */
+.progress{
+    width:250px;
+    height:6px;
+    background:#333;
+    margin-top:15px;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-/* PARTICLES */
-.particle {
-    position: fixed;
-    top: -10px;
-    width: 6px;
-    height: 6px;
-    background: gold;
-    border-radius: 50%;
-    opacity: 0.8;
-    pointer-events: none;
-    z-index: 1;
-    animation: fall linear infinite;
-}
-@keyframes fall {
-    to {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
+.bar{
+    height:100%;
+    width:0%;
+    background:gold;
+    animation:load 4s linear forwards;
 }
 
-/* FIREWORKS */
-.spark {
-    position: fixed;
-    width: 4px;
-    height: 4px;
-    background: gold;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 2;
-    animation: explode 800ms ease-out forwards;
+@keyframes load{
+    to{width:100%;}
 }
 
-@keyframes explode {
-    from {
-        transform: translate(0,0);
-        opacity: 1;
-    }
-    to {
-        transform: translate(var(--x), var(--y));
-        opacity: 0;
-    }
+/* Falling particles */
+.particle{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:gold;
+    border-radius:50%;
+    opacity:0.8;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10px);}
+    to{transform:translateY(100vh);}
 }
 </style>
+
+<script>
+/* Create falling particles */
+for(let i=0;i<80;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(3+Math.random()*5)+"s";
+    p.style.opacity=Math.random();
+    document.body.appendChild(p);
+}
+
+/* PRO REDIRECT LOGIC */
+setTimeout(function(){
+
+    if(localStorage.getItem("visited")){
+        window.location.href = "home.html";
+    }else{
+        localStorage.setItem("visited","true");
+        window.location.href = "welcome.html";
+    }
+
+}, 4000);
+</script>
+
 </head>
 
 <body>
 
 <div class="card">
     <div class="logo">KD</div>
+    <h2>KRISHNALATHA DEALS</h2>
+    <p>Best Deals, Big Savings!</p>
 
-    <h1>KRISHNALATHA DEALS</h1>
-
-    <p>
-        BEST DEALS, BIG SAVINGS!<br>
-        One Destination. Endless Savings.
-    </p>
-
-    <div class="loader">
-        <span></span>
+    <div class="progress">
+        <div class="bar"></div>
     </div>
 
-    <p>Loading...</p>
+    <p style="margin-top:10px;">Loading...</p>
 </div>
-
-<!-- PARTICLES -->
-<script>
-for (let i = 0; i < 60; i++) {
-    let p = document.createElement("div");
-    p.className = "particle";
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (3 + Math.random() * 5) + "s";
-    document.body.appendChild(p);
-}
-</script>
-
-<!-- FIREWORKS -->
-<script>
-function createFirework(x, y) {
-    for (let i = 0; i < 25; i++) {
-        let s = document.createElement("div");
-        s.className = "spark";
-
-        let angle = Math.random() * 2 * Math.PI;
-        let radius = Math.random() * 120;
-
-        s.style.left = x + "px";
-        s.style.top = y + "px";
-
-        s.style.setProperty("--x", Math.cos(angle) * radius + "px");
-        s.style.setProperty("--y", Math.sin(angle) * radius + "px");
-
-        document.body.appendChild(s);
-
-        setTimeout(() => s.remove(), 800);
-    }
-}
-
-setInterval(() => {
-    let x = Math.random() * window.innerWidth;
-    let y = Math.random() * (window.innerHeight / 2);
-    createFirework(x, y);
-}, 500);
-</script>
-
-<!-- ✅ REDIRECT FIX -->
-<script>
-setTimeout(() => {
-    window.location.href = "welcome.html";   // IMPORTANT
-}, 3500);
-</script>
 
 </body>
 </html>
