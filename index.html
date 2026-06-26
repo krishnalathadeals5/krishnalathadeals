@@ -226,7 +226,7 @@ div.className = "product";
 
 div.innerHTML = `
 <img src="${item.image}">
-<p>${item.title.substring(0,40)}...</p>
+<p>${item.title.length > 50 ? item.title.substring(0,50) + "..." : item.title}</p>
 <p class="price">₹${Math.floor(item.price*80)} 
 <span class="old">₹${Math.floor(item.price*120)}</span></p>
 <p class="discount">${Math.floor(Math.random()*60)}% OFF</p>
