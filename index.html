@@ -50,51 +50,44 @@ background:#febd69;
 border:none;
 padding:10px;
 cursor:pointer;
-border-radius:0 4px 4px 0;
+border-radius:0 4px 0 4px;
 }
 
-/* ================= HERO (BIGGER + SMOOTH SLIDER) ================= */
-.hero{
-position:relative;
-height:140px;
-overflow:hidden;
+/* ================= SMOOTH CONTINUOUS HERO ================= */
+.hero-wrap{
 background:#0f1115;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-font-size:18px;
+overflow:hidden;
+padding:12px 0;
 }
 
 .hero-track{
 display:flex;
-width:100%;
-transition:transform 0.6s ease-in-out;
+gap:30px;
+width:max-content;
+animation:scroll 18s linear infinite;
 }
 
-.hero-slide{
-min-width:100%;
-text-align:center;
-padding:20px;
-}
-
-.arrow{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-font-size:22px;
-background:rgba(0,0,0,0.4);
+.hero-item{
+white-space:nowrap;
 color:white;
-padding:8px 12px;
-border-radius:50%;
-cursor:pointer;
+font-weight:bold;
+font-size:15px;
+padding:8px 16px;
+background:rgba(255,255,255,0.08);
+border-radius:20px;
 }
 
-.left{left:10px;}
-.right{right:10px;}
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
+}
 
-/* ================= BRAND ICONS ================= */
+/* pause on hover */
+.hero-wrap:hover .hero-track{
+animation-play-state:paused;
+}
+
+/* ================= BRAND LOGOS ================= */
 .brand-bar{
 display:flex;
 gap:12px;
@@ -123,7 +116,7 @@ height:22px;
 }
 
 .brand:hover{
-transform:scale(1.1);
+transform:scale(1.08);
 }
 
 @keyframes float{
@@ -131,7 +124,7 @@ transform:scale(1.1);
 50%{transform:translateY(-4px);}
 }
 
-/* ================= GRID ================= */
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -154,36 +147,7 @@ object-fit:contain;
 
 .price{color:green;font-weight:bold;}
 .old{color:gray;text-decoration:line-through;font-size:12px;}
-.best{color:red;font-weight:bold;margin-top:10px;}
-
-/* ================= SOCIAL ================= */
-.social{
-position:fixed;
-right:10px;
-bottom:20px;
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.social a{
-width:42px;
-height:42px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-animation:float 2s infinite;
-}
-
-.social img{width:20px;}
-
-.wa{background:#25D366;}
-.tg{background:#0088cc;}
-.yt{background:#FF0000;}
-.ig{background:#E4405F;}
-.fb{background:#1877F2;}
-
+.best{color:red;font-weight:bold;}
 </style>
 </head>
 
@@ -194,143 +158,60 @@ animation:float 2s infinite;
 <div class="logo">Krishnalatha Deals</div>
 
 <div class="search">
-<input id="search" placeholder="Search product (e.g. Samsung S23 FE)">
-<button onclick="compare()">🔍</button>
+<input placeholder="Search product (e.g. Samsung S23 FE)">
+<button>🔍</button>
 </div>
 </div>
 
-<!-- HERO (BIG + SMOOTH) -->
-<div class="hero">
-<div class="hero-track" id="track">
+<!-- 🔥 CONTINUOUS HERO SCROLL -->
+<div class="hero-wrap">
+<div class="hero-track">
 
-<div class="hero-slide">🔥 Amazon Mega Offers</div>
-<div class="hero-slide">⚡ Flipkart Big Savings</div>
-<div class="hero-slide">💄 Myntra Fashion Sale</div>
-<div class="hero-slide">🛍 Meesho Lowest Price</div>
-<div class="hero-slide">🏷 Ajio Premium Deals</div>
+<div class="hero-item">🔥 Amazon Mega Offers</div>
+<div class="hero-item">⚡ Flipkart Big Savings</div>
+<div class="hero-item">💄 Myntra Fashion Sale</div>
+<div class="hero-item">🛍 Meesho Lowest Price</div>
+<div class="hero-item">🏷 Ajio Premium Deals</div>
+
+<!-- duplicate for infinite loop effect -->
+<div class="hero-item">🔥 Amazon Mega Offers</div>
+<div class="hero-item">⚡ Flipkart Big Savings</div>
+<div class="hero-item">💄 Myntra Fashion Sale</div>
+<div class="hero-item">🛍 Meesho Lowest Price</div>
+<div class="hero-item">🏷 Ajio Premium Deals</div>
 
 </div>
-
-<div class="arrow left" onclick="move(-1)">❮</div>
-<div class="arrow right" onclick="move(1)">❯</div>
 </div>
 
-<!-- BRAND ICONS -->
+<!-- BRAND LOGOS -->
 <div class="brand-bar">
 
 <div class="brand">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"> Amazon
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
+Amazon
 </div>
 
 <div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png"> Flipkart
+<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
+Flipkart
 </div>
 
 <div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png"> Myntra
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
+Myntra
 </div>
 
 <div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"> Meesho
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
+Meesho
 </div>
 
 <div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"> Ajio
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+Ajio
 </div>
 
 </div>
-
-<!-- PRODUCT COMPARISON -->
-<div class="grid" id="result"></div>
-
-<!-- SOCIAL -->
-<div class="social">
-<a class="wa"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
-<a class="tg"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-<a class="yt"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-<a class="ig"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
-<a class="fb"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
-</div>
-
-<script>
-
-/* HERO SLIDER */
-let index=0;
-function move(dir){
-let track=document.getElementById("track");
-let slides=document.querySelectorAll(".hero-slide");
-
-index+=dir;
-if(index<0) index=slides.length-1;
-if(index>=slides.length) index=0;
-
-track.style.transform=`translateX(-${index*100}%)`;
-}
-
-setInterval(()=>move(1),4000);
-
-/* PRODUCT DATABASE */
-const data={
-"samsung s23 fe":{
-amazon:39999,
-flipkart:38999,
-myntra:0,
-meesho:37999,
-ajio:0
-},
-"watch":{
-amazon:1999,
-flipkart:1899,
-myntra:2100,
-meesho:1750,
-ajio:0
-},
-"backpack":{
-amazon:999,
-flipkart:899,
-myntra:0,
-meesho:799,
-ajio:0
-}
-};
-
-/* COMPARE */
-function compare(){
-
-let key=document.getElementById("search").value.toLowerCase();
-let d=data[key];
-
-let box=document.getElementById("result");
-
-if(!d){
-box.innerHTML="<div class='card'>No product found</div>";
-return;
-}
-
-let arr=[];
-let html="<div class='card'><h3>Price Comparison</h3>";
-
-function add(n,p){
-if(p>0){
-arr.push({n,p});
-html+=`<p>${n}: <span class='price'>₹${p}</span></p>`;
-}
-}
-
-add("Amazon",d.amazon);
-add("Flipkart",d.flipkart);
-add("Myntra",d.myntra);
-add("Meesho",d.meesho);
-add("Ajio",d.ajio);
-
-let best=arr.reduce((a,b)=>a.p<b.p?a:b);
-
-html+=`<div class='best'>🏆 Best Price: ${best.n} ₹${best.p}</div></div>`;
-
-box.innerHTML=html;
-}
-
-</script>
 
 </body>
 </html>
