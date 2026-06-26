@@ -231,7 +231,48 @@ to{opacity:1;transform:translateY(0);}
 <!-- LIVE DEALS -->
 <section class="deals">
 <h2>🔥 Live Deals</h2>
-<div id="products">Loading deals...</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+var container = document.getElementById("products");
+
+if(!container){
+alert("ERROR: products div not found");
+return;
+}
+
+// clear loading
+container.innerHTML = "";
+
+var products = [
+{title:"Mens Jacket", price:999},
+{title:"T-Shirt", price:499},
+{title:"Backpack", price:799}
+];
+
+for(var i=0; i<products.length; i++){
+
+var p = products[i];
+
+var original = Math.floor(p.price * 1.5);
+var discount = Math.floor(((original - p.price)/original)*100);
+
+var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
+
+var div = document.createElement("div");
+div.className = "product";
+
+div.innerHTML =
+"<p>"+p.title+"</p>"+
+"<p class='price'>₹"+p.price+" <span class='old'>₹"+original+"</span></p>"+
+"<p class='discount'>"+discount+"% OFF</p>"+
+"<a href='"+link+"' target='_blank'>View Deal</a>";
+
+container.appendChild(div);
+}
+
+});
+</script>
 </section>
 
 <!-- SOCIAL FLOAT -->
