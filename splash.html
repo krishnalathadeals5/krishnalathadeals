@@ -29,21 +29,27 @@ body{
 </div>
 
 <script>
+
+// ⚡ FAST LOAD (1.5 sec only)
 setTimeout(function(){
 
     try{
-        if(localStorage.getItem("visited")){
-            window.location.href = "home.html";
+
+        let visited = localStorage.getItem("visited");
+
+        if(visited === "true"){
+            window.location.replace("home.html");
         }else{
             localStorage.setItem("visited","true");
-            window.location.href = "welcome.html";
+            window.location.replace("welcome.html");
         }
+
     }catch(e){
-        // fallback if localStorage fails
-        window.location.href = "home.html";
+        window.location.replace("home.html");
     }
 
-}, 4000);
+}, 1500);
+
 </script>
 
 </body>
