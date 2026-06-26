@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -33,7 +34,6 @@ background:linear-gradient(45deg,#ff9900,#ff5e00);
 color:#fff;
 padding:40px 20px;
 text-align:center;
-animation:fadeIn 1s ease;
 }
 
 .hero button{
@@ -43,11 +43,6 @@ background:#000;
 color:#fff;
 border-radius:6px;
 cursor:pointer;
-transition:0.3s;
-}
-
-.hero button:hover{
-background:#333;
 }
 
 /* BRANDS */
@@ -89,7 +84,7 @@ transform:translateY(-5px) scale(1.05);
 .ajio{border-top:4px solid #000;}
 .reliance{border-top:4px solid #1e3c72;}
 
-/* LIVE DEALS */
+/* DEALS */
 .deals{
 padding:20px;
 }
@@ -100,7 +95,6 @@ padding:12px;
 margin-bottom:12px;
 border-radius:10px;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
-animation:fadeIn 0.5s ease;
 }
 
 .price{
@@ -142,14 +136,14 @@ z-index:999;
 }
 
 .social-float a{
-width:42px;
-height:42px;
+width:40px;
+height:40px;
 border-radius:50%;
 display:flex;
 justify-content:center;
 align-items:center;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
-animation:float 2s infinite ease-in-out;
+animation:float 2s infinite;
 }
 
 .social-float img{
@@ -166,32 +160,30 @@ width:20px;
 0%,100%{transform:translateY(0);}
 50%{transform:translateY(-6px);}
 }
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
-}
-
 </style>
+
 </head>
 
 <body>
 
 <!-- HEADER -->
+
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
 </div>
 
 <!-- HERO -->
+
 <div class="hero">
-<h1>Best Deals Online</h1>
+<h2>Best Deals Online</h2>
 <p>Amazon • Flipkart • Myntra</p>
 <button onclick="location.href='amazon.html'">Shop Now</button>
 </div>
 
 <!-- BRANDS -->
+
 <section class="brands">
-<h2>Top Platforms</h2>
+<h3>Top Platforms</h3>
 
 <div class="brand-grid">
 
@@ -229,53 +221,14 @@ to{opacity:1;transform:translateY(0);}
 </section>
 
 <!-- LIVE DEALS -->
+
 <section class="deals">
-<h2>🔥 Live Deals</h2>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-var container = document.getElementById("products");
-
-if(!container){
-alert("ERROR: products div not found");
-return;
-}
-
-// clear loading
-container.innerHTML = "";
-
-var products = [
-{title:"Mens Jacket", price:999},
-{title:"T-Shirt", price:499},
-{title:"Backpack", price:799}
-];
-
-for(var i=0; i<products.length; i++){
-
-var p = products[i];
-
-var original = Math.floor(p.price * 1.5);
-var discount = Math.floor(((original - p.price)/original)*100);
-
-var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
-
-var div = document.createElement("div");
-div.className = "product";
-
-div.innerHTML =
-"<p>"+p.title+"</p>"+
-"<p class='price'>₹"+p.price+" <span class='old'>₹"+original+"</span></p>"+
-"<p class='discount'>"+discount+"% OFF</p>"+
-"<a href='"+link+"' target='_blank'>View Deal</a>";
-
-container.appendChild(div);
-}
-
-});
-</script>
+<h3>🔥 Live Deals</h3>
+<div id="products">Loading deals...</div>
 </section>
 
-<!-- SOCIAL FLOAT -->
+<!-- SOCIAL -->
+
 <div class="social-float">
 
 <a href="https://wa.me/your-number" class="wa" target="_blank">
@@ -301,27 +254,29 @@ container.appendChild(div);
 </div>
 
 <script>
-window.onload = function(){
+document.addEventListener("DOMContentLoaded", function(){
 
-const products = [
+var container = document.getElementById("products");
+
+// clear loading
+container.innerHTML = "";
+
+var products = [
 {title:"Mens Jacket", price:4479},
 {title:"Slim Fit T-Shirt", price:1784},
 {title:"Backpack", price:8796}
 ];
 
-const container = document.getElementById("products");
+for(var i=0; i<products.length; i++){
 
-// clear loading
-container.innerHTML = "";
+var p = products[i];
 
-products.forEach(function(p){
+var original = Math.floor(p.price * 1.5);
+var discount = Math.floor(((original - p.price)/original)*100);
 
-let original = Math.floor(p.price * 1.5);
-let discount = Math.floor(((original - p.price)/original)*100);
+var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
 
-let link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
-
-let div = document.createElement("div");
+var div = document.createElement("div");
 div.className="product";
 
 div.innerHTML =
@@ -331,10 +286,9 @@ div.innerHTML =
 "<a href='"+link+"' target='_blank'>View Deal</a>";
 
 container.appendChild(div);
+}
 
 });
-
-};
 </script>
 
 </body>
