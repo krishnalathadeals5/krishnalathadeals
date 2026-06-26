@@ -229,7 +229,9 @@ div.innerHTML = `
 <p>${item.title.length > 50 ? item.title.substring(0,50) + "..." : item.title}</p>
 <p class="price">₹${Math.floor(item.price*80)} 
 <span class="old">₹${Math.floor(item.price*120)}</span></p>
-<p class="discount">${Math.floor(Math.random()*60)}% OFF</p>
+<p class="discount">${let original = Math.floor(item.price * 120);
+let current = Math.floor(item.price * 80);
+let discount = Math.floor(((original - current) / original) * 100);}% OFF</p>
 `;
 
 container.appendChild(div);
