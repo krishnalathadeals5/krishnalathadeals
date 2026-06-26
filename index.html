@@ -6,239 +6,181 @@
 <title>Krishnalatha Deals</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+body{
+margin:0;
+font-family:Arial;
+background:#f5f6fa;
+}
 
-body{background:#f5f6fa;}
+/* SPLASH */
+#splash{
+position:fixed;
+inset:0;
+background:#111;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+z-index:99999;
+}
 
 /* HEADER */
 .header{
-background:#0a3d2c;
+background:#111;
 color:#fff;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:12px 20px;
-}
-
-.logo{color:#ffd700;font-weight:bold;}
-
-.search input{
-padding:10px;
-width:300px;
-border-radius:8px;
-border:none;
-}
-
-/* HERO SLIDER */
-.hero{
-margin:15px;
-overflow:hidden;
-border-radius:12px;
-position:relative;
-}
-
-.slides{
-display:flex;
-width:300%;
-animation:slide 12s infinite;
-}
-
-.slide{
-min-width:100%;
-padding:40px;
-color:#fff;
+padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 }
 
-.slide1{background:linear-gradient(90deg,#063,#0a3d2c);}
-.slide2{background:linear-gradient(90deg,#1a237e,#3949ab);}
-.slide3{background:linear-gradient(90deg,#880e4f,#c2185b);}
-
-.slide img{width:220px;}
-
-@keyframes slide{
-0%{transform:translateX(0);}
-33%{transform:translateX(0);}
-36%{transform:translateX(-100%);}
-66%{transform:translateX(-100%);}
-69%{transform:translateX(-200%);}
-100%{transform:translateX(-200%);}
-}
-
-/* PLATFORM CARDS */
-.platforms{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:15px;
-padding:15px;
-}
-
-.card{
-background:#fff;
-padding:15px;
-border-radius:10px;
-text-align:center;
-transition:0.3s;
-cursor:pointer;
-}
-
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 6px 15px rgba(0,0,0,0.15);
-}
-
-.card img{height:40px;}
-
-.card button{
-margin-top:10px;
-padding:6px 10px;
-border:none;
-border-radius:5px;
-color:#fff;
-cursor:pointer;
-}
-
-.amazon{background:#ff9900;}
-.flipkart{background:#2874f0;}
-.myntra{background:#ff3f6c;}
-.meesho{background:#ff2e63;}
-.ajio{background:#111;}
-.reliance{background:#e60023;}
-
-/* PRODUCTS */
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-padding:15px;
-}
-
-.product{
-background:#fff;
-padding:10px;
-border-radius:10px;
-transition:0.3s;
-}
-
-.product:hover{
-transform:scale(1.03);
-box-shadow:0 6px 15px rgba(0,0,0,0.15);
-}
-
-.product img{
-width:100%;
-height:150px;
-object-fit:contain;
-}
-
-.price{font-weight:bold;}
-.old{text-decoration:line-through;color:gray;font-size:12px;}
-.discount{color:red;font-size:12px;}
-
-/* LOADER */
-.loader{
-text-align:center;
-padding:20px;
+.logo{
+font-size:18px;
 font-weight:bold;
 }
 
-/* MOBILE */
-@media(max-width:768px){
-.search input{width:100%;}
-.slide{flex-direction:column;text-align:center;}
-.slide img{width:150px;margin-top:10px;}
+/* HERO */
+.hero{
+background:linear-gradient(45deg,#ff9900,#ff5e00);
+color:#fff;
+padding:40px 20px;
+text-align:center;
+}
+
+.hero button{
+padding:10px 20px;
+border:none;
+background:#000;
+color:#fff;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* BRANDS */
+.brands{
+padding:30px 20px;
+text-align:center;
+}
+
+.brand-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+gap:15px;
+}
+
+.brand{
+padding:15px;
+border-radius:12px;
+text-decoration:none;
+color:#000;
+background:#fff;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.brand:hover{
+transform:scale(1.05);
+}
+
+/* DEALS */
+.deals{padding:20px;}
+
+.product{
+background:#fff;
+padding:12px;
+margin-bottom:12px;
+border-radius:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 </style>
 </head>
 
 <body>
 
+<!-- SPLASH -->
+<div id="splash">Loading Krishnalatha Deals...</div>
+
+<!-- HEADER -->
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
-<div class="search"><input placeholder="Search..."></div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-<div class="slides">
+<h2>Best Deals Online</h2>
+<p>Amazon • Flipkart • Myntra</p>
 
-<div class="slide slide1">
-<div>
-<h1>BEST DEALS</h1>
-<p>Amazon, Flipkart, Myntra</p>
-<button>Shop Now</button>
-</div>
-<img src="https://cdn-icons-png.flaticon.com/512/1041/1041880.png">
+<!-- ✅ AMAZON BUTTON FIX -->
+<button onclick="openAmazon()">Shop Amazon</button>
 </div>
 
-<div class="slide slide2">
-<div>
-<h1>BIG SALE</h1>
-<p>Up to 70% OFF</p>
-<button>Explore</button>
-</div>
-<img src="https://cdn-icons-png.flaticon.com/512/891/891419.png">
-</div>
+<!-- BRANDS -->
+<section class="brands">
+<h3>Top Platforms</h3>
 
-<div class="slide slide3">
-<div>
-<h1>TOP BRANDS</h1>
-<p>Best Prices Guaranteed</p>
-<button>Shop Now</button>
-</div>
-<img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
-</div>
+<div class="brand-grid">
+
+<!-- ✅ AMAZON LINK FIX -->
+<a href="./amazon.html" class="brand">
+<p>Amazon</p>
+</a>
+
+<a href="#" class="brand">
+<p>Flipkart</p>
+</a>
 
 </div>
-</div>
+</section>
 
-<!-- PLATFORMS -->
-<div class="platforms">
-<div class="card"><img src="https://logo.clearbit.com/amazon.com"><button class="amazon">Amazon</button></div>
-<div class="card"><img src="https://logo.clearbit.com/flipkart.com"><button class="flipkart">Flipkart</button></div>
-<div class="card"><img src="https://logo.clearbit.com/myntra.com"><button class="myntra">Myntra</button></div>
-<div class="card"><img src="https://logo.clearbit.com/meesho.com"><button class="meesho">Meesho</button></div>
-<div class="card"><img src="https://logo.clearbit.com/ajio.com"><button class="ajio">Ajio</button></div>
-<div class="card"><img src="https://logo.clearbit.com/reliancedigital.in"><button class="reliance">Reliance</button></div>
-</div>
-
-<!-- PRODUCTS -->
-<h2 style="padding-left:15px;">🔥 Live Deals</h2>
-<div class="loader" id="loader">Loading deals...</div>
-<div class="products" id="products"></div>
+<!-- DEALS -->
+<section class="deals">
+<h3>🔥 Live Deals</h3>
+<div id="products">Loading deals...</div>
+</section>
 
 <script>
 
-/* REAL API FETCH */
-const container = document.getElementById("products");
-const loader = document.getElementById("loader");
+/* ✅ AMAZON OPEN FIX */
+function openAmazon(){
+window.location.href = "./amazon.html";
+}
 
-fetch("https://fakestoreapi.com/products")
-.then(res => res.json())
-.then(data => {
-loader.style.display = "none";
+/* SPLASH FIX */
+window.addEventListener("load", function(){
+setTimeout(function(){
+let splash = document.getElementById("splash");
+if(splash){
+splash.remove();
+}
+}, 1200);
+});
 
-data.slice(0,8).forEach(item => {
-const div = document.createElement("div");
+/* SAMPLE PRODUCTS */
+window.addEventListener("load", function(){
+
+let container = document.getElementById("products");
+
+let products = [
+{title:"Mens Jacket", price:4479},
+{title:"Shoes", price:1999},
+{title:"Backpack", price:879}
+];
+
+container.innerHTML = "";
+
+products.forEach(p=>{
+
+let div = document.createElement("div");
 div.className = "product";
 
-div.innerHTML = `
-<img src="${item.image}">
-<p>${item.title.length > 50 ? item.title.substring(0,50) + "..." : item.title}</p>
-<p class="price">₹${Math.floor(item.price*80)} 
-<span class="old">₹${Math.floor(item.price*120)}</span></p>
-<p class="discount">${let original = Math.floor(item.price * 120);
-let current = Math.floor(item.price * 80);
-let discount = Math.floor(((original - current) / original) * 100);}% OFF</p>
-`;
+div.innerHTML =
+"<p>"+p.title+"</p>"+
+"<p>₹"+p.price+"</p>";
 
 container.appendChild(div);
+
 });
-})
-.catch(() => {
-loader.innerText = "Failed to load products";
+
 });
 
 </script>
