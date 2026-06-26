@@ -331,16 +331,18 @@ box-shadow:0 2px 8px rgba(0,0,0,0.3);
 <script>
 
 /* HERO SLIDER */
-const heroTrack = document.querySelector(".hero-track");
 const hero = document.querySelector(".hero");
+const track = document.querySelector(".hero-track");
 
-hero.addEventListener("mouseenter", ()=>{
-heroTrack.style.animationPlayState="paused";
-});
+if(hero && track){
+  hero.addEventListener("mouseenter", ()=>{
+    track.style.animationPlayState="paused";
+  });
 
-hero.addEventListener("mouseleave", ()=>{
-heroTrack.style.animationPlayState="running";
-});
+  hero.addEventListener("mouseleave", ()=>{
+    track.style.animationPlayState="running";
+  });
+}
 </script>
 
 </body>
