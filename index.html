@@ -318,20 +318,16 @@ box-shadow:0 2px 8px rgba(0,0,0,0.3);
 <script>
 
 /* HERO SLIDER */
-let i=0;
-function move(dir){
-let track=document.getElementById("track");
-let slides=document.querySelectorAll(".hero-slide");
+const heroTrack = document.querySelector(".hero-track");
+const hero = document.querySelector(".hero");
 
-i+=dir;
-if(i<0) i=slides.length-1;
-if(i>=slides.length) i=0;
+hero.addEventListener("mouseenter", ()=>{
+heroTrack.style.animationPlayState="paused";
+});
 
-track.style.transform=`translateX(-${i*100}%)`;
-}
-
-setInterval(()=>move(1),4000);
-
+hero.addEventListener("mouseleave", ()=>{
+heroTrack.style.animationPlayState="running";
+});
 </script>
 
 </body>
