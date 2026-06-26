@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Splash</title>
+
+<!-- 🔥 FALLBACK REDIRECT (VERY IMPORTANT) -->
+<meta http-equiv="refresh" content="4; url=home.html">
 
 <style>
 body{
@@ -14,112 +17,39 @@ body{
     justify-content:center;
     align-items:center;
     height:100vh;
-    overflow:hidden;
+    color:gold;
     font-family:Arial;
 }
-
-/* Center Card */
-.card{
-    background:rgba(255,255,255,0.05);
-    border:2px solid gold;
-    border-radius:20px;
-    padding:40px;
-    text-align:center;
-    color:gold;
-    box-shadow:0 0 40px rgba(255,215,0,0.5);
-    z-index:2;
-}
-
-.logo{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    border:2px solid gold;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:auto;
-    margin-bottom:15px;
-    font-size:28px;
-}
-
-/* Progress */
-.progress{
-    width:250px;
-    height:6px;
-    background:#333;
-    margin-top:15px;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-.bar{
-    height:100%;
-    width:0%;
-    background:gold;
-    animation:load 4s linear forwards;
-}
-
-@keyframes load{
-    to{width:100%;}
-}
-
-/* Falling particles */
-.particle{
-    position:absolute;
-    width:6px;
-    height:6px;
-    background:gold;
-    border-radius:50%;
-    opacity:0.8;
-    animation:fall linear infinite;
-}
-
-@keyframes fall{
-    from{transform:translateY(-10px);}
-    to{transform:translateY(100vh);}
-}
 </style>
-
-<script>
-/* Create falling particles */
-for(let i=0;i<80;i++){
-    let p=document.createElement("div");
-    p.className="particle";
-    p.style.left=Math.random()*100+"%";
-    p.style.animationDuration=(3+Math.random()*5)+"s";
-    p.style.opacity=Math.random();
-    document.body.appendChild(p);
-}
-
-/* PRO REDIRECT LOGIC */
-setTimeout(function(){
-
-    if(localStorage.getItem("visited")){
-        window.location.href = "home.html";
-    }else{
-        localStorage.setItem("visited","true");
-        window.location.href = "welcome.html";
-    }
-
-}, 4000);
-</script>
 
 </head>
 
 <body>
 
-<div class="card">
-    <div class="logo">KD</div>
-    <h2>KRISHNALATHA DEALS</h2>
-    <p>Best Deals, Big Savings!</p>
-
-    <div class="progress">
-        <div class="bar"></div>
-    </div>
-
-    <p style="margin-top:10px;">Loading...</p>
+<div>
+    <h1>Krishnalatha Deals</h1>
+    <p>Loading...</p>
 </div>
+
+<script>
+try{
+
+    setTimeout(function(){
+
+        if(localStorage.getItem("visited")){
+            window.location.href = "home.html";
+        }else{
+            localStorage.setItem("visited","true");
+            window.location.href = "welcome.html";
+        }
+
+    }, 4000);
+
+}catch(e){
+    // fallback if JS fails
+    window.location.href = "home.html";
+}
+</script>
 
 </body>
 </html>
