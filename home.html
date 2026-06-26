@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -53,7 +52,7 @@ text-align:center;
 
 .brand-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
 gap:15px;
 }
 
@@ -68,7 +67,7 @@ transition:0.3s;
 }
 
 .brand img{
-width:40px;
+width:45px;
 margin-bottom:8px;
 }
 
@@ -136,20 +135,26 @@ z-index:999;
 }
 
 .social-float a{
-width:40px;
-height:40px;
+width:42px;
+height:42px;
 border-radius:50%;
 display:flex;
 justify-content:center;
 align-items:center;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
 animation:float 2s infinite;
+transition:0.3s;
+}
+
+.social-float a:hover{
+transform:scale(1.2);
 }
 
 .social-float img{
 width:20px;
 }
 
+/* COLORS */
 .wa{background:#25D366;}
 .tg{background:#0088cc;}
 .yt{background:#FF0000;}
@@ -167,13 +172,11 @@ width:20px;
 <body>
 
 <!-- HEADER -->
-
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
 </div>
 
 <!-- HERO -->
-
 <div class="hero">
 <h2>Best Deals Online</h2>
 <p>Amazon • Flipkart • Myntra</p>
@@ -181,7 +184,6 @@ width:20px;
 </div>
 
 <!-- BRANDS -->
-
 <section class="brands">
 <h3>Top Platforms</h3>
 
@@ -221,14 +223,12 @@ width:20px;
 </section>
 
 <!-- LIVE DEALS -->
-
 <section class="deals">
 <h3>🔥 Live Deals</h3>
-<div id="products">Loading deals...</div>
+<div id="products"></div>
 </section>
 
 <!-- SOCIAL -->
-
 <div class="social-float">
 
 <a href="https://wa.me/your-number" class="wa" target="_blank">
@@ -258,18 +258,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
 var container = document.getElementById("products");
 
-// clear loading
-container.innerHTML = "";
-
 var products = [
 {title:"Mens Jacket", price:4479},
 {title:"Slim Fit T-Shirt", price:1784},
 {title:"Backpack", price:8796}
 ];
 
-for(var i=0; i<products.length; i++){
-
-var p = products[i];
+products.forEach(function(p){
 
 var original = Math.floor(p.price * 1.5);
 var discount = Math.floor(((original - p.price)/original)*100);
@@ -286,7 +281,8 @@ div.innerHTML =
 "<a href='"+link+"' target='_blank'>View Deal</a>";
 
 container.appendChild(div);
-}
+
+});
 
 });
 </script>
