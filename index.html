@@ -12,19 +12,6 @@ font-family:Arial;
 background:#f5f6fa;
 }
 
-/* SPLASH */
-#splash{
-position:fixed;
-inset:0;
-background:#111;
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:22px;
-z-index:99999;
-}
-
 /* HEADER */
 .header{
 background:#111;
@@ -34,58 +21,33 @@ text-align:center;
 font-weight:bold;
 }
 
-/* HERO */
-.hero{
-background:linear-gradient(45deg,#ff9900,#ff5e00);
-color:#fff;
-padding:30px 20px;
-text-align:center;
-}
-
-.hero button{
-padding:10px 18px;
-border:none;
-background:#000;
-color:#fff;
-border-radius:6px;
-cursor:pointer;
-margin-top:10px;
-}
-
 /* BRAND GRID */
 .brand-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:15px;
+gap:12px;
 padding:15px;
 }
 
 .brand{
 background:#fff;
-border-radius:14px;
+border-radius:12px;
 padding:12px;
 text-align:center;
-text-decoration:none;
-color:#000;
-font-weight:bold;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
-transition:0.3s;
+font-weight:bold;
 display:flex;
 flex-direction:column;
 align-items:center;
+justify-content:center;
 }
 
 .brand img{
 width:40px;
 height:40px;
-margin-bottom:6px;
+margin-bottom:5px;
 }
 
-.brand:hover{
-transform:scale(1.05);
-}
-
-/* BRAND COLORS */
 .amazon{border-top:4px solid #ff9900;}
 .flipkart{border-top:4px solid #2874f0;}
 .myntra{border-top:4px solid #ff3f6c;}
@@ -93,23 +55,36 @@ transform:scale(1.05);
 .ajio{border-top:4px solid #000;}
 .reliance{border-top:4px solid #e60000;}
 
-/* COMPARISON SECTION */
-.compare-section{
-padding:20px;
+/* SEARCH BOX */
+.search-box{
+padding:15px;
 }
 
-.compare-title{
-font-size:18px;
-font-weight:bold;
-margin-bottom:12px;
+.search-box input{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
 }
 
+.search-box button{
+margin-top:10px;
+padding:10px 15px;
+background:#111;
+color:#fff;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* RESULT */
 .compare-card{
 background:#fff;
+margin:15px;
 padding:15px;
-margin-bottom:12px;
 border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
 .compare-grid{
@@ -121,202 +96,213 @@ margin-top:10px;
 
 .price-box{
 background:#f7f7f7;
-padding:8px;
+padding:10px;
 border-radius:8px;
 text-align:center;
-font-size:13px;
 }
 
 .price{
 color:green;
 font-weight:bold;
-margin-top:4px;
+margin-top:5px;
 }
 
-/* PRODUCT */
-.product{
-background:#fff;
-margin:10px 15px;
-padding:12px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+/* BEST PRICE */
+.best{
+background:#d4f8d4 !important;
+border:2px solid #2ecc71;
+}
+
+/* SOCIAL ICONS */
+.social-float{
+position:fixed;
+right:10px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index:9999;
+}
+
+.social{
+width:45px;
+height:45px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+animation:float 2s infinite ease-in-out;
+box-shadow:0 3px 10px rgba(0,0,0,0.3);
+}
+
+.social img{width:22px;height:22px;}
+
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">Loading Krishnalatha Deals...</div>
-
-<!-- HEADER -->
 <div class="header">
 Krishnalatha Deals
 </div>
 
-<!-- HERO -->
-<div class="hero">
-<h2>Best Deals Online</h2>
-<p>Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital</p>
-<button onclick="goAmazon()">Shop Amazon</button>
-</div>
-
-<!-- BRAND SECTION -->
+<!-- BRANDS -->
 <div class="brand-grid">
 
-<a href="./amazon.html" class="brand amazon">
+<div class="brand amazon">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
 Amazon
-</a>
+</div>
 
-<a href="#" class="brand flipkart">
+<div class="brand flipkart">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
 Flipkart
-</a>
+</div>
 
-<a href="#" class="brand myntra">
+<div class="brand myntra">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
 Myntra
-</a>
+</div>
 
-<a href="#" class="brand meesho">
+<div class="brand meesho">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
 Meesho
-</a>
+</div>
 
-<a href="#" class="brand ajio">
+<div class="brand ajio">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
 Ajio
-</a>
+</div>
 
-<a href="#" class="brand reliance">
+<div class="brand reliance">
 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
 Reliance
-</a>
-
-</div>
-
-<!-- COMPARISON SECTION -->
-<div class="compare-section">
-
-<div class="compare-title">🏆 Product Price Comparison</div>
-
-<!-- PRODUCT 1 -->
-<div class="compare-card">
-<h3>Mens Jacket</h3>
-
-<div class="compare-grid">
-
-<div class="price-box amazon">
-Amazon <div class="price">₹4479</div>
-</div>
-
-<div class="price-box flipkart">
-Flipkart <div class="price">₹4399</div>
-</div>
-
-<div class="price-box myntra">
-Myntra <div class="price">₹4599</div>
-</div>
-
-<div class="price-box meesho">
-Meesho <div class="price">₹4200</div>
-</div>
-
-<div class="price-box ajio">
-Ajio <div class="price">₹4700</div>
-</div>
-
-<div class="price-box reliance">
-Reliance <div class="price">₹4350</div>
-</div>
-
-</div>
-</div>
-
-<!-- PRODUCT 2 -->
-<div class="compare-card">
-<h3>Shoes</h3>
-
-<div class="compare-grid">
-
-<div class="price-box amazon">
-Amazon <div class="price">₹1999</div>
-</div>
-
-<div class="price-box flipkart">
-Flipkart <div class="price">₹1899</div>
-</div>
-
-<div class="price-box myntra">
-Myntra <div class="price">₹2099</div>
-</div>
-
-<div class="price-box meesho">
-Meesho <div class="price">₹1750</div>
-</div>
-
-<div class="price-box ajio">
-Ajio <div class="price">₹2100</div>
-</div>
-
-<div class="price-box reliance">
-Reliance <div class="price">₹1850</div>
-</div>
-
-</div>
-</div>
-
-<!-- PRODUCT 3 -->
-<div class="compare-card">
-<h3>Backpack</h3>
-
-<div class="compare-grid">
-
-<div class="price-box amazon">
-Amazon <div class="price">₹879</div>
-</div>
-
-<div class="price-box flipkart">
-Flipkart <div class="price">₹849</div>
-</div>
-
-<div class="price-box myntra">
-Myntra <div class="price">₹999</div>
-</div>
-
-<div class="price-box meesho">
-Meesho <div class="price">₹799</div>
-</div>
-
-<div class="price-box ajio">
-Ajio <div class="price">₹950</div>
-</div>
-
-<div class="price-box reliance">
-Reliance <div class="price">₹820</div>
-</div>
-
-</div>
 </div>
 
 </div>
 
-<!-- PRODUCT LIST -->
-<div class="product">Mens Jacket - ₹4479</div>
-<div class="product">Shoes - ₹1999</div>
-<div class="product">Backpack - ₹879</div>
+<!-- SEARCH -->
+<div class="search-box">
+<input id="search" placeholder="Search product (e.g. Samsung S23 FE)">
+<button onclick="searchProduct()">Compare Prices</button>
+</div>
+
+<!-- RESULT -->
+<div id="result"></div>
+
+<!-- SOCIAL -->
+<div class="social-float">
+
+<a class="social wa" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+<a class="social tg" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+<a class="social yt" href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+<a class="social ig" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
+<a class="social fb" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
+
+</div>
 
 <script>
-function goAmazon(){
-window.location.href="./amazon.html";
+
+/* PRODUCT DATABASE */
+const db = {
+"Samsung S23 FE":{
+amazon:39999,
+flipkart:38999,
+myntra:null,
+meesho:37999,
+ajio:null,
+reliance:38500
+},
+"Mens Jacket":{
+amazon:4479,
+flipkart:4399,
+myntra:4599,
+meesho:4200,
+ajio:4700,
+reliance:4350
+},
+"Shoes":{
+amazon:1999,
+flipkart:1899,
+myntra:2099,
+meesho:1750,
+ajio:2100,
+reliance:1850
+},
+"Backpack":{
+amazon:879,
+flipkart:849,
+myntra:999,
+meesho:799,
+ajio:950,
+reliance:820
+}
+};
+
+/* SEARCH FUNCTION */
+function searchProduct(){
+
+let name = document.getElementById("search").value.trim();
+let data = db[name];
+
+let box = document.getElementById("result");
+
+if(!data){
+box.innerHTML = "<div class='compare-card'>❌ No product found</div>";
+return;
 }
 
-window.addEventListener("load",()=>{
-setTimeout(()=>{
-document.getElementById("splash").remove();
-},1000);
-});
+let prices = [];
+
+let html = `<div class="compare-card"><h3>${name}</h3><div class="compare-grid">`;
+
+function addBrand(b, price, color, icon){
+
+if(price){
+prices.push({brand:b,price:price});
+
+html += `
+<div class="price-box">
+<img src="${icon}" width="20"><br>
+<b>${b}</b>
+<div class="price">₹${price}</div>
+</div>`;
+}
+}
+
+addBrand("Amazon",data.amazon);
+addBrand("Flipkart",data.flipkart);
+addBrand("Myntra",data.myntra);
+addBrand("Meesho",data.meesho);
+addBrand("Ajio",data.ajio);
+addBrand("Reliance",data.reliance);
+
+html += "</div>";
+
+if(prices.length){
+
+let best = prices.reduce((a,b)=>a.price<b.price?a:b);
+
+html += `<h3 style="color:green;margin-top:10px;">
+🏆 Best Price: ${best.brand} ₹${best.price}
+</h3>`;
+}
+
+html += "</div>";
+
+box.innerHTML = html;
+}
+
 </script>
 
 </body>
