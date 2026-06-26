@@ -31,7 +31,6 @@ background:#111;
 color:#fff;
 padding:15px;
 text-align:center;
-font-size:18px;
 font-weight:bold;
 }
 
@@ -39,7 +38,7 @@ font-weight:bold;
 .hero{
 background:linear-gradient(45deg,#ff9900,#ff5e00);
 color:#fff;
-padding:40px 20px;
+padding:35px 20px;
 text-align:center;
 }
 
@@ -53,32 +52,28 @@ cursor:pointer;
 margin-top:10px;
 }
 
-/* BRANDS */
-.brands{
-padding:30px 15px;
-text-align:center;
-}
-
+/* BRAND GRID FIX (ICONS PROPER ALIGN) */
 .brand-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
 gap:15px;
-margin-top:15px;
+padding:15px;
 }
 
 .brand{
+background:#fff;
+border-radius:14px;
+padding:15px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+text-decoration:none;
+color:#000;
+font-weight:bold;
+transition:0.3s;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-padding:15px;
-border-radius:14px;
-text-decoration:none;
-background:#fff;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-transition:0.3s;
-font-weight:bold;
-color:#000;
 }
 
 .brand img{
@@ -98,20 +93,69 @@ transform:translateY(-5px) scale(1.05);
 .meesho{border-top:4px solid #9c27b0;}
 .ajio{border-top:4px solid #000;}
 
-/* DEALS */
-.deals{
-padding:20px;
-}
-
-.product{
+/* PRODUCT COMPARISON BOX (AMAZON STYLE) */
+.product-box{
 background:#fff;
-padding:12px;
-margin-bottom:12px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+margin:12px;
+padding:15px;
+border-radius:12px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
 }
 
-.price{color:green;font-weight:bold;}
+.product-info{
+flex:1;
+min-width:200px;
+}
+
+.price{
+color:green;
+font-weight:bold;
+font-size:18px;
+}
+
+/* SOCIAL FLOAT ICONS */
+.social-float{
+position:fixed;
+right:12px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index:9999;
+}
+
+.social{
+width:45px;
+height:45px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+animation:float 2s infinite ease-in-out;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+
+.social img{
+width:22px;
+height:22px;
+}
+
+/* COLORS */
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
+
+/* ANIMATION */
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
+}
 </style>
 </head>
 
@@ -129,79 +173,98 @@ Krishnalatha Deals
 <div class="hero">
 <h2>Best Deals Online</h2>
 <p>Amazon • Flipkart • Myntra • Meesho • Ajio</p>
-
-<!-- AMAZON BUTTON -->
 <button onclick="goAmazon()">Shop Amazon</button>
 </div>
 
 <!-- BRANDS -->
-<section class="brands">
-<h3>Top Platforms</h3>
-
 <div class="brand-grid">
 
 <a href="./amazon.html" class="brand amazon">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
-<p>Amazon</p>
+Amazon
 </a>
 
 <a href="#" class="brand flipkart">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
-<p>Flipkart</p>
+Flipkart
 </a>
 
 <a href="#" class="brand myntra">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
-<p>Myntra</p>
+Myntra
 </a>
 
 <a href="#" class="brand meesho">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
-<p>Meesho</p>
+Meesho
 </a>
 
 <a href="#" class="brand ajio">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
-<p>Ajio</p>
+Ajio
 </a>
 
 </div>
-</section>
 
-<!-- DEALS -->
-<section class="deals">
-<h3>🔥 Live Deals</h3>
-
-<div class="product">
-Mens Jacket
+<!-- PRODUCT COMPARISON STYLE -->
+<div class="product-box">
+<div class="product-info">
+<h3>Mens Jacket</h3>
 <div class="price">₹4479</div>
 </div>
+</div>
 
-<div class="product">
-Shoes
+<div class="product-box">
+<div class="product-info">
+<h3>Shoes</h3>
 <div class="price">₹1999</div>
 </div>
-
-<div class="product">
-Backpack
-<div class="price">₹879</div>
 </div>
 
-</section>
+<div class="product-box">
+<div class="product-info">
+<h3>Backpack</h3>
+<div class="price">₹879</div>
+</div>
+</div>
+
+<!-- SOCIAL FLOAT ICONS -->
+<div class="social-float">
+
+<a class="social wa" href="https://wa.me/" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
+
+<a class="social tg" href="https://t.me/" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+</a>
+
+<a class="social yt" href="#" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+</a>
+
+<a class="social ig" href="#" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</a>
+
+<a class="social fb" href="#" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+</a>
+
+</div>
 
 <script>
 
-/* AMAZON NAVIGATION */
+/* AMAZON PAGE */
 function goAmazon(){
-window.location.href = "./amazon.html";
+window.location.href="./amazon.html";
 }
 
 /* SPLASH FIX */
-window.addEventListener("load", function(){
+window.addEventListener("load",()=>{
 setTimeout(()=>{
-let splash = document.getElementById("splash");
-if(splash) splash.remove();
-}, 1000);
+document.getElementById("splash").remove();
+},1000);
 });
 
 </script>
