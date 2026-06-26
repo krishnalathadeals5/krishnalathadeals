@@ -6,16 +6,9 @@
 <title>Krishnalatha Deals</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
-body{
-background:#f5f6fa;
-}
+body{background:#f5f6fa;}
 
 /* HEADER */
 .header{
@@ -27,71 +20,51 @@ justify-content:space-between;
 padding:12px 20px;
 }
 
-.logo{
-font-size:20px;
-font-weight:bold;
-color:#ffd700;
-}
-
-.search{
-flex:1;
-margin:0 20px;
-}
+.logo{color:#ffd700;font-weight:bold;}
 
 .search input{
-width:100%;
 padding:10px;
+width:300px;
 border-radius:8px;
 border:none;
 }
 
-.nav{
-display:flex;
-gap:20px;
-font-size:14px;
-}
-
-/* HERO */
+/* HERO SLIDER */
 .hero{
 margin:15px;
-background:linear-gradient(90deg,#063,#0a3d2c);
-color:#fff;
+overflow:hidden;
 border-radius:12px;
-padding:30px;
+position:relative;
+}
+
+.slides{
+display:flex;
+width:300%;
+animation:slide 12s infinite;
+}
+
+.slide{
+min-width:100%;
+padding:40px;
+color:#fff;
 display:flex;
 justify-content:space-between;
 align-items:center;
-flex-wrap:wrap;
 }
 
-.hero-text h1{
-font-size:32px;
-}
+.slide1{background:linear-gradient(90deg,#063,#0a3d2c);}
+.slide2{background:linear-gradient(90deg,#1a237e,#3949ab);}
+.slide3{background:linear-gradient(90deg,#880e4f,#c2185b);}
 
-.hero-text span{
-color:#ffd700;
-}
+.slide img{width:220px;}
 
-.hero button{
-margin-top:15px;
-padding:10px 20px;
-background:#ffd700;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.hero img{
-width:250px;
-}
-
-/* SECTION */
-.section{
-padding:15px;
-}
-
-.section h2{
-margin-bottom:10px;
+@keyframes slide{
+0%{transform:translateX(0);}
+33%{transform:translateX(0);}
+36%{transform:translateX(-100%);}
+66%{transform:translateX(-100%);}
+69%{transform:translateX(-200%);}
+100%{transform:translateX(-200%);}
 }
 
 /* PLATFORM CARDS */
@@ -99,6 +72,7 @@ margin-bottom:10px;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 gap:15px;
+padding:15px;
 }
 
 .card{
@@ -106,21 +80,24 @@ background:#fff;
 padding:15px;
 border-radius:10px;
 text-align:center;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+transition:0.3s;
+cursor:pointer;
 }
 
-.card img{
-height:40px;
-margin-bottom:10px;
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
 }
+
+.card img{height:40px;}
 
 .card button{
 margin-top:10px;
 padding:6px 10px;
 border:none;
 border-radius:5px;
-cursor:pointer;
 color:#fff;
+cursor:pointer;
 }
 
 .amazon{background:#ff9900;}
@@ -135,13 +112,19 @@ color:#fff;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
+padding:15px;
 }
 
 .product{
 background:#fff;
 padding:10px;
 border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.product:hover{
+transform:scale(1.03);
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
 }
 
 .product img{
@@ -150,177 +133,113 @@ height:150px;
 object-fit:contain;
 }
 
-.price{
-font-weight:bold;
-}
+.price{font-weight:bold;}
+.old{text-decoration:line-through;color:gray;font-size:12px;}
+.discount{color:red;font-size:12px;}
 
-.old{
-text-decoration:line-through;
-color:gray;
-font-size:12px;
-}
-
-.discount{
-color:red;
-font-size:12px;
-}
-
-/* FEATURES */
-.features{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-padding:20px;
-}
-
-.feature{
-background:#fff;
-padding:15px;
-border-radius:10px;
+/* LOADER */
+.loader{
 text-align:center;
+padding:20px;
+font-weight:bold;
 }
 
 /* MOBILE */
 @media(max-width:768px){
-
-.header{
-flex-direction:column;
-gap:10px;
-}
-
-.hero{
-flex-direction:column;
-text-align:center;
-}
-
-.hero img{
-width:180px;
-}
-
+.search input{width:100%;}
+.slide{flex-direction:column;text-align:center;}
+.slide img{width:150px;margin-top:10px;}
 }
 </style>
-
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
-
-<div class="search">
-<input type="text" placeholder="Search for products...">
-</div>
-
-<div class="nav">
-<span>Categories</span>
-<span>Deals</span>
-<span>Account</span>
-</div>
+<div class="search"><input placeholder="Search..."></div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-<div class="hero-text">
-<h1>BEST DEALS <br><span>ON TOP BRANDS</span></h1>
-<p>Amazon, Flipkart, Myntra, Meesho & More</p>
+<div class="slides">
+
+<div class="slide slide1">
+<div>
+<h1>BEST DEALS</h1>
+<p>Amazon, Flipkart, Myntra</p>
 <button>Shop Now</button>
 </div>
-
 <img src="https://cdn-icons-png.flaticon.com/512/1041/1041880.png">
 </div>
 
+<div class="slide slide2">
+<div>
+<h1>BIG SALE</h1>
+<p>Up to 70% OFF</p>
+<button>Explore</button>
+</div>
+<img src="https://cdn-icons-png.flaticon.com/512/891/891419.png">
+</div>
+
+<div class="slide slide3">
+<div>
+<h1>TOP BRANDS</h1>
+<p>Best Prices Guaranteed</p>
+<button>Shop Now</button>
+</div>
+<img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+</div>
+
+</div>
+</div>
+
 <!-- PLATFORMS -->
-<div class="section">
-<h2>Top Platforms</h2>
-
 <div class="platforms">
-
-<div class="card">
-<img src="https://logo.clearbit.com/amazon.com">
-<h4>Amazon</h4>
-<button class="amazon">Shop Now</button>
-</div>
-
-<div class="card">
-<img src="https://logo.clearbit.com/flipkart.com">
-<h4>Flipkart</h4>
-<button class="flipkart">Shop Now</button>
-</div>
-
-<div class="card">
-<img src="https://logo.clearbit.com/myntra.com">
-<h4>Myntra</h4>
-<button class="myntra">Shop Now</button>
-</div>
-
-<div class="card">
-<img src="https://logo.clearbit.com/meesho.com">
-<h4>Meesho</h4>
-<button class="meesho">Shop Now</button>
-</div>
-
-<div class="card">
-<img src="https://logo.clearbit.com/ajio.com">
-<h4>Ajio</h4>
-<button class="ajio">Shop Now</button>
-</div>
-
-<div class="card">
-<img src="https://logo.clearbit.com/reliancedigital.in">
-<h4>Reliance Digital</h4>
-<button class="reliance">Shop Now</button>
-</div>
-
-</div>
+<div class="card"><img src="https://logo.clearbit.com/amazon.com"><button class="amazon">Amazon</button></div>
+<div class="card"><img src="https://logo.clearbit.com/flipkart.com"><button class="flipkart">Flipkart</button></div>
+<div class="card"><img src="https://logo.clearbit.com/myntra.com"><button class="myntra">Myntra</button></div>
+<div class="card"><img src="https://logo.clearbit.com/meesho.com"><button class="meesho">Meesho</button></div>
+<div class="card"><img src="https://logo.clearbit.com/ajio.com"><button class="ajio">Ajio</button></div>
+<div class="card"><img src="https://logo.clearbit.com/reliancedigital.in"><button class="reliance">Reliance</button></div>
 </div>
 
 <!-- PRODUCTS -->
-<div class="section">
-<h2>Top Deals of the Day</h2>
+<h2 style="padding-left:15px;">🔥 Live Deals</h2>
+<div class="loader" id="loader">Loading deals...</div>
+<div class="products" id="products"></div>
 
-<div class="products">
+<script>
 
-<div class="product">
-<img src="https://m.media-amazon.com/images/I/61mpMH5TzkL._SL1500_.jpg">
-<p>Smart Watch</p>
-<p class="price">₹1,199 <span class="old">₹2,999</span></p>
-<p class="discount">60% OFF</p>
-</div>
+/* REAL API FETCH */
+const container = document.getElementById("products");
+const loader = document.getElementById("loader");
 
-<div class="product">
-<img src="https://m.media-amazon.com/images/I/61CGHv6kmWL._SL1500_.jpg">
-<p>Wireless Earbuds</p>
-<p class="price">₹699 <span class="old">₹1,499</span></p>
-<p class="discount">53% OFF</p>
-</div>
+fetch("https://fakestoreapi.com/products")
+.then(res => res.json())
+.then(data => {
+loader.style.display = "none";
 
-<div class="product">
-<img src="https://m.media-amazon.com/images/I/81c+R3+2yCL._SL1500_.jpg">
-<p>Laptop Backpack</p>
-<p class="price">₹1,099 <span class="old">₹1,999</span></p>
-<p class="discount">45% OFF</p>
-</div>
+data.slice(0,8).forEach(item => {
+const div = document.createElement("div");
+div.className = "product";
 
-<div class="product">
-<img src="https://m.media-amazon.com/images/I/71c5Y7vYcPL._SL1500_.jpg">
-<p>Sneakers</p>
-<p class="price">₹1,799 <span class="old">₹2,899</span></p>
-<p class="discount">38% OFF</p>
-</div>
+div.innerHTML = `
+<img src="${item.image}">
+<p>${item.title.substring(0,40)}...</p>
+<p class="price">₹${Math.floor(item.price*80)} 
+<span class="old">₹${Math.floor(item.price*120)}</span></p>
+<p class="discount">${Math.floor(Math.random()*60)}% OFF</p>
+`;
 
-</div>
-</div>
+container.appendChild(div);
+});
+})
+.catch(() => {
+loader.innerText = "Failed to load products";
+});
 
-<!-- FEATURES -->
-<div class="features">
-
-<div class="feature">100% Genuine Products</div>
-<div class="feature">Best Prices</div>
-<div class="feature">Secure Shopping</div>
-<div class="feature">Easy Returns</div>
-
-</div>
+</script>
 
 </body>
 </html>
