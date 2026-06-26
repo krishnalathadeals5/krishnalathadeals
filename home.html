@@ -36,15 +36,6 @@ padding:40px 20px;
 text-align:center;
 }
 
-.hero h1{
-margin:0;
-font-size:24px;
-}
-
-.hero p{
-margin:10px 0;
-}
-
 .hero button{
 padding:10px 20px;
 border:none;
@@ -69,23 +60,21 @@ gap:15px;
 .brand{
 padding:15px;
 border-radius:12px;
+background:#fff;
 text-decoration:none;
 color:#000;
-background:#fff;
 box-shadow:0 4px 10px rgba(0,0,0,0.1);
 transition:0.3s;
-}
-
-.brand img{
-width:40px;
-margin-bottom:8px;
 }
 
 .brand:hover{
 transform:translateY(-5px) scale(1.05);
 }
 
-/* BRAND COLORS */
+.brand img{
+width:40px;
+}
+
 .amazon{border-top:4px solid #ff9900;}
 .flipkart{border-top:4px solid #2874f0;}
 .myntra{border-top:4px solid #ff3f6c;}
@@ -93,44 +82,7 @@ transform:translateY(-5px) scale(1.05);
 .ajio{border-top:4px solid #000;}
 .reliance{border-top:4px solid #1e3c72;}
 
-/* SOCIAL FLOAT */
-.social-float{
-position:fixed;
-right:10px;
-bottom:20px;
-display:flex;
-flex-direction:column;
-gap:10px;
-z-index:999;
-}
-
-.social-float a{
-width:45px;
-height:45px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-animation:float 2s infinite ease-in-out;
-}
-
-.social-float img{
-width:22px;
-}
-
-.wa{background:#25D366;}
-.tg{background:#0088cc;}
-.yt{background:#FF0000;}
-.ig{background:#E4405F;}
-.fb{background:#1877F2;}
-
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-6px);}
-}
-
-/* LIVE DEALS */
+/* DEALS */
 .deals{
 padding:20px;
 }
@@ -143,42 +95,60 @@ border-radius:10px;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-.price{
-color:green;
-font-weight:bold;
+.price{color:green;font-weight:bold;}
+.old{text-decoration:line-through;color:#999;margin-left:5px;}
+.discount{color:red;font-size:12px;}
+
+/* SOCIAL FLOAT */
+.social-float{
+position:fixed;
+right:10px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
-.old{
-text-decoration:line-through;
-color:#999;
-margin-left:5px;
+.social-float a{
+width:45px;
+height:45px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+animation:float 2s infinite;
 }
 
-.discount{
-color:red;
-font-size:12px;
-}
+.social-float img{width:22px;}
 
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
+}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
-<h1>Best Deals Online</h1>
+<h2>Best Deals Online</h2>
 <p>Amazon • Flipkart • Myntra</p>
 <button onclick="location.href='amazon.html'">Shop Now</button>
 </div>
 
-<!-- BRANDS -->
 <section class="brands">
-<h2>Top Platforms</h2>
+<h3>Top Platforms</h3>
 
 <div class="brand-grid">
 
@@ -215,15 +185,12 @@ font-size:12px;
 </div>
 </section>
 
-<!-- LIVE DEALS -->
 <section class="deals">
-<h2>🔥 Live Deals</h2>
-<div id="products"></div>
+<h3>🔥 Live Deals</h3>
+<div id="products">Loading deals...</div>
 </section>
 
-<!-- SOCIAL FLOAT -->
 <div class="social-float">
-
 <a href="https://wa.me/your-number" class="wa" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
 </a>
@@ -243,18 +210,19 @@ font-size:12px;
 <a href="#" class="fb" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
 </a>
-
 </div>
 
 <script>
-// DEMO DEALS (you can replace with Firebase later)
+const container = document.getElementById("products");
+
 const products = [
 {title:"Mens Jacket", price:4479},
 {title:"Slim Fit T-Shirt", price:1784},
-{title:"Backpack", price:8796}
+{title:"Backpack", price:8796},
+{title:"Shoes", price:2499}
 ];
 
-const container = document.getElementById("products");
+container.innerHTML = "";
 
 products.forEach(p => {
 
@@ -264,6 +232,7 @@ let discount = Math.floor(((original - p.price)/original)*100);
 let link = `https://www.amazon.in/s?k=${encodeURIComponent(p.title)}&tag=krishna-21`;
 
 const div = document.createElement("div");
+
 div.className="product";
 
 div.innerHTML = `
