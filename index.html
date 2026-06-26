@@ -13,40 +13,37 @@ background:#0f1115;
 color:white;
 }
 
-/* HEADER */
-.header{
-text-align:center;
-padding:15px;
-font-size:22px;
-font-weight:bold;
-background:#111;
-}
-
-/* MOVING SCROLL TEXT */
-.hero-wrap{
+/* 🔥 TOP TICKER (FULL WIDTH ENDLESS) */
+.ticker{
+width:100%;
 overflow:hidden;
+background:linear-gradient(90deg,#ff9900,#2874f0,#ff3f6c,#9c27b0,#00c853);
 white-space:nowrap;
-background:linear-gradient(90deg,#ff9900,#2874f0,#ff3f6c,#9c27b0);
 }
 
-.hero-track{
+.ticker span{
 display:inline-block;
 padding:10px 0;
-animation:move 12s linear infinite;
 font-weight:bold;
 font-size:14px;
+animation:scroll 14s linear infinite;
 }
 
-@keyframes move{
+@keyframes scroll{
 0%{transform:translateX(100%);}
 100%{transform:translateX(-100%);}
 }
 
-/* HERO BANNER (NOW BELOW SCROLL) */
+/* 🔥 HERO BANNER BIG */
 .hero{
+height:140px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 text-align:center;
-padding:25px 10px;
 background:#1a1d25;
+padding:10px;
 }
 
 .hero h1{
@@ -55,8 +52,23 @@ font-size:26px;
 }
 
 .hero p{
-opacity:0.8;
 margin-top:6px;
+opacity:0.8;
+animation:slideText 6s linear infinite;
+white-space:nowrap;
+}
+
+@keyframes slideText{
+0%{transform:translateX(100%);}
+100%{transform:translateX(-100%);}
+}
+
+/* TITLE */
+.title{
+text-align:center;
+padding:10px;
+font-size:14px;
+opacity:0.8;
 }
 
 /* BRAND GRID */
@@ -74,18 +86,17 @@ padding:15px;
 text-align:center;
 cursor:pointer;
 transition:0.3s;
-box-shadow:0 0 10px rgba(255,255,255,0.05);
 animation:float 3s ease-in-out infinite;
+box-shadow:0 0 10px rgba(255,255,255,0.05);
 }
 
 .brand:hover{
 transform:scale(1.08);
-box-shadow:0 0 20px rgba(255,255,255,0.2);
 }
 
 .brand img{
-width:50px;
-height:50px;
+width:45px;
+height:45px;
 margin-bottom:8px;
 }
 
@@ -95,6 +106,7 @@ margin-bottom:8px;
 .myntra{border-top:4px solid #ff3f6c;}
 .meesho{border-top:4px solid #9c27b0;}
 .ajio{border-top:4px solid #ffffff;}
+.reliance{border-top:4px solid #00c853;}
 
 /* FLOAT ANIMATION */
 @keyframes float{
@@ -102,29 +114,46 @@ margin-bottom:8px;
 50%{transform:translateY(-6px);}
 }
 
-/* TEXT */
-.title{
-text-align:center;
-padding:10px;
-font-size:14px;
-opacity:0.8;
+/* SOCIAL FLOAT */
+.social{
+position:fixed;
+right:10px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
 }
+
+.social a{
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+animation:float 2s infinite;
+box-shadow:0 3px 10px rgba(0,0,0,0.4);
+}
+
+.social img{width:22px;}
+
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
+
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">Krishnalatha Deals</div>
-
-<!-- MOVING TEXT (TOP) -->
-<div class="hero-wrap">
-<div class="hero-track">
-🔥 Best Deals • Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital • Offers 🔥
-</div>
+<!-- 🔥 TOP FULL WIDTH TICKER -->
+<div class="ticker">
+<span>🔥 Best Deals • Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital • Offers • Lowest Price Guarantee • 🔥</span>
 </div>
 
-<!-- HERO BANNER (BELOW SCROLL) -->
+<!-- HERO -->
 <div class="hero">
 <h1>Best Deals Online</h1>
 <p>Compare prices across all platforms instantly</p>
@@ -159,6 +188,22 @@ Meesho
 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
 Ajio
 </div>
+
+<div class="brand reliance" onclick="openPage('reliance.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
+Reliance
+</div>
+
+</div>
+
+<!-- SOCIAL -->
+<div class="social">
+
+<a class="wa" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+<a class="tg" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+<a class="yt" href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+<a class="ig" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
+<a class="fb" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
 
 </div>
 
