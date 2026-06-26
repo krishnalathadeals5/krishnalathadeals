@@ -6,9 +6,6 @@
 
 <title>Splash</title>
 
-<!-- 🔥 FALLBACK REDIRECT (VERY IMPORTANT) -->
-<meta http-equiv="refresh" content="4; url=home.html">
-
 <style>
 body{
     margin:0;
@@ -32,23 +29,21 @@ body{
 </div>
 
 <script>
-try{
+setTimeout(function(){
 
-    setTimeout(function(){
-
+    try{
         if(localStorage.getItem("visited")){
             window.location.href = "home.html";
         }else{
             localStorage.setItem("visited","true");
             window.location.href = "welcome.html";
         }
+    }catch(e){
+        // fallback if localStorage fails
+        window.location.href = "home.html";
+    }
 
-    }, 4000);
-
-}catch(e){
-    // fallback if JS fails
-    window.location.href = "home.html";
-}
+}, 4000);
 </script>
 
 </body>
