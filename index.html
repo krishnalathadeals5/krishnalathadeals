@@ -9,209 +9,215 @@
 body{
 margin:0;
 font-family:Arial;
-background:#0f1115;
+background:#f1f3f6;
+}
+
+/* 🔥 TOP AMAZON STYLE HEADER */
+.header{
+background:#131921;
 color:white;
-}
-
-/* 🔥 TOP TICKER (FULL WIDTH ENDLESS) */
-.ticker{
-width:100%;
-overflow:hidden;
-background:linear-gradient(90deg,#ff9900,#2874f0,#ff3f6c,#9c27b0,#00c853);
-white-space:nowrap;
-}
-
-.ticker span{
-display:inline-block;
-padding:10px 0;
-font-weight:bold;
-font-size:14px;
-animation:scroll 14s linear infinite;
-}
-
-@keyframes scroll{
-0%{transform:translateX(100%);}
-100%{transform:translateX(-100%);}
-}
-
-/* 🔥 HERO BANNER BIG */
-.hero{
-height:140px;
 display:flex;
-flex-direction:column;
-justify-content:center;
 align-items:center;
-text-align:center;
-background:#1a1d25;
-padding:10px;
-}
-
-.hero h1{
-margin:0;
-font-size:26px;
-}
-
-.hero p{
-margin-top:6px;
-opacity:0.8;
-animation:slideText 6s linear infinite;
-white-space:nowrap;
-}
-
-@keyframes slideText{
-0%{transform:translateX(100%);}
-100%{transform:translateX(-100%);}
-}
-
-/* TITLE */
-.title{
-text-align:center;
-padding:10px;
-font-size:14px;
-opacity:0.8;
-}
-
-/* BRAND GRID */
-.brand-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
 gap:15px;
-padding:20px;
+padding:10px 15px;
+position:sticky;
+top:0;
+z-index:1000;
 }
 
-.brand{
-background:#1c1f26;
-border-radius:16px;
-padding:15px;
-text-align:center;
+.logo{
+font-weight:bold;
+font-size:18px;
+color:#ffb84d;
+white-space:nowrap;
+}
+
+/* SEARCH BAR */
+.search{
+flex:1;
+display:flex;
+}
+
+.search input{
+width:100%;
+padding:10px;
+border:none;
+border-radius:4px 0 0 4px;
+outline:none;
+}
+
+.search button{
+background:#febd69;
+border:none;
+padding:10px 14px;
 cursor:pointer;
-transition:0.3s;
-animation:float 3s ease-in-out infinite;
-box-shadow:0 0 10px rgba(255,255,255,0.05);
+border-radius:0 4px 4px 0;
 }
 
-.brand:hover{
-transform:scale(1.08);
-}
-
-.brand img{
-width:45px;
-height:45px;
-margin-bottom:8px;
-}
-
-/* COLORS */
-.amazon{border-top:4px solid #ff9900;}
-.flipkart{border-top:4px solid #2874f0;}
-.myntra{border-top:4px solid #ff3f6c;}
-.meesho{border-top:4px solid #9c27b0;}
-.ajio{border-top:4px solid #ffffff;}
-.reliance{border-top:4px solid #00c853;}
-
-/* FLOAT ANIMATION */
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-6px);}
-}
-
-/* SOCIAL FLOAT */
-.social{
-position:fixed;
-right:10px;
-bottom:20px;
+/* CATEGORY BAR */
+.categories{
 display:flex;
-flex-direction:column;
 gap:10px;
+overflow-x:auto;
+padding:10px;
+background:white;
+white-space:nowrap;
 }
 
-.social a{
-width:45px;
-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-animation:float 2s infinite;
-box-shadow:0 3px 10px rgba(0,0,0,0.4);
+.cat{
+padding:8px 12px;
+background:#f5f5f5;
+border-radius:20px;
+font-size:13px;
+cursor:pointer;
 }
 
-.social img{width:22px;}
+/* HERO BANNER */
+.hero{
+background:linear-gradient(90deg,#ff9900,#2874f0);
+color:white;
+padding:25px;
+text-align:center;
+font-weight:bold;
+}
 
-.wa{background:#25D366;}
-.tg{background:#0088cc;}
-.yt{background:#FF0000;}
-.ig{background:#E4405F;}
-.fb{background:#1877F2;}
+/* PRODUCT GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+padding:15px;
+}
 
+/* PRODUCT CARD */
+.card{
+background:white;
+border-radius:10px;
+padding:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+transition:0.2s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.03);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:contain;
+}
+
+.title{
+font-size:14px;
+margin:5px 0;
+height:35px;
+overflow:hidden;
+}
+
+.price{
+color:#1a8e3e;
+font-weight:bold;
+}
+
+.old{
+text-decoration:line-through;
+color:gray;
+font-size:12px;
+}
+
+.discount{
+color:#d32f2f;
+font-size:12px;
+}
+
+/* BADGE */
+.badge{
+background:#ff5252;
+color:white;
+font-size:12px;
+padding:3px 6px;
+border-radius:4px;
+position:absolute;
+}
+
+.card-wrap{
+position:relative;
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🔥 TOP FULL WIDTH TICKER -->
-<div class="ticker">
-<span>🔥 Best Deals • Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital • Offers • Lowest Price Guarantee • 🔥</span>
+<!-- HEADER -->
+<div class="header">
+
+<div class="logo">Krishnalatha Deals</div>
+
+<div class="search">
+<input placeholder="Search products...">
+<button>🔍</button>
+</div>
+
 </div>
 
 <!-- HERO -->
 <div class="hero">
-<h1>Best Deals Online</h1>
-<p>Compare prices across all platforms instantly</p>
+🔥 Amazon • Flipkart Style Shopping Experience
 </div>
 
-<div class="title">Choose your shopping platform</div>
-
-<!-- BRAND ICONS -->
-<div class="brand-grid">
-
-<div class="brand amazon" onclick="openPage('amazon.html')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-Amazon
+<!-- CATEGORY -->
+<div class="categories">
+<div class="cat">All</div>
+<div class="cat">Mobiles</div>
+<div class="cat">Electronics</div>
+<div class="cat">Fashion</div>
+<div class="cat">Home</div>
+<div class="cat">Beauty</div>
+<div class="cat">Sports</div>
 </div>
 
-<div class="brand flipkart" onclick="openPage('flipkart.html')">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
-Flipkart
+<!-- PRODUCT GRID -->
+<div class="grid">
+
+<!-- PRODUCT 1 -->
+<div class="card-wrap">
+<div class="card">
+<div class="badge">-45%</div>
+<img src="https://m.media-amazon.com/images/I/71geVdy6-OS.jpg">
+<div class="title">Samsung Galaxy S23 FE</div>
+<div class="price">₹39,999</div>
+<div class="old">₹72,999</div>
+<div class="discount">Save ₹33,000</div>
+</div>
 </div>
 
-<div class="brand myntra" onclick="openPage('myntra.html')">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
-Myntra
+<!-- PRODUCT 2 -->
+<div class="card-wrap">
+<div class="card">
+<div class="badge">-30%</div>
+<img src="https://m.media-amazon.com/images/I/61-r9zOKBCL.jpg">
+<div class="title">Noise Smart Watch</div>
+<div class="price">₹1,999</div>
+<div class="old">₹2,999</div>
+<div class="discount">Limited Deal</div>
+</div>
 </div>
 
-<div class="brand meesho" onclick="openPage('meesho.html')">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
-Meesho
+<!-- PRODUCT 3 -->
+<div class="card-wrap">
+<div class="card">
+<div class="badge">-55%</div>
+<img src="https://m.media-amazon.com/images/I/61cwywLZR-L.jpg">
+<div class="title">Backpack Travel Bag</div>
+<div class="price">₹899</div>
+<div class="old">₹1,999</div>
+<div class="discount">Best Price</div>
 </div>
-
-<div class="brand ajio" onclick="openPage('ajio.html')">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
-Ajio
-</div>
-
-<div class="brand reliance" onclick="openPage('reliance.html')">
-<img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png">
-Reliance
 </div>
 
 </div>
-
-<!-- SOCIAL -->
-<div class="social">
-
-<a class="wa" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
-<a class="tg" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-<a class="yt" href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-<a class="ig" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
-<a class="fb" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
-
-</div>
-
-<script>
-function openPage(page){
-window.location.href = page;
-}
-</script>
 
 </body>
 </html>
