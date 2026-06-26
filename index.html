@@ -9,137 +9,89 @@
 body{
 margin:0;
 font-family:Arial;
-background:#f5f6fa;
+background:#0f1115;
+color:white;
 }
 
 /* HEADER */
 .header{
-background:#111;
-color:#fff;
-padding:15px;
 text-align:center;
-font-size:20px;
+padding:18px;
+font-size:22px;
+font-weight:bold;
+background:#111;
+}
+
+/* MOVING HERO BANNER */
+.hero-wrap{
+overflow:hidden;
+white-space:nowrap;
+background:linear-gradient(90deg,#ff9900,#ff3f6c,#2874f0,#9c27b0);
+}
+
+.hero-track{
+display:inline-block;
+padding:12px 0;
+animation:move 12s linear infinite;
 font-weight:bold;
 }
 
-/* HERO */
-.hero{
-background:linear-gradient(45deg,#ff9900,#ff5e00);
-color:white;
-text-align:center;
-padding:40px 20px;
+@keyframes move{
+0%{transform:translateX(100%);}
+100%{transform:translateX(-100%);}
 }
 
-.hero h1{
-margin:0;
-font-size:28px;
-}
-
-.hero p{
-margin-top:8px;
-opacity:0.9;
-}
-
-/* BRAND BAR */
-.brand-row{
-display:flex;
-gap:12px;
-overflow-x:auto;
-padding:12px;
-background:#fff;
+/* BRAND SECTION */
+.brand-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:15px;
+padding:20px;
 }
 
 .brand{
-flex:0 0 auto;
-display:flex;
-align-items:center;
-gap:8px;
-padding:10px 14px;
-border-radius:25px;
-background:#fff;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-font-weight:bold;
-font-size:13px;
+background:#1c1f26;
+border-radius:16px;
+padding:15px;
+text-align:center;
 cursor:pointer;
-text-decoration:none;
-color:#000;
-transition:0.2s;
+transition:0.3s;
+box-shadow:0 0 10px rgba(255,255,255,0.05);
+animation:float 3s ease-in-out infinite;
 }
 
 .brand:hover{
-transform:scale(1.05);
+transform:scale(1.08);
+box-shadow:0 0 20px rgba(255,255,255,0.2);
 }
 
-/* BRAND COLORS */
-.amazon{border-left:4px solid #ff9900;}
-.flipkart{border-left:4px solid #2874f0;}
-.myntra{border-left:4px solid #ff3f6c;}
-.meesho{border-left:4px solid #9c27b0;}
-.ajio{border-left:4px solid #000;}
-
-/* LOGOS */
 .brand img{
-width:22px;
-height:22px;
+width:45px;
+height:45px;
+margin-bottom:8px;
 }
 
-/* SEARCH */
-.search-box{
-padding:15px;
+/* COLORS */
+.amazon{border-top:4px solid #ff9900;}
+.flipkart{border-top:4px solid #2874f0;}
+.myntra{border-top:4px solid #ff3f6c;}
+.meesho{border-top:4px solid #9c27b0;}
+.ajio{border-top:4px solid #ffffff;}
+
+/* FLOAT ANIMATION */
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
 }
 
-.search-box input{
-width:100%;
-padding:12px;
-border-radius:8px;
-border:1px solid #ccc;
-font-size:16px;
-}
-
-.search-box button{
-margin-top:10px;
-width:100%;
-padding:12px;
-background:#111;
-color:#fff;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
-}
-
-/* RESULT */
-.result{
-padding:10px;
-}
-
-.card{
-background:#fff;
-margin:10px 0;
-padding:15px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:10px;
-margin-top:10px;
-}
-
-.box{
-background:#f7f7f7;
-padding:10px;
-border-radius:8px;
+/* TEXT */
+.title{
 text-align:center;
+padding:10px;
+font-size:16px;
+opacity:0.8;
 }
 
-.price{
-color:green;
-font-weight:bold;
-margin-top:5px;
-}
 </style>
 </head>
 
@@ -148,130 +100,51 @@ margin-top:5px;
 <!-- HEADER -->
 <div class="header">Krishnalatha Deals</div>
 
-<!-- HERO (FIXED AMAZON LINK HERE) -->
-<div class="hero">
-<h1>Best Deals Online</h1>
-<p>Amazon • Flipkart • Myntra • Meesho • Ajio</p>
-
-<!-- 🔥 AMAZON LINK FIX -->
-<button onclick="window.location.href='amazon.html'"
-style="margin-top:15px;padding:10px 16px;border:none;background:#000;color:#fff;border-radius:6px;cursor:pointer;">
-Shop Amazon
-</button>
-
+<!-- MOVING HERO -->
+<div class="hero-wrap">
+<div class="hero-track">
+🔥 Best Deals • Lowest Prices • Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital • Offers 🔥
+</div>
 </div>
 
-<!-- BRAND ROW (ALL CLICKABLE + LOGOS FIXED) -->
-<div class="brand-row">
+<div class="title">Choose your shopping platform</div>
 
-<a class="brand amazon" href="amazon.html">
+<!-- BRAND ICONS -->
+<div class="brand-grid">
+
+<div class="brand amazon" onclick="openPage('amazon.html')">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
 Amazon
-</a>
+</div>
 
-<a class="brand flipkart" href="#">
+<div class="brand flipkart" onclick="openPage('flipkart.html')">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
 Flipkart
-</a>
+</div>
 
-<a class="brand myntra" href="#">
+<div class="brand myntra" onclick="openPage('myntra.html')">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
 Myntra
-</a>
+</div>
 
-<a class="brand meesho" href="#">
+<div class="brand meesho" onclick="openPage('meesho.html')">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
 Meesho
-</a>
+</div>
 
-<a class="brand ajio" href="#">
+<div class="brand ajio" onclick="openPage('ajio.html')">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
 Ajio
-</a>
-
 </div>
 
-<!-- SEARCH -->
-<div class="search-box">
-<input id="search" placeholder="Search product (e.g. Samsung S23 FE)">
-<button onclick="searchProduct()">Compare Prices</button>
 </div>
-
-<!-- RESULT -->
-<div id="result" class="result"></div>
 
 <script>
 
-/* SAMPLE DATABASE */
-const db = {
-"Samsung S23 FE":{
-amazon:39999,
-flipkart:38999,
-myntra:null,
-meesho:37999,
-ajio:null
-},
-"Mens Jacket":{
-amazon:4479,
-flipkart:4399,
-myntra:4599,
-meesho:4200,
-ajio:4700
-},
-"Shoes":{
-amazon:1999,
-flipkart:1899,
-myntra:2099,
-meesho:1750,
-ajio:2100
-}
-};
-
-/* SEARCH FUNCTION */
-function searchProduct(){
-
-let name = document.getElementById("search").value.trim();
-let data = db[name];
-
-let box = document.getElementById("result");
-
-if(!data){
-box.innerHTML = "<div class='card'>❌ No product found</div>";
-return;
+function openPage(page){
+window.location.href = page;
 }
 
-let prices = [];
-
-let html = `<div class="card"><h3>${name}</h3><div class="grid">`;
-
-function add(b, price){
-if(price){
-prices.push({b,price});
-html += `
-<div class="box">
-<b>${b}</b>
-<div class="price">₹${price}</div>
-</div>`;
-}
-}
-
-add("Amazon",data.amazon);
-add("Flipkart",data.flipkart);
-add("Myntra",data.myntra);
-add("Meesho",data.meesho);
-add("Ajio",data.ajio);
-
-html += "</div>";
-
-if(prices.length){
-let best = prices.reduce((a,b)=>a.price<b.price?a:b);
-html += `<h3 style="color:green;">🏆 Best Price: ${best.b} ₹${best.price}</h3>`;
-}
-
-html += "</div>";
-
-box.innerHTML = html;
-}
 </script>
 
 </body>
