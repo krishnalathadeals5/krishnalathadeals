@@ -21,7 +21,7 @@ color:#fff;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:24px;
+font-size:22px;
 z-index:99999;
 }
 
@@ -30,12 +30,7 @@ z-index:99999;
 background:#111;
 color:#fff;
 padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
+text-align:center;
 font-size:18px;
 font-weight:bold;
 }
@@ -55,35 +50,58 @@ background:#000;
 color:#fff;
 border-radius:6px;
 cursor:pointer;
+margin-top:10px;
 }
 
 /* BRANDS */
 .brands{
-padding:30px 20px;
+padding:30px 15px;
 text-align:center;
 }
 
 .brand-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
 gap:15px;
+margin-top:15px;
 }
 
 .brand{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
 padding:15px;
-border-radius:12px;
+border-radius:14px;
 text-decoration:none;
-color:#000;
 background:#fff;
 box-shadow:0 4px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+font-weight:bold;
+color:#000;
+}
+
+.brand img{
+width:45px;
+height:45px;
+margin-bottom:8px;
 }
 
 .brand:hover{
-transform:scale(1.05);
+transform:translateY(-5px) scale(1.05);
 }
 
+/* BRAND COLORS */
+.amazon{border-top:4px solid #ff9900;}
+.flipkart{border-top:4px solid #2874f0;}
+.myntra{border-top:4px solid #ff3f6c;}
+.meesho{border-top:4px solid #9c27b0;}
+.ajio{border-top:4px solid #000;}
+
 /* DEALS */
-.deals{padding:20px;}
+.deals{
+padding:20px;
+}
 
 .product{
 background:#fff;
@@ -92,6 +110,8 @@ margin-bottom:12px;
 border-radius:10px;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
+
+.price{color:green;font-weight:bold;}
 </style>
 </head>
 
@@ -102,16 +122,16 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 
 <!-- HEADER -->
 <div class="header">
-<div class="logo">Krishnalatha Deals</div>
+Krishnalatha Deals
 </div>
 
 <!-- HERO -->
 <div class="hero">
 <h2>Best Deals Online</h2>
-<p>Amazon • Flipkart • Myntra</p>
+<p>Amazon • Flipkart • Myntra • Meesho • Ajio</p>
 
-<!-- ✅ AMAZON BUTTON FIX -->
-<button onclick="openAmazon()">Shop Amazon</button>
+<!-- AMAZON BUTTON -->
+<button onclick="goAmazon()">Shop Amazon</button>
 </div>
 
 <!-- BRANDS -->
@@ -120,13 +140,29 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 
 <div class="brand-grid">
 
-<!-- ✅ AMAZON LINK FIX -->
-<a href="./amazon.html" class="brand">
+<a href="./amazon.html" class="brand amazon">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
 <p>Amazon</p>
 </a>
 
-<a href="#" class="brand">
+<a href="#" class="brand flipkart">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
 <p>Flipkart</p>
+</a>
+
+<a href="#" class="brand myntra">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
+<p>Myntra</p>
+</a>
+
+<a href="#" class="brand meesho">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
+<p>Meesho</p>
+</a>
+
+<a href="#" class="brand ajio">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+<p>Ajio</p>
 </a>
 
 </div>
@@ -135,52 +171,37 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 <!-- DEALS -->
 <section class="deals">
 <h3>🔥 Live Deals</h3>
-<div id="products">Loading deals...</div>
+
+<div class="product">
+Mens Jacket
+<div class="price">₹4479</div>
+</div>
+
+<div class="product">
+Shoes
+<div class="price">₹1999</div>
+</div>
+
+<div class="product">
+Backpack
+<div class="price">₹879</div>
+</div>
+
 </section>
 
 <script>
 
-/* ✅ AMAZON OPEN FIX */
-function openAmazon(){
+/* AMAZON NAVIGATION */
+function goAmazon(){
 window.location.href = "./amazon.html";
 }
 
 /* SPLASH FIX */
 window.addEventListener("load", function(){
-setTimeout(function(){
+setTimeout(()=>{
 let splash = document.getElementById("splash");
-if(splash){
-splash.remove();
-}
-}, 1200);
-});
-
-/* SAMPLE PRODUCTS */
-window.addEventListener("load", function(){
-
-let container = document.getElementById("products");
-
-let products = [
-{title:"Mens Jacket", price:4479},
-{title:"Shoes", price:1999},
-{title:"Backpack", price:879}
-];
-
-container.innerHTML = "";
-
-products.forEach(p=>{
-
-let div = document.createElement("div");
-div.className = "product";
-
-div.innerHTML =
-"<p>"+p.title+"</p>"+
-"<p>₹"+p.price+"</p>";
-
-container.appendChild(div);
-
-});
-
+if(splash) splash.remove();
+}, 1000);
 });
 
 </script>
