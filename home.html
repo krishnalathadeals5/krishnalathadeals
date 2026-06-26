@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -163,32 +164,37 @@ transform:scale(1.2);
 50%{transform:translateY(-6px);}
 }
 </style>
+
 </head>
 
 <body>
 
 <!-- SPLASH -->
+
 <div id="splash">Loading Krishnalatha Deals...</div>
 
 <!-- HEADER -->
+
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
 </div>
 
 <!-- HERO -->
+
 <div class="hero">
 <h2>Best Deals Online</h2>
 <p>Amazon • Flipkart • Myntra</p>
-<button onclick="window.location.href='amazon.html'">Shop Now</button>
+<button id="shopBtn">Shop Now</button>
 </div>
 
 <!-- BRANDS -->
+
 <section class="brands">
 <h3>Top Platforms</h3>
 
 <div class="brand-grid">
 
-<a href="./amazon.html" class="brand amazon">
+<a href="amazon.html" class="brand amazon">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
 <p>Amazon</p>
 </a>
@@ -222,12 +228,14 @@ transform:scale(1.2);
 </section>
 
 <!-- DEALS -->
+
 <section class="deals">
 <h3>🔥 Live Deals</h3>
 <div id="products">Loading deals...</div>
 </section>
 
 <!-- SOCIAL -->
+
 <div class="social-float">
 <a href="https://wa.me/your-number" class="wa" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
 <a href="https://t.me/your-channel" class="tg" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
@@ -239,13 +247,18 @@ transform:scale(1.2);
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-// SPLASH FIX
+// ✅ SPLASH FIX (FORCE REMOVE)
 setTimeout(function(){
-var splash = document.getElementById("splash");
+let splash = document.getElementById("splash");
 if(splash){
-splash.style.display="none";
+splash.remove(); // stronger than display none
 }
 },1200);
+
+// ✅ AMAZON BUTTON FIX
+document.getElementById("shopBtn").addEventListener("click", function(){
+window.location.href = "amazon.html";
+});
 
 // DEALS LOAD
 var container = document.getElementById("products");
