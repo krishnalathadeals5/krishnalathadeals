@@ -25,9 +25,9 @@ body {
     border-radius: 20px;
     border: 2px solid gold;
     color: gold;
-    background: rgba(0,0,0,0.2);
-    box-shadow: 0 0 40px rgba(255,215,0,0.5);
-    z-index: 5;
+    background: rgba(0,0,0,0.25);
+    box-shadow: 0 0 40px rgba(255,215,0,0.6);
+    z-index: 10;
 }
 
 /* LOGO */
@@ -40,7 +40,7 @@ body {
     line-height: 100px;
     font-size: 40px;
     font-weight: bold;
-    box-shadow: 0 0 20px gold;
+    box-shadow: 0 0 25px gold;
 }
 
 /* TEXT */
@@ -67,7 +67,7 @@ p { font-size: 14px; }
     100% { width: 100%; }
 }
 
-/* PARTICLES */
+/* PARTICLES (FALLING) */
 .particle {
     position: fixed;
     top: -10px;
@@ -81,23 +81,33 @@ p { font-size: 14px; }
     animation: fall linear infinite;
 }
 @keyframes fall {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(100vh); opacity: 0; }
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
 }
 
-/* CRACKERS */
-.cracker {
+/* FIREWORK EXPLOSION */
+.spark {
     position: fixed;
-    bottom: 0;
     width: 4px;
-    height: 20px;
+    height: 4px;
     background: gold;
+    border-radius: 50%;
+    pointer-events: none;
     z-index: 2;
-    animation: shoot 1s linear forwards;
+    animation: explode 800ms ease-out forwards;
 }
-@keyframes shoot {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-250px); opacity: 0; }
+
+@keyframes explode {
+    from {
+        transform: translate(0,0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+    }
 }
 
 </style>
@@ -125,33 +135,43 @@ p { font-size: 14px; }
 
 <!-- PARTICLES SCRIPT -->
 <script>
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 60; i++) {
     let p = document.createElement("div");
     p.className = "particle";
     p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (3 + Math.random() * 4) + "s";
+    p.style.animationDuration = (3 + Math.random() * 5) + "s";
     document.body.appendChild(p);
 }
 </script>
 
-<!-- CRACKERS SCRIPT -->
+<!-- FIREWORK SCRIPT -->
 <script>
-function createCracker(side) {
-    let c = document.createElement("div");
-    c.className = "cracker";
+function createFirework(x, y) {
+    for (let i = 0; i < 25; i++) {
+        let s = document.createElement("div");
+        s.className = "spark";
 
-    if (side === "left") {
-        c.style.left = "5%";
-    } else {
-        c.style.left = "95%";
+        let angle = Math.random() * 2 * Math.PI;
+        let radius = Math.random() * 120;
+
+        s.style.left = x + "px";
+        s.style.top = y + "px";
+
+        s.style.setProperty("--x", Math.cos(angle) * radius + "px");
+        s.style.setProperty("--y", Math.sin(angle) * radius + "px");
+
+        document.body.appendChild(s);
+
+        setTimeout(() => s.remove(), 800);
     }
-
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 1000);
 }
 
-setInterval(() => createCracker("left"), 400);
-setInterval(() => createCracker("right"), 400);
+// Random explosions
+setInterval(() => {
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * (window.innerHeight / 2);
+    createFirework(x, y);
+}, 500);
 </script>
 
 <!-- REDIRECT -->
