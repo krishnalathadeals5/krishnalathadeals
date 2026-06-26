@@ -254,6 +254,47 @@ width:20px;
 </div>
 
 <script>
+window.onload = function(){
+
+var container = document.getElementById("products");
+
+if(!container){
+console.log("Products div not found");
+return;
+}
+
+var products = [
+{title:"Mens Jacket", price:4479},
+{title:"Slim Fit T-Shirt", price:1784},
+{title:"Backpack", price:8796}
+];
+
+// clear loading text
+container.innerHTML = "";
+
+products.forEach(function(p){
+
+var original = Math.floor(p.price * 1.5);
+var discount = Math.floor(((original - p.price)/original)*100);
+
+var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
+
+var div = document.createElement("div");
+div.className="product";
+
+div.innerHTML =
+"<p>"+p.title+"</p>"+
+"<p class='price'>₹"+p.price+" <span class='old'>₹"+original+"</span></p>"+
+"<p class='discount'>"+discount+"% OFF</p>"+
+"<a href='"+link+"' target='_blank'>View Deal</a>";
+
+container.appendChild(div);
+
+});
+
+};
+</script>
+
 document.addEventListener("DOMContentLoaded", function(){
 
 var container = document.getElementById("products");
