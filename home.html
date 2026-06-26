@@ -1,174 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krishnalatha Deals</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#f5f6fa;
-}
-
-/* SPLASH */
-#splash{
-position:fixed;
-inset:0;
-background:#111;
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:24px;
-z-index:99999;
-}
-
-/* HEADER */
-.header{
-background:#111;
-color:#fff;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{font-size:18px;font-weight:bold;}
-
-/* HERO */
-.hero{
-background:linear-gradient(45deg,#ff9900,#ff5e00);
-color:#fff;
-padding:40px 20px;
-text-align:center;
-}
-
-.hero button{
-padding:10px 20px;
-border:none;
-background:#000;
-color:#fff;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* BRANDS */
-.brands{padding:30px 20px;text-align:center;}
-
-.brand-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
-gap:15px;
-}
-
-.brand{
-padding:15px;
-border-radius:12px;
-text-decoration:none;
-color:#000;
-background:#fff;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-transition:0.3s;
-}
-
-.brand:hover{
-transform:translateY(-5px) scale(1.05);
-}
-
-/* DEALS */
-.deals{padding:20px;}
-
-.product{
-background:#fff;
-padding:12px;
-margin-bottom:12px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
-
-.price{color:green;font-weight:bold;}
-.old{text-decoration:line-through;color:#999;margin-left:5px;}
-.discount{color:red;font-size:12px;}
-
-.product a{
-display:inline-block;
-margin-top:5px;
-padding:6px 10px;
-background:#ff9900;
-color:#fff;
-text-decoration:none;
-border-radius:5px;
-font-size:12px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- SPLASH -->
-<div id="splash">Loading Krishnalatha Deals...</div>
-
-<!-- HEADER -->
-<div class="header">
-<div class="logo">Krishnalatha Deals</div>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-<h2>Best Deals Online</h2>
-<p>Amazon • Flipkart • Myntra</p>
-<button onclick="goAmazon()">Shop Now</button>
-</div>
-
-<!-- BRANDS -->
-<section class="brands">
-<h3>Top Platforms</h3>
-
-<div class="brand-grid">
-
-<a href="amazon.html" class="brand">
-<p>Amazon</p>
-</a>
-
-<a href="#" class="brand">
-<p>Flipkart</p>
-</a>
-
-</div>
-</section>
-
-<!-- DEALS -->
-<section class="deals">
-<h3>🔥 Live Deals</h3>
-<div id="products">Loading deals...</div>
-</section>
-
 <script>
-// ✅ AMAZON FUNCTION (SAFE)
+
+// 🔥 AMAZON FIX (extra safe)
 function goAmazon(){
-window.location.href = "amazon.html";
+window.location.href = "./amazon.html";
 }
 
+// 🔥 SPLASH FIX (bulletproof)
+document.addEventListener("DOMContentLoaded", function(){
+
+const splash = document.getElementById("splash");
+
+setTimeout(function(){
+if(splash){
+splash.style.transition = "0.5s ease";
+splash.style.opacity = "0";
+
+setTimeout(function(){
+splash.remove();
+}, 500);
+}
+}, 1200);
+
+});
+
+// 🔥 PRODUCTS LOAD (safe)
 window.addEventListener("load", function(){
 
-// ✅ SPLASH FIX (100% WORKING)
-setTimeout(function(){
-let splash = document.getElementById("splash");
-if(splash){
-splash.style.opacity = "0";
-splash.style.transition = "0.4s";
-setTimeout(()=> splash.remove(), 400);
-}
-}, 1000);
-
-// ✅ PRODUCTS
-var container = document.getElementById("products");
-
+const container = document.getElementById("products");
 if(!container) return;
 
-var products = [
+const products = [
 {title:"Mens Jacket", price:4479},
 {title:"Slim Fit T-Shirt", price:1784},
 {title:"Backpack", price:8796}
@@ -178,13 +39,13 @@ container.innerHTML = "";
 
 products.forEach(function(p){
 
-var original = Math.floor(p.price * 1.5);
-var discount = Math.floor(((original - p.price)/original)*100);
+const original = Math.floor(p.price * 1.5);
+const discount = Math.floor(((original - p.price)/original)*100);
 
-var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title);
+const link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title);
 
-var div = document.createElement("div");
-div.className="product";
+const div = document.createElement("div");
+div.className = "product";
 
 div.innerHTML =
 "<p>"+p.title+"</p>"+
@@ -193,11 +54,9 @@ div.innerHTML =
 "<a href='"+link+"' target='_blank'>View Deal</a>";
 
 container.appendChild(div);
+
 });
 
 });
 
 </script>
-
-</body>
-</html>
