@@ -67,7 +67,7 @@ p { font-size: 14px; }
     100% { width: 100%; }
 }
 
-/* PARTICLES (FALLING) */
+/* PARTICLES */
 .particle {
     position: fixed;
     top: -10px;
@@ -87,7 +87,7 @@ p { font-size: 14px; }
     }
 }
 
-/* FIREWORK EXPLOSION */
+/* FIREWORKS */
 .spark {
     position: fixed;
     width: 4px;
@@ -109,13 +109,11 @@ p { font-size: 14px; }
         opacity: 0;
     }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- CARD -->
 <div class="card">
     <div class="logo">KD</div>
 
@@ -133,7 +131,7 @@ p { font-size: 14px; }
     <p>Loading...</p>
 </div>
 
-<!-- PARTICLES SCRIPT -->
+<!-- PARTICLES -->
 <script>
 for (let i = 0; i < 60; i++) {
     let p = document.createElement("div");
@@ -144,7 +142,7 @@ for (let i = 0; i < 60; i++) {
 }
 </script>
 
-<!-- FIREWORK SCRIPT -->
+<!-- FIREWORKS -->
 <script>
 function createFirework(x, y) {
     for (let i = 0; i < 25; i++) {
@@ -166,7 +164,6 @@ function createFirework(x, y) {
     }
 }
 
-// Random explosions
 setInterval(() => {
     let x = Math.random() * window.innerWidth;
     let y = Math.random() * (window.innerHeight / 2);
@@ -174,10 +171,10 @@ setInterval(() => {
 }, 500);
 </script>
 
-<!-- REDIRECT -->
+<!-- ✅ REDIRECT FIX -->
 <script>
 setTimeout(() => {
-    window.location.href = "welcome.html";
+    window.location.href = "home.html";   // IMPORTANT
 }, 3500);
 </script>
 
