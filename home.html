@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Krishnalatha Deals</title>
 
 <style>
@@ -34,6 +33,7 @@ background:linear-gradient(45deg,#ff9900,#ff5e00);
 color:#fff;
 padding:40px 20px;
 text-align:center;
+animation:fadeIn 1s ease;
 }
 
 .hero button{
@@ -43,6 +43,11 @@ background:#000;
 color:#fff;
 border-radius:6px;
 cursor:pointer;
+transition:0.3s;
+}
+
+.hero button:hover{
+background:#333;
 }
 
 /* BRANDS */
@@ -60,21 +65,23 @@ gap:15px;
 .brand{
 padding:15px;
 border-radius:12px;
-background:#fff;
 text-decoration:none;
 color:#000;
+background:#fff;
 box-shadow:0 4px 10px rgba(0,0,0,0.1);
 transition:0.3s;
+}
+
+.brand img{
+width:40px;
+margin-bottom:8px;
 }
 
 .brand:hover{
 transform:translateY(-5px) scale(1.05);
 }
 
-.brand img{
-width:40px;
-}
-
+/* BRAND COLORS */
 .amazon{border-top:4px solid #ff9900;}
 .flipkart{border-top:4px solid #2874f0;}
 .myntra{border-top:4px solid #ff3f6c;}
@@ -82,22 +89,46 @@ width:40px;
 .ajio{border-top:4px solid #000;}
 .reliance{border-top:4px solid #1e3c72;}
 
-/* DEALS */
+/* LIVE DEALS */
 .deals{
 padding:20px;
 }
 
 .product{
 background:#fff;
-padding:10px;
-margin-bottom:10px;
+padding:12px;
+margin-bottom:12px;
 border-radius:10px;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
+animation:fadeIn 0.5s ease;
 }
 
-.price{color:green;font-weight:bold;}
-.old{text-decoration:line-through;color:#999;margin-left:5px;}
-.discount{color:red;font-size:12px;}
+.price{
+color:green;
+font-weight:bold;
+}
+
+.old{
+text-decoration:line-through;
+color:#999;
+margin-left:5px;
+}
+
+.discount{
+color:red;
+font-size:12px;
+}
+
+.product a{
+display:inline-block;
+margin-top:5px;
+padding:6px 10px;
+background:#ff9900;
+color:#fff;
+text-decoration:none;
+border-radius:5px;
+font-size:12px;
+}
 
 /* SOCIAL FLOAT */
 .social-float{
@@ -107,20 +138,23 @@ bottom:20px;
 display:flex;
 flex-direction:column;
 gap:10px;
+z-index:999;
 }
 
 .social-float a{
-width:45px;
-height:45px;
+width:42px;
+height:42px;
 border-radius:50%;
 display:flex;
 justify-content:center;
 align-items:center;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
-animation:float 2s infinite;
+animation:float 2s infinite ease-in-out;
 }
 
-.social-float img{width:22px;}
+.social-float img{
+width:20px;
+}
 
 .wa{background:#25D366;}
 .tg{background:#0088cc;}
@@ -132,23 +166,32 @@ animation:float 2s infinite;
 0%,100%{transform:translateY(0);}
 50%{transform:translateY(-6px);}
 }
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
 </div>
 
+<!-- HERO -->
 <div class="hero">
-<h2>Best Deals Online</h2>
+<h1>Best Deals Online</h1>
 <p>Amazon • Flipkart • Myntra</p>
 <button onclick="location.href='amazon.html'">Shop Now</button>
 </div>
 
+<!-- BRANDS -->
 <section class="brands">
-<h3>Top Platforms</h3>
+<h2>Top Platforms</h2>
 
 <div class="brand-grid">
 
@@ -185,12 +228,15 @@ animation:float 2s infinite;
 </div>
 </section>
 
+<!-- LIVE DEALS -->
 <section class="deals">
-<h3>🔥 Live Deals</h3>
+<h2>🔥 Live Deals</h2>
 <div id="products">Loading deals...</div>
 </section>
 
+<!-- SOCIAL FLOAT -->
 <div class="social-float">
+
 <a href="https://wa.me/your-number" class="wa" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
 </a>
@@ -210,41 +256,44 @@ animation:float 2s infinite;
 <a href="#" class="fb" target="_blank">
 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
 </a>
+
 </div>
 
 <script>
-const container = document.getElementById("products");
+window.onload = function(){
 
 const products = [
 {title:"Mens Jacket", price:4479},
 {title:"Slim Fit T-Shirt", price:1784},
-{title:"Backpack", price:8796},
-{title:"Shoes", price:2499}
+{title:"Backpack", price:8796}
 ];
 
+const container = document.getElementById("products");
+
+// clear loading
 container.innerHTML = "";
 
-products.forEach(p => {
+products.forEach(function(p){
 
 let original = Math.floor(p.price * 1.5);
 let discount = Math.floor(((original - p.price)/original)*100);
 
-let link = `https://www.amazon.in/s?k=${encodeURIComponent(p.title)}&tag=krishna-21`;
+let link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
 
-const div = document.createElement("div");
-
+let div = document.createElement("div");
 div.className="product";
 
-div.innerHTML = `
-<p>${p.title}</p>
-<p class="price">₹${p.price} <span class="old">₹${original}</span></p>
-<p class="discount">${discount}% OFF</p>
-<a href="${link}" target="_blank">View Deal</a>
-`;
+div.innerHTML =
+"<p>"+p.title+"</p>"+
+"<p class='price'>₹"+p.price+" <span class='old'>₹"+original+"</span></p>"+
+"<p class='discount'>"+discount+"% OFF</p>"+
+"<a href='"+link+"' target='_blank'>View Deal</a>";
 
 container.appendChild(div);
 
 });
+
+};
 </script>
 
 </body>
