@@ -1,27 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Krishnalatha Deals</title>
 
-<!-- 🔥 THIS IS THE FIX -->
-<meta http-equiv="refresh" content="1; url=splash.html">
-
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#02150e;
-    color:white;
-    font-family:Arial;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
 }
-h1{
-    color:gold;
+
+body{
+background:#f5f6fa;
+}
+
+/* HEADER */
+.header{
+background:#0a3d2c;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px 20px;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+color:#ffd700;
+}
+
+.search{
+flex:1;
+margin:0 20px;
+}
+
+.search input{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:none;
+}
+
+.nav{
+display:flex;
+gap:20px;
+font-size:14px;
+}
+
+/* HERO */
+.hero{
+margin:15px;
+background:linear-gradient(90deg,#063,#0a3d2c);
+color:#fff;
+border-radius:12px;
+padding:30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.hero-text h1{
+font-size:32px;
+}
+
+.hero-text span{
+color:#ffd700;
+}
+
+.hero button{
+margin-top:15px;
+padding:10px 20px;
+background:#ffd700;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.hero img{
+width:250px;
+}
+
+/* SECTION */
+.section{
+padding:15px;
+}
+
+.section h2{
+margin-bottom:10px;
+}
+
+/* PLATFORM CARDS */
+.platforms{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+}
+
+.card{
+background:#fff;
+padding:15px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card img{
+height:40px;
+margin-bottom:10px;
+}
+
+.card button{
+margin-top:10px;
+padding:6px 10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+color:#fff;
+}
+
+.amazon{background:#ff9900;}
+.flipkart{background:#2874f0;}
+.myntra{background:#ff3f6c;}
+.meesho{background:#ff2e63;}
+.ajio{background:#111;}
+.reliance{background:#e60023;}
+
+/* PRODUCTS */
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.product{
+background:#fff;
+padding:10px;
+border-radius:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.product img{
+width:100%;
+height:150px;
+object-fit:contain;
+}
+
+.price{
+font-weight:bold;
+}
+
+.old{
+text-decoration:line-through;
+color:gray;
+font-size:12px;
+}
+
+.discount{
+color:red;
+font-size:12px;
+}
+
+/* FEATURES */
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+padding:20px;
+}
+
+.feature{
+background:#fff;
+padding:15px;
+border-radius:10px;
+text-align:center;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.header{
+flex-direction:column;
+gap:10px;
+}
+
+.hero{
+flex-direction:column;
+text-align:center;
+}
+
+.hero img{
+width:180px;
+}
+
 }
 </style>
 
@@ -29,9 +204,122 @@ h1{
 
 <body>
 
-<div>
-    <h1>Krishnalatha Deals</h1>
-    <p>Starting...</p>
+<!-- HEADER -->
+<div class="header">
+<div class="logo">Krishnalatha Deals</div>
+
+<div class="search">
+<input type="text" placeholder="Search for products...">
+</div>
+
+<div class="nav">
+<span>Categories</span>
+<span>Deals</span>
+<span>Account</span>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<div class="hero-text">
+<h1>BEST DEALS <br><span>ON TOP BRANDS</span></h1>
+<p>Amazon, Flipkart, Myntra, Meesho & More</p>
+<button>Shop Now</button>
+</div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/1041/1041880.png">
+</div>
+
+<!-- PLATFORMS -->
+<div class="section">
+<h2>Top Platforms</h2>
+
+<div class="platforms">
+
+<div class="card">
+<img src="https://logo.clearbit.com/amazon.com">
+<h4>Amazon</h4>
+<button class="amazon">Shop Now</button>
+</div>
+
+<div class="card">
+<img src="https://logo.clearbit.com/flipkart.com">
+<h4>Flipkart</h4>
+<button class="flipkart">Shop Now</button>
+</div>
+
+<div class="card">
+<img src="https://logo.clearbit.com/myntra.com">
+<h4>Myntra</h4>
+<button class="myntra">Shop Now</button>
+</div>
+
+<div class="card">
+<img src="https://logo.clearbit.com/meesho.com">
+<h4>Meesho</h4>
+<button class="meesho">Shop Now</button>
+</div>
+
+<div class="card">
+<img src="https://logo.clearbit.com/ajio.com">
+<h4>Ajio</h4>
+<button class="ajio">Shop Now</button>
+</div>
+
+<div class="card">
+<img src="https://logo.clearbit.com/reliancedigital.in">
+<h4>Reliance Digital</h4>
+<button class="reliance">Shop Now</button>
+</div>
+
+</div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="section">
+<h2>Top Deals of the Day</h2>
+
+<div class="products">
+
+<div class="product">
+<img src="https://m.media-amazon.com/images/I/61mpMH5TzkL._SL1500_.jpg">
+<p>Smart Watch</p>
+<p class="price">₹1,199 <span class="old">₹2,999</span></p>
+<p class="discount">60% OFF</p>
+</div>
+
+<div class="product">
+<img src="https://m.media-amazon.com/images/I/61CGHv6kmWL._SL1500_.jpg">
+<p>Wireless Earbuds</p>
+<p class="price">₹699 <span class="old">₹1,499</span></p>
+<p class="discount">53% OFF</p>
+</div>
+
+<div class="product">
+<img src="https://m.media-amazon.com/images/I/81c+R3+2yCL._SL1500_.jpg">
+<p>Laptop Backpack</p>
+<p class="price">₹1,099 <span class="old">₹1,999</span></p>
+<p class="discount">45% OFF</p>
+</div>
+
+<div class="product">
+<img src="https://m.media-amazon.com/images/I/71c5Y7vYcPL._SL1500_.jpg">
+<p>Sneakers</p>
+<p class="price">₹1,799 <span class="old">₹2,899</span></p>
+<p class="discount">38% OFF</p>
+</div>
+
+</div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+
+<div class="feature">100% Genuine Products</div>
+<div class="feature">Best Prices</div>
+<div class="feature">Secure Shopping</div>
+<div class="feature">Easy Returns</div>
+
 </div>
 
 </body>
