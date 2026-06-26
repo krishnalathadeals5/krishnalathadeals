@@ -1,1013 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home | Krishnalatha Deals</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: #f6f7f9;
-      color: #222;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ===== HEADER ===== */
-    .topbar {
-      background: linear-gradient(135deg, #0b6b3a, #0f7f45, #085c31);
-      color: white;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    }
-
-    .brand-wrap {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand {
-      font-size: 28px;
-      font-weight: 800;
-      color: #f4d06f;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }
-
-    .brand-sub {
-      font-size: 12px;
-      color: #fff6d5;
-      margin-top: 2px;
-      font-weight: 500;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .header-btn {
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      transition: 0.25s;
-    }
-
-    .header-btn:hover {
-      background: rgba(255,255,255,0.24);
-      transform: translateY(-1px);
-    }
-
-    /* ===== HERO ===== */
-    .hero {
-      background: linear-gradient(135deg, #0d7a40, #0b6b3a, #085c31);
-      color: white;
-      padding: 36px 20px 30px;
-    }
-
-    .hero-card {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 28px;
-      padding: 28px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-      align-items: center;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
-      backdrop-filter: blur(6px);
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: #f4d06f;
-      color: #0b6b3a;
-      font-size: 13px;
-      font-weight: 800;
-      padding: 8px 14px;
-      border-radius: 999px;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-size: 44px;
-      line-height: 1.15;
-      margin-bottom: 12px;
-      color: #fff8df;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }
-
-    .hero p {
-      font-size: 18px;
-      line-height: 1.7;
-      color: #f2f6ef;
-      margin-bottom: 22px;
-      max-width: 700px;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #f4b000, #ff9800);
-      color: white;
-      padding: 14px 22px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: 0.25s;
-      box-shadow: 0 10px 24px rgba(255,152,0,0.22);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 28px rgba(255,152,0,0.28);
-    }
-
-    .btn-outline {
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-      padding: 14px 22px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 800;
-      border: 1px solid rgba(255,255,255,0.24);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: 0.25s;
-    }
-
-    .btn-outline:hover {
-      background: rgba(255,255,255,0.18);
-      transform: translateY(-2px);
-    }
-
-    .hero-visual {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .promo-box {
-      width: 100%;
-      max-width: 380px;
-      min-height: 280px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #fff8df, #fff2c2);
-      color: #0b6b3a;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.16);
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      border: 3px solid #f4d06f;
-    }
-
-    .promo-kd {
-      width: 92px;
-      height: 92px;
-      border-radius: 50%;
-      border: 3px solid #d4af37;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-      font-weight: 900;
-      color: #d4af37;
-      background: linear-gradient(135deg, #0b6b3a, #0f7f45);
-      margin-bottom: 16px;
-      box-shadow: 0 0 18px rgba(212,175,55,0.35);
-    }
-
-    .promo-box h3 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .promo-box p {
-      color: #234;
-      font-size: 16px;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* ===== COMMON SECTION ===== */
-    .section {
-      max-width: 1200px;
-      margin: 28px auto;
-      padding: 0 16px;
-    }
-
-    .section-title {
-      font-size: 30px;
-      color: #0b6b3a;
-      font-weight: 800;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 24px;
-      font-size: 16px;
-    }
-
-    /* ===== PLATFORM SECTION ===== */
-    .platform-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
-    }
-
-    .platform-card {
-      background: white;
-      border-radius: 20px;
-      padding: 22px 16px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      border: 1px solid #edf0f4;
-      transition: 0.25s;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .platform-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.12);
-    }
-
-    .platform-card.active-platform {
-      border: 2px solid #f4b000;
-      box-shadow: 0 14px 30px rgba(244,176,0,0.18);
-    }
-
-    .platform-card.active-platform::before {
-      content: "LIVE";
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #0b6b3a;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 6px 9px;
-      border-radius: 999px;
-    }
-
-    .platform-logo {
-      width: 96px;
-      height: 96px;
-      border-radius: 22px;
-      margin: 0 auto 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #eef2f5;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-      overflow: hidden;
-      background: #fff;
-      padding: 12px;
-    }
-
-    .platform-logo img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .amazon-logo {
-      background: #ffffff;
-    }
-
-    .flipkart-logo {
-      background: #2874f0;
-    }
-
-    .meesho-logo {
-      background: #ffffff;
-    }
-
-    .myntra-logo {
-      background: #ffffff;
-    }
-
-    .ajio-logo {
-      background: #ffffff;
-    }
-
-    .platform-card h3 {
-      font-size: 20px;
-      color: #222;
-      margin-bottom: 8px;
-    }
-
-    .platform-card p {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.5;
-      min-height: 64px;
-    }
-
-    .platform-action {
-      margin-top: 14px;
-      display: inline-block;
-      background: #f4b000;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    /* ===== FEATURE STRIP ===== */
-    .feature-strip {
-      max-width: 1200px;
-      margin: 26px auto 0;
-      padding: 0 16px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .feature-box {
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      border: 1px solid #edf0f4;
-    }
-
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #0b6b3a, #0f7f45);
-      color: #f4d06f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
-      box-shadow: 0 8px 18px rgba(11,107,58,0.18);
-    }
-
-    .feature-box h4 {
-      font-size: 17px;
-      color: #222;
-      margin-bottom: 6px;
-    }
-
-    .feature-box p {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    /* ===== DEALS PREVIEW ===== */
-    .deals-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .deal-card {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      border: 1px solid #edf0f4;
-      transition: 0.25s;
-    }
-
-    .deal-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.12);
-    }
-
-    .deal-image {
-      height: 190px;
-      background: linear-gradient(135deg, #eaf7ef, #f8f3df);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 56px;
-    }
-
-    .deal-body {
-      padding: 18px;
-    }
-
-    .deal-tag {
-      display: inline-block;
-      background: #ffeded;
-      color: #d32f2f;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 6px 10px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-    }
-
-    .deal-body h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      color: #222;
-    }
-
-    .deal-body p {
-      color: #666;
-      line-height: 1.6;
-      font-size: 15px;
-      margin-bottom: 14px;
-    }
-
-    .deal-link {
-      display: inline-block;
-      background: #0b6b3a;
-      color: white;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-weight: 800;
-    }
-
-    /* ===== CTA ===== */
-    .cta-section {
-      max-width: 1200px;
-      margin: 34px auto 24px;
-      padding: 0 16px;
-    }
-
-    .cta-box {
-      background: linear-gradient(135deg, #0b6b3a, #0f7f45, #085c31);
-      color: white;
-      border-radius: 28px;
-      padding: 34px 26px;
-      text-align: center;
-      box-shadow: 0 14px 34px rgba(0,0,0,0.18);
-    }
-
-    .cta-box h2 {
-      font-size: 34px;
-      color: #fff8df;
-      margin-bottom: 12px;
-    }
-
-    .cta-box p {
-      font-size: 17px;
-      color: #f2f6ef;
-      margin-bottom: 22px;
-      line-height: 1.7;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #f4b000, #ff9800);
-      color: white;
-      padding: 15px 24px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 800;
-      box-shadow: 0 10px 24px rgba(255,152,0,0.24);
-    }
-
-    /* ===== BOTTOM SOCIAL ===== */
-    .bottom-social {
-      max-width: 1200px;
-      margin: 10px auto 0;
-      padding: 0 16px 24px;
-    }
-
-    .bottom-social-wrap {
-      background: white;
-      border: 1px solid #edf0f4;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .bottom-social-text h3 {
-      font-size: 20px;
-      color: #0b6b3a;
-      margin-bottom: 4px;
-      font-weight: 800;
-    }
-
-    .bottom-social-text p {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    .bottom-social-icons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .bottom-social-link {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 800;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-      transition: 0.25s;
-    }
-
-    .bottom-social-link:hover {
-      transform: translateY(-2px);
-    }
-
-    .wa { background: #25D366; }
-    .tg { background: #229ED9; }
-    .yt { background: #FF0000; }
-    .ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: #061f12;
-      color: #e6f0ea;
-      padding: 26px 16px;
-      margin-top: 0;
-    }
-
-    .footer-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 22px;
-    }
-
-    .footer-brand {
-      font-size: 28px;
-      color: #f4d06f;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .footer-text {
-      color: #c7d5cc;
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    .footer-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-links a {
-      color: #d8e4dd;
-      font-size: 15px;
-    }
-
-    .footer-links a:hover {
-      color: #f4d06f;
-    }
-
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 18px auto 0;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      text-align: center;
-      color: #b8c7be;
-      font-size: 14px;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1100px) {
-      .hero-card {
-        grid-template-columns: 1fr;
-      }
-
-      .platform-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .feature-strip {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .deals-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-wrap {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .topbar {
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
-      }
-
-      .header-actions {
-        width: 100%;
-        flex-wrap: wrap;
-      }
-
-      .header-btn {
-        flex: 1;
-        text-align: center;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      .section-title {
-        font-size: 26px;
-      }
-
-      .platform-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .feature-strip {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-wrap {
-        grid-template-columns: 1fr;
-      }
-
-      .bottom-social-wrap {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .bottom-social-text h3 {
-        font-size: 18px;
-      }
-
-      .bottom-social-icons {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .brand {
-        font-size: 24px;
-      }
-
-      .hero {
-        padding: 26px 14px 24px;
-      }
-
-      .hero-card {
-        padding: 22px 16px;
-        border-radius: 22px;
-      }
-
-      .hero h1 {
-        font-size: 28px;
-      }
-
-      .promo-box {
-        min-height: auto;
-        padding: 20px;
-      }
-
-      .platform-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cta-box h2 {
-        font-size: 28px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Krishnalatha Deals</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f5f6fa;
+}
+
+/* HEADER */
+.header{
+background:#111;
+color:#fff;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:18px;
+font-weight:bold;
+}
+
+/* HERO */
+.hero{
+background:linear-gradient(45deg,#ff9900,#ff5e00);
+color:#fff;
+padding:40px 20px;
+text-align:center;
+}
+
+.hero h1{
+margin:0;
+font-size:24px;
+}
+
+.hero p{
+margin:10px 0;
+}
+
+.hero button{
+padding:10px 20px;
+border:none;
+background:#000;
+color:#fff;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* BRANDS */
+.brands{
+padding:30px 20px;
+text-align:center;
+}
+
+.brand-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
+gap:15px;
+}
+
+.brand{
+padding:15px;
+border-radius:12px;
+text-decoration:none;
+color:#000;
+background:#fff;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.brand img{
+width:40px;
+margin-bottom:8px;
+}
+
+.brand:hover{
+transform:translateY(-5px) scale(1.05);
+}
+
+/* BRAND COLORS */
+.amazon{border-top:4px solid #ff9900;}
+.flipkart{border-top:4px solid #2874f0;}
+.myntra{border-top:4px solid #ff3f6c;}
+.meesho{border-top:4px solid #f43397;}
+.ajio{border-top:4px solid #000;}
+.reliance{border-top:4px solid #1e3c72;}
+
+/* SOCIAL FLOAT */
+.social-float{
+position:fixed;
+right:10px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index:999;
+}
+
+.social-float a{
+width:45px;
+height:45px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+animation:float 2s infinite ease-in-out;
+}
+
+.social-float img{
+width:22px;
+}
+
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
+}
+
+/* LIVE DEALS */
+.deals{
+padding:20px;
+}
+
+.product{
+background:#fff;
+padding:10px;
+margin-bottom:10px;
+border-radius:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.price{
+color:green;
+font-weight:bold;
+}
+
+.old{
+text-decoration:line-through;
+color:#999;
+margin-left:5px;
+}
+
+.discount{
+color:red;
+font-size:12px;
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header class="topbar">
-    <div class="brand-wrap">
-      <div class="brand">Krishnalatha Deals</div>
-      <div class="brand-sub">Best Deals, Big Savings!</div>
-    </div>
+<!-- HEADER -->
+<div class="header">
+<div class="logo">Krishnalatha Deals</div>
+</div>
 
-    <div class="header-actions">
-      <a href="amazon.html" class="header-btn">Amazon Deals</a>
-      <a href="admin.html" class="header-btn">Admin</a>
-      <a href="contact.html" class="header-btn">Contact</a>
-    </div>
-  </header>
+<!-- HERO -->
+<div class="hero">
+<h1>Best Deals Online</h1>
+<p>Amazon • Flipkart • Myntra</p>
+<button onclick="location.href='amazon.html'">Shop Now</button>
+</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-card">
-      <div class="hero-content">
-        <div class="hero-badge">✨ Trusted Deal Updates</div>
-        <h1>Welcome to Krishnalatha Deals</h1>
-        <p>
-          Discover the best offers, top product picks, and daily savings across
-          Amazon, Flipkart, Meesho, Myntra and Ajio — all in one clean, premium place.
-        </p>
+<!-- BRANDS -->
+<section class="brands">
+<h2>Top Platforms</h2>
 
-        <div class="hero-btns">
-          <a href="amazon.html" class="btn-primary">🛒 Shop Amazon Deals</a>
-          <a href="#platforms" class="btn-outline">🏬 Browse Platforms</a>
-        </div>
-      </div>
+<div class="brand-grid">
 
-      <div class="hero-visual">
-        <div class="promo-box">
-          <div class="promo-kd">KD</div>
-          <h3>Top Deals & Savings</h3>
-          <p>
-            One destination for curated deals, trending offers and smart shopping.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+<a href="amazon.html" class="brand amazon">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
+<p>Amazon</p>
+</a>
 
-  <!-- PLATFORMS -->
-  <section class="section" id="platforms">
-    <h2 class="section-title">Shop From Top Platforms</h2>
-    <p class="section-subtitle">
-      Click a platform to explore its deals page.
-    </p>
+<a href="#" class="brand flipkart">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
+<p>Flipkart</p>
+</a>
 
-    <div class="platform-grid">
-      <!-- AMAZON -->
-      <a href="amazon.html" class="platform-card active-platform">
-        <div class="platform-logo amazon-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo">
-        </div>
-        <h3>Amazon</h3>
-        <p>Open your current Amazon deals page with all products and categories.</p>
-        <span class="platform-action">Open Deals</span>
-      </a>
+<a href="#" class="brand myntra">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
+<p>Myntra</p>
+</a>
 
-      <!-- FLIPKART -->
-      <a href="#" class="platform-card" onclick="comingSoon(event, 'Flipkart')">
-        <div class="platform-logo flipkart-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Flipkart_logo.png" alt="Flipkart Logo">
-        </div>
-        <h3>Flipkart</h3>
-        <p>Flipkart deals page will be added next in the same premium style.</p>
-        <span class="platform-action">Coming Soon</span>
-      </a>
+<a href="#" class="brand meesho">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
+<p>Meesho</p>
+</a>
 
-      <!-- MEESHO -->
-      <a href="#" class="platform-card" onclick="comingSoon(event, 'Meesho')">
-        <div class="platform-logo meesho-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Meesho_logo.png" alt="Meesho Logo">
-        </div>
-        <h3>Meesho</h3>
-        <p>Meesho deals and price comparison section will be added next.</p>
-        <span class="platform-action">Coming Soon</span>
-      </a>
+<a href="#" class="brand ajio">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+<p>Ajio</p>
+</a>
 
-      <!-- MYNTRA -->
-      <a href="#" class="platform-card" onclick="comingSoon(event, 'Myntra')">
-        <div class="platform-logo myntra-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Myntra_logo.png" alt="Myntra Logo">
-        </div>
-        <h3>Myntra</h3>
-        <p>Fashion and lifestyle deals from Myntra will be added next.</p>
-        <span class="platform-action">Coming Soon</span>
-      </a>
+<a href="#" class="brand reliance">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968672.png">
+<p>Reliance</p>
+</a>
 
-      <!-- AJIO -->
-      <a href="#" class="platform-card" onclick="comingSoon(event, 'Ajio')">
-        <div class="platform-logo ajio-logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Ajio-Logo.svg" alt="Ajio Logo">
-        </div>
-        <h3>Ajio</h3>
-        <p>Ajio fashion deals page can be connected in the next phase.</p>
-        <span class="platform-action">Coming Soon</span>
-      </a>
-    </div>
-  </section>
+</div>
+</section>
 
-  <!-- FEATURES -->
-  <section class="feature-strip">
-    <div class="feature-box">
-      <div class="feature-icon">💰</div>
-      <div>
-        <h4>Best Price Picks</h4>
-        <p>Curated deals selected to highlight discounts, value and savings.</p>
-      </div>
-    </div>
+<!-- LIVE DEALS -->
+<section class="deals">
+<h2>🔥 Live Deals</h2>
+<div id="products"></div>
+</section>
 
-    <div class="feature-box">
-      <div class="feature-icon">⚡</div>
-      <div>
-        <h4>Fast Access</h4>
-        <p>Jump directly to platform pages and product deals in one click.</p>
-      </div>
-    </div>
+<!-- SOCIAL FLOAT -->
+<div class="social-float">
 
-    <div class="feature-box">
-      <div class="feature-icon">🛒</div>
-      <div>
-        <h4>Smart Shopping</h4>
-        <p>Find daily deals, offers, and selected products from one home page.</p>
-      </div>
-    </div>
+<a href="https://wa.me/your-number" class="wa" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+</a>
 
-    <div class="feature-box">
-      <div class="feature-icon">📦</div>
-      <div>
-        <h4>Multiple Platforms</h4>
-        <p>Amazon first, then Flipkart, Meesho, Myntra and Ajio pages can be added.</p>
-      </div>
-    </div>
-  </section>
+<a href="https://t.me/your-channel" class="tg" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+</a>
 
-  <!-- DEALS PREVIEW -->
-  <section class="section">
-    <h2 class="section-title">Top Deals Preview</h2>
-    <p class="section-subtitle">
-      Start with Amazon deals now and expand other platforms next.
-    </p>
+<a href="#" class="yt" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+</a>
 
-    <div class="deals-grid">
-      <div class="deal-card">
-        <div class="deal-image">🛍️</div>
-        <div class="deal-body">
-          <span class="deal-tag">LIVE NOW</span>
-          <h3>Amazon Deals Page</h3>
-          <p>
-            Your current live products page is now connected as the Amazon section.
-            Users can browse products, view pricing and open deal links.
-          </p>
-          <a href="amazon.html" class="deal-link">Open Amazon Deals</a>
-        </div>
-      </div>
+<a href="#" class="ig" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</a>
 
-      <div class="deal-card">
-        <div class="deal-image">📱</div>
-        <div class="deal-body">
-          <span class="deal-tag">NEXT PHASE</span>
-          <h3>Platform Expansion</h3>
-          <p>
-            Add Flipkart, Meesho, Myntra and Ajio pages with the same design and product layout.
-          </p>
-          <a href="#platforms" class="deal-link">View Platforms</a>
-        </div>
-      </div>
+<a href="#" class="fb" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+</a>
 
-      <div class="deal-card">
-        <div class="deal-image">🔥</div>
-        <div class="deal-body">
-          <span class="deal-tag">UPGRADE READY</span>
-          <h3>Future Comparison</h3>
-          <p>
-            Later we can add product comparison, best price view and cross-platform product matching.
-          </p>
-          <a href="admin.html" class="deal-link">Open Admin</a>
-        </div>
-      </div>
-    </div>
-  </section>
+</div>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-box">
-      <h2>Start Shopping with Amazon Deals</h2>
-      <p>
-        Your Amazon page is already live. Use it as the first platform page,
-        then we’ll build the remaining platform pages one by one.
-      </p>
-      <a href="amazon.html" class="cta-btn">Go to Amazon Deals</a>
-    </div>
-  </section>
+<script>
+// DEMO DEALS (you can replace with Firebase later)
+const products = [
+{title:"Mens Jacket", price:4479},
+{title:"Slim Fit T-Shirt", price:1784},
+{title:"Backpack", price:8796}
+];
 
-  <!-- BOTTOM SOCIAL -->
-  <section class="bottom-social">
-    <div class="bottom-social-wrap">
-      <div class="bottom-social-text">
-        <h3>Join Us for Latest Updates</h3>
-        <p>Follow Krishnalatha Deals on social platforms for new deals and updates.</p>
-      </div>
+const container = document.getElementById("products");
 
-      <div class="bottom-social-icons">
-        <a href="#" class="bottom-social-link wa" title="WhatsApp">W</a>
-        <a href="#" class="bottom-social-link tg" title="Telegram">T</a>
-        <a href="#" class="bottom-social-link yt" title="YouTube">Y</a>
-        <a href="#" class="bottom-social-link ig" title="Instagram">I</a>
-      </div>
-    </div>
-  </section>
+products.forEach(p => {
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-wrap">
-      <div>
-        <div class="footer-brand">Krishnalatha Deals</div>
-        <div class="footer-text">
-          Krishnalatha Deals helps users discover selected online deals, offers,
-          product savings and shopping updates across multiple platforms.
-        </div>
-      </div>
+let original = Math.floor(p.price * 1.5);
+let discount = Math.floor(((original - p.price)/original)*100);
 
-      <div>
-        <div class="footer-title">Quick Links</div>
-        <div class="footer-links">
-          <a href="index.html">Splash</a>
-          <a href="welcome.html">Welcome</a>
-          <a href="home.html">Home</a>
-          <a href="amazon.html">Amazon Deals</a>
-          <a href="admin.html">Admin Panel</a>
-        </div>
-      </div>
+let link = `https://www.amazon.in/s?k=${encodeURIComponent(p.title)}&tag=krishna-21`;
 
-      <div>
-        <div class="footer-title">Legal</div>
-        <div class="footer-links">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="contact.html">Contact</a>
-          <a href="disclaimer.html">Disclaimer</a>
-          <a href="login.html">Login</a>
-        </div>
-      </div>
-    </div>
+const div = document.createElement("div");
+div.className="product";
 
-    <div class="footer-bottom">
-      © 2026 Krishnalatha Deals. All rights reserved.
-    </div>
-  </footer>
+div.innerHTML = `
+<p>${p.title}</p>
+<p class="price">₹${p.price} <span class="old">₹${original}</span></p>
+<p class="discount">${discount}% OFF</p>
+<a href="${link}" target="_blank">View Deal</a>
+`;
 
-  <script>
-    function comingSoon(event, platformName) {
-      event.preventDefault();
-      alert(platformName + " page will be added next.");
-    }
-  </script>
+container.appendChild(div);
+
+});
+</script>
 
 </body>
 </html>
