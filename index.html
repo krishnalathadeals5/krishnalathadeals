@@ -16,24 +16,25 @@ color:white;
 /* HEADER */
 .header{
 text-align:center;
-padding:18px;
+padding:15px;
 font-size:22px;
 font-weight:bold;
 background:#111;
 }
 
-/* MOVING HERO BANNER */
+/* MOVING SCROLL TEXT */
 .hero-wrap{
 overflow:hidden;
 white-space:nowrap;
-background:linear-gradient(90deg,#ff9900,#ff3f6c,#2874f0,#9c27b0);
+background:linear-gradient(90deg,#ff9900,#2874f0,#ff3f6c,#9c27b0);
 }
 
 .hero-track{
 display:inline-block;
-padding:12px 0;
+padding:10px 0;
 animation:move 12s linear infinite;
 font-weight:bold;
+font-size:14px;
 }
 
 @keyframes move{
@@ -41,7 +42,24 @@ font-weight:bold;
 100%{transform:translateX(-100%);}
 }
 
-/* BRAND SECTION */
+/* HERO BANNER (NOW BELOW SCROLL) */
+.hero{
+text-align:center;
+padding:25px 10px;
+background:#1a1d25;
+}
+
+.hero h1{
+margin:0;
+font-size:26px;
+}
+
+.hero p{
+opacity:0.8;
+margin-top:6px;
+}
+
+/* BRAND GRID */
 .brand-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -66,8 +84,8 @@ box-shadow:0 0 20px rgba(255,255,255,0.2);
 }
 
 .brand img{
-width:45px;
-height:45px;
+width:50px;
+height:50px;
 margin-bottom:8px;
 }
 
@@ -88,10 +106,9 @@ margin-bottom:8px;
 .title{
 text-align:center;
 padding:10px;
-font-size:16px;
+font-size:14px;
 opacity:0.8;
 }
-
 </style>
 </head>
 
@@ -100,11 +117,17 @@ opacity:0.8;
 <!-- HEADER -->
 <div class="header">Krishnalatha Deals</div>
 
-<!-- MOVING HERO -->
+<!-- MOVING TEXT (TOP) -->
 <div class="hero-wrap">
 <div class="hero-track">
-🔥 Best Deals • Lowest Prices • Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital • Offers 🔥
+🔥 Best Deals • Amazon • Flipkart • Myntra • Meesho • Ajio • Reliance Digital • Offers 🔥
 </div>
+</div>
+
+<!-- HERO BANNER (BELOW SCROLL) -->
+<div class="hero">
+<h1>Best Deals Online</h1>
+<p>Compare prices across all platforms instantly</p>
 </div>
 
 <div class="title">Choose your shopping platform</div>
@@ -113,7 +136,7 @@ opacity:0.8;
 <div class="brand-grid">
 
 <div class="brand amazon" onclick="openPage('amazon.html')">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
 Amazon
 </div>
 
@@ -140,11 +163,9 @@ Ajio
 </div>
 
 <script>
-
 function openPage(page){
 window.location.href = page;
 }
-
 </script>
 
 </body>
