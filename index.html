@@ -50,31 +50,30 @@ background:#febd69;
 border:none;
 padding:10px;
 cursor:pointer;
-border-radius:0 4px 0 4px;
 }
 
-/* ================= SMOOTH CONTINUOUS HERO ================= */
-.hero-wrap{
-background:#0f1115;
+/* ================= TOP SCROLL STRIP ================= */
+.scroll-strip{
 overflow:hidden;
-padding:12px 0;
+background:#0f1115;
+padding:8px 0;
 }
 
-.hero-track{
+.scroll-track{
 display:flex;
-gap:30px;
+gap:25px;
 width:max-content;
 animation:scroll 18s linear infinite;
 }
 
-.hero-item{
-white-space:nowrap;
+.scroll-item{
 color:white;
 font-weight:bold;
-font-size:15px;
-padding:8px 16px;
+padding:6px 14px;
 background:rgba(255,255,255,0.08);
 border-radius:20px;
+white-space:nowrap;
+font-size:13px;
 }
 
 @keyframes scroll{
@@ -82,12 +81,54 @@ border-radius:20px;
 100%{transform:translateX(-50%);}
 }
 
-/* pause on hover */
-.hero-wrap:hover .hero-track{
-animation-play-state:paused;
+/* ================= HERO CAROUSEL (NEW) ================= */
+.hero{
+position:relative;
+height:160px;
+overflow:hidden;
+background:#2874f0;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-/* ================= BRAND LOGOS ================= */
+.hero-track{
+display:flex;
+transition:transform 0.5s ease-in-out;
+width:100%;
+}
+
+.hero-slide{
+min-width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:20px;
+padding:20px;
+}
+
+.hero-slide img{
+width:120px;
+border-radius:10px;
+}
+
+.arrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+font-size:22px;
+background:rgba(0,0,0,0.4);
+color:white;
+padding:8px 12px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.left{left:10px;}
+.right{right:10px;}
+
+/* ================= BRAND BAR ================= */
 .brand-bar{
 display:flex;
 gap:12px;
@@ -116,7 +157,7 @@ height:22px;
 }
 
 .brand:hover{
-transform:scale(1.08);
+transform:scale(1.1);
 }
 
 @keyframes float{
@@ -124,30 +165,35 @@ transform:scale(1.08);
 50%{transform:translateY(-4px);}
 }
 
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-padding:15px;
+/* ================= SOCIAL ================= */
+.social{
+position:fixed;
+right:10px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
-.card{
-background:white;
-padding:10px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+.social a{
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+animation:float 2s infinite;
+box-shadow:0 2px 8px rgba(0,0,0,0.3);
 }
 
-.card img{
-width:100%;
-height:150px;
-object-fit:contain;
-}
+.social img{width:20px;}
 
-.price{color:green;font-weight:bold;}
-.old{color:gray;text-decoration:line-through;font-size:12px;}
-.best{color:red;font-weight:bold;}
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
+
 </style>
 </head>
 
@@ -163,55 +209,113 @@ object-fit:contain;
 </div>
 </div>
 
-<!-- 🔥 CONTINUOUS HERO SCROLL -->
-<div class="hero-wrap">
-<div class="hero-track">
+<!-- TOP SCROLL -->
+<div class="scroll-strip">
+<div class="scroll-track">
 
-<div class="hero-item">🔥 Amazon Mega Offers</div>
-<div class="hero-item">⚡ Flipkart Big Savings</div>
-<div class="hero-item">💄 Myntra Fashion Sale</div>
-<div class="hero-item">🛍 Meesho Lowest Price</div>
-<div class="hero-item">🏷 Ajio Premium Deals</div>
+<div class="scroll-item">🔥 Amazon Mega Offers</div>
+<div class="scroll-item">⚡ Flipkart Big Savings</div>
+<div class="scroll-item">💄 Myntra Fashion Sale</div>
+<div class="scroll-item">🛍 Meesho Lowest Price</div>
+<div class="scroll-item">🏷 Ajio Premium Deals</div>
 
-<!-- duplicate for infinite loop effect -->
-<div class="hero-item">🔥 Amazon Mega Offers</div>
-<div class="hero-item">⚡ Flipkart Big Savings</div>
-<div class="hero-item">💄 Myntra Fashion Sale</div>
-<div class="hero-item">🛍 Meesho Lowest Price</div>
-<div class="hero-item">🏷 Ajio Premium Deals</div>
+<div class="scroll-item">🔥 Amazon Mega Offers</div>
+<div class="scroll-item">⚡ Flipkart Big Savings</div>
+<div class="scroll-item">💄 Myntra Fashion Sale</div>
+<div class="scroll-item">🛍 Meesho Lowest Price</div>
+<div class="scroll-item">🏷 Ajio Premium Deals</div>
 
 </div>
 </div>
 
-<!-- BRAND LOGOS -->
+<!-- HERO CAROUSEL -->
+<div class="hero">
+<div class="hero-track" id="track">
+
+<div class="hero-slide">
+<img src="https://m.media-amazon.com/images/I/71geVdy6-OS.jpg">
+<div>
+<h2>Amazon Mega Sale</h2>
+<p>Best deals on mobiles & electronics</p>
+</div>
+</div>
+
+<div class="hero-slide">
+<img src="https://rukminim2.flixcart.com/image/850/1000/l2ghgnk0/shoe/2/j/j/-original-imagds3g3f2x8z9h.jpeg">
+<div>
+<h2>Flipkart Big Savings</h2>
+<p>Up to 70% OFF on fashion & gadgets</p>
+</div>
+</div>
+
+<div class="hero-slide">
+<img src="https://myntra.myntassets.com/assets/images/2023/1/1.jpg">
+<div>
+<h2>Myntra Fashion Sale</h2>
+<p>Trendy outfits at lowest price</p>
+</div>
+</div>
+
+</div>
+
+<div class="arrow left" onclick="move(-1)">❮</div>
+<div class="arrow right" onclick="move(1)">❯</div>
+</div>
+
+<!-- BRAND LINKS -->
 <div class="brand-bar">
 
-<div class="brand">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-Amazon
+<div class="brand" onclick="location.href='amazon.html'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"> Amazon
 </div>
 
-<div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
-Flipkart
+<div class="brand" onclick="location.href='flipkart.html'">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png"> Flipkart
 </div>
 
-<div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
-Myntra
+<div class="brand" onclick="location.href='myntra.html'">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png"> Myntra
 </div>
 
-<div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
-Meesho
+<div class="brand" onclick="location.href='meesho.html'">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"> Meesho
 </div>
 
-<div class="brand">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
-Ajio
+<div class="brand" onclick="location.href='ajio.html'">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"> Ajio
 </div>
 
 </div>
+
+<!-- SOCIAL MEDIA -->
+<div class="social">
+
+<a class="wa"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+<a class="tg"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+<a class="yt"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+<a class="ig"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
+<a class="fb"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
+
+</div>
+
+<script>
+
+/* HERO SLIDER */
+let i=0;
+function move(dir){
+let track=document.getElementById("track");
+let slides=document.querySelectorAll(".hero-slide");
+
+i+=dir;
+if(i<0) i=slides.length-1;
+if(i>=slides.length) i=0;
+
+track.style.transform=`translateX(-${i*100}%)`;
+}
+
+setInterval(()=>move(1),4000);
+
+</script>
 
 </body>
 </html>
