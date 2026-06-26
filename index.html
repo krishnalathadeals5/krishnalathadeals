@@ -1,9 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Krishnalatha Deals</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#02150e;
+    font-family:Arial;
+    color:white;
+}
+
+/* Simple loader before splash */
+.loader{
+    text-align:center;
+}
+
+.loader h1{
+    color:#FFD700;
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.loader p{
+    opacity:0.7;
+}
+</style>
+
 <script>
-window.location.href = "splash.html";
+/* Redirect to splash after 1 second */
+setTimeout(function(){
+    window.location.href = "splash.html";
+}, 1000);
 </script>
+
 </head>
-<body></body>
+
+<body>
+
+<div class="loader">
+    <h1>Krishnalatha Deals</h1>
+    <p>Starting...</p>
+</div>
+
+</body>
 </html>
