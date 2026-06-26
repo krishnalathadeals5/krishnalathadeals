@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -16,15 +15,14 @@ background:#f5f6fa;
 /* SPLASH */
 #splash{
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
 background:#111;
 color:#fff;
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:24px;
-z-index:9999;
+z-index:99999;
 }
 
 /* HEADER */
@@ -37,10 +35,7 @@ justify-content:space-between;
 align-items:center;
 }
 
-.logo{
-font-size:18px;
-font-weight:bold;
-}
+.logo{font-size:18px;font-weight:bold;}
 
 /* HERO */
 .hero{
@@ -60,10 +55,7 @@ cursor:pointer;
 }
 
 /* BRANDS */
-.brands{
-padding:30px 20px;
-text-align:center;
-}
+.brands{padding:30px 20px;text-align:center;}
 
 .brand-grid{
 display:grid;
@@ -81,22 +73,9 @@ box-shadow:0 4px 10px rgba(0,0,0,0.1);
 transition:0.3s;
 }
 
-.brand img{
-width:45px;
-margin-bottom:8px;
-}
-
 .brand:hover{
 transform:translateY(-5px) scale(1.05);
 }
-
-/* BRAND COLORS */
-.amazon{border-top:4px solid #ff9900;}
-.flipkart{border-top:4px solid #2874f0;}
-.myntra{border-top:4px solid #ff3f6c;}
-.meesho{border-top:4px solid #f43397;}
-.ajio{border-top:4px solid #000;}
-.reliance{border-top:4px solid #1e3c72;}
 
 /* DEALS */
 .deals{padding:20px;}
@@ -123,145 +102,71 @@ text-decoration:none;
 border-radius:5px;
 font-size:12px;
 }
-
-/* SOCIAL */
-.social-float{
-position:fixed;
-right:10px;
-bottom:20px;
-display:flex;
-flex-direction:column;
-gap:10px;
-z-index:999;
-}
-
-.social-float a{
-width:42px;
-height:42px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-animation:float 2s infinite ease-in-out;
-transition:0.3s;
-}
-
-.social-float a:hover{
-transform:scale(1.2);
-}
-
-.social-float img{width:20px;}
-
-.wa{background:#25D366;}
-.tg{background:#0088cc;}
-.yt{background:#FF0000;}
-.ig{background:#E4405F;}
-.fb{background:#1877F2;}
-
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-6px);}
-}
 </style>
-
 </head>
 
 <body>
 
 <!-- SPLASH -->
-
 <div id="splash">Loading Krishnalatha Deals...</div>
 
 <!-- HEADER -->
-
 <div class="header">
 <div class="logo">Krishnalatha Deals</div>
 </div>
 
 <!-- HERO -->
-
 <div class="hero">
 <h2>Best Deals Online</h2>
 <p>Amazon • Flipkart • Myntra</p>
-<button id="shopBtn">Shop Now</button>
+<button onclick="goAmazon()">Shop Now</button>
 </div>
 
 <!-- BRANDS -->
-
 <section class="brands">
 <h3>Top Platforms</h3>
 
 <div class="brand-grid">
 
-<a href="amazon.html" class="brand amazon">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
+<a href="amazon.html" class="brand">
 <p>Amazon</p>
 </a>
 
-<a href="#" class="brand flipkart">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
+<a href="#" class="brand">
 <p>Flipkart</p>
-</a>
-
-<a href="#" class="brand myntra">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
-<p>Myntra</p>
-</a>
-
-<a href="#" class="brand meesho">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
-<p>Meesho</p>
-</a>
-
-<a href="#" class="brand ajio">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
-<p>Ajio</p>
-</a>
-
-<a href="#" class="brand reliance">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968672.png">
-<p>Reliance</p>
 </a>
 
 </div>
 </section>
 
 <!-- DEALS -->
-
 <section class="deals">
 <h3>🔥 Live Deals</h3>
 <div id="products">Loading deals...</div>
 </section>
 
-<!-- SOCIAL -->
-
-<div class="social-float">
-<a href="https://wa.me/your-number" class="wa" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
-<a href="https://t.me/your-channel" class="tg" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-<a href="#" class="yt"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-<a href="#" class="ig"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
-<a href="#" class="fb"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
-</div>
-
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+// ✅ AMAZON FUNCTION (SAFE)
+function goAmazon(){
+window.location.href = "amazon.html";
+}
 
-// ✅ SPLASH FIX (FORCE REMOVE)
+window.addEventListener("load", function(){
+
+// ✅ SPLASH FIX (100% WORKING)
 setTimeout(function(){
 let splash = document.getElementById("splash");
 if(splash){
-splash.remove(); // stronger than display none
+splash.style.opacity = "0";
+splash.style.transition = "0.4s";
+setTimeout(()=> splash.remove(), 400);
 }
-},1200);
+}, 1000);
 
-// ✅ AMAZON BUTTON FIX
-document.getElementById("shopBtn").addEventListener("click", function(){
-window.location.href = "amazon.html";
-});
-
-// DEALS LOAD
+// ✅ PRODUCTS
 var container = document.getElementById("products");
+
+if(!container) return;
 
 var products = [
 {title:"Mens Jacket", price:4479},
@@ -276,7 +181,7 @@ products.forEach(function(p){
 var original = Math.floor(p.price * 1.5);
 var discount = Math.floor(((original - p.price)/original)*100);
 
-var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title) + "&tag=krishna-21";
+var link = "https://www.amazon.in/s?k=" + encodeURIComponent(p.title);
 
 var div = document.createElement("div");
 div.className="product";
@@ -288,10 +193,10 @@ div.innerHTML =
 "<a href='"+link+"' target='_blank'>View Deal</a>";
 
 container.appendChild(div);
-
 });
 
 });
+
 </script>
 
 </body>
