@@ -16,21 +16,16 @@ body{
     height:100vh;
     color:gold;
     font-family:Arial;
-    overflow:hidden;
 }
 
-/* ✨ Fade animation */
-.fade{
-    opacity:0;
-    transform:scale(0.95);
-    animation:fadeIn 0.6s ease forwards;
+/* instant show */
+.container{
+    animation:fade 0.3s ease;
 }
 
-@keyframes fadeIn{
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
 }
 </style>
 
@@ -38,14 +33,13 @@ body{
 
 <body>
 
-<div class="fade">
+<div class="container">
     <h1>Krishnalatha Deals</h1>
-    <p>Loading...</p>
 </div>
 
 <script>
 
-// ⚡ ULTRA FAST (0.8s)
+// ⚡ SUPER FAST (0.3 sec)
 setTimeout(function(){
 
     try{
@@ -63,7 +57,7 @@ setTimeout(function(){
         window.location.replace("home.html");
     }
 
-}, 800);
+}, 300);
 
 </script>
 
