@@ -26,9 +26,8 @@ z-index:1000;
 }
 
 .logo{
-font-size:18px;
-font-weight:bold;
 color:#ffb84d;
+font-weight:bold;
 }
 
 /* SEARCH */
@@ -49,67 +48,82 @@ outline:none;
 .search button{
 background:#febd69;
 border:none;
-padding:10px 14px;
+padding:10px;
 cursor:pointer;
 border-radius:0 4px 4px 0;
 }
 
-/* HERO */
+/* HERO CAROUSEL */
 .hero{
-background:linear-gradient(90deg,#ff9900,#2874f0);
+position:relative;
+overflow:hidden;
+background:#1a1d25;
 color:white;
 text-align:center;
-padding:18px;
-font-weight:bold;
+padding:25px;
 }
 
-/* PLATFORM BAR (REPLACES CATEGORIES) */
-.platform-bar{
+.slide{
+display:none;
+font-weight:bold;
+font-size:16px;
+}
+
+.slide.active{
+display:block;
+animation:fade 0.5s ease-in-out;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.arrow{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+font-size:22px;
+cursor:pointer;
+padding:10px;
+background:rgba(0,0,0,0.4);
+border-radius:50%;
+}
+
+.left{left:10px;}
+.right{right:10px;}
+
+/* BRAND BAR */
+.brand-bar{
 display:flex;
 gap:10px;
 overflow-x:auto;
 padding:10px;
 background:white;
-white-space:nowrap;
 }
 
-/* PLATFORM ITEM */
-.platform{
+.brand{
 flex:0 0 auto;
 display:flex;
 align-items:center;
-gap:8px;
+gap:6px;
 padding:10px 14px;
-border-radius:25px;
+border-radius:20px;
 background:#f5f5f5;
 cursor:pointer;
 font-weight:bold;
-font-size:13px;
-transition:0.3s;
-animation:float 3s ease-in-out infinite;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
+animation:float 3s infinite;
 }
 
-.platform:hover{
-transform:scale(1.08);
+.brand img{
+width:20px;
+height:20px;
 }
 
-.platform img{
-width:22px;
-height:22px;
-}
-
-/* BRAND COLORS */
-.amazon{border-left:4px solid #ff9900;}
-.flipkart{border-left:4px solid #2874f0;}
-.myntra{border-left:4px solid #ff3f6c;}
-.meesho{border-left:4px solid #9c27b0;}
-.ajio{border-left:4px solid #000;}
-
-/* FLOAT ANIMATION */
+/* FLOAT */
 @keyframes float{
 0%,100%{transform:translateY(0);}
-50%{transform:translateY(-5px);}
+50%{transform:translateY(-4px);}
 }
 
 /* GRID */
@@ -120,35 +134,21 @@ gap:15px;
 padding:15px;
 }
 
-/* CARD */
 .card{
 background:white;
-border-radius:10px;
 padding:10px;
+border-radius:10px;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
-transition:0.2s;
-cursor:pointer;
-}
-
-.card:hover{
-transform:scale(1.03);
 }
 
 .card img{
 width:100%;
-height:160px;
+height:150px;
 object-fit:contain;
 }
 
-.title{
-font-size:14px;
-margin:5px 0;
-height:35px;
-overflow:hidden;
-}
-
 .price{
-color:#1a8e3e;
+color:green;
 font-weight:bold;
 }
 
@@ -158,12 +158,39 @@ color:gray;
 font-size:12px;
 }
 
-.discount{
+.best{
 color:#d32f2f;
-font-size:12px;
+font-weight:bold;
 }
 
-.hidden{display:none;}
+/* SOCIAL */
+.social{
+position:fixed;
+right:10px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.social a{
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+animation:float 2s infinite;
+box-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+
+.social img{width:20px;}
+
+.wa{background:#25D366;}
+.tg{background:#0088cc;}
+.yt{background:#FF0000;}
+.ig{background:#E4405F;}
+.fb{background:#1877F2;}
 </style>
 </head>
 
@@ -174,107 +201,135 @@ font-size:12px;
 <div class="logo">Krishnalatha Deals</div>
 
 <div class="search">
-<input id="search" placeholder="Search products...">
-<button onclick="search()">🔍</button>
+<input id="search" placeholder="Search product...">
+<button onclick="compare()">🔍</button>
 </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <div class="hero">
-🔥 Amazon • Flipkart • Myntra • Meesho • Ajio Deals Hub
-</div>
 
-<!-- PLATFORM SWITCH BAR -->
-<div class="platform-bar">
+<div class="slide active">🔥 Amazon Mega Deals Today</div>
+<div class="slide">⚡ Flipkart Big Saving Days</div>
+<div class="slide">💄 Myntra Fashion Sale</div>
+<div class="slide">🛍 Meesho Lowest Price Deals</div>
+<div class="slide">🏷 Ajio Premium Offers</div>
 
-<div class="platform amazon" onclick="filter('all')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-All
-</div>
-
-<div class="platform amazon" onclick="filter('amazon')">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg">
-Amazon
-</div>
-
-<div class="platform flipkart" onclick="filter('flipkart')">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
-Flipkart
-</div>
-
-<div class="platform myntra" onclick="filter('myntra')">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
-Myntra
-</div>
-
-<div class="platform meesho" onclick="filter('meesho')">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
-Meesho
-</div>
-
-<div class="platform ajio" onclick="filter('ajio')">
-<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
-Ajio
-</div>
+<div class="arrow left" onclick="changeSlide(-1)">❮</div>
+<div class="arrow right" onclick="changeSlide(1)">❯</div>
 
 </div>
 
-<!-- PRODUCTS -->
-<div class="grid" id="grid">
+<!-- BRAND LINKS -->
+<div class="brand-bar">
 
-<div class="card" data-platform="amazon">
-<img src="https://m.media-amazon.com/images/I/71geVdy6-OS.jpg">
-<div class="title">Samsung S23 FE</div>
-<div class="price">₹39,999</div>
-<div class="old">₹72,999</div>
-<div class="discount">-45%</div>
+<div class="brand" onclick="openPage('amazon.html')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"> Amazon
 </div>
 
-<div class="card" data-platform="flipkart">
-<img src="https://m.media-amazon.com/images/I/61-r9zOKBCL.jpg">
-<div class="title">Noise Smart Watch</div>
-<div class="price">₹1,999</div>
-<div class="old">₹2,999</div>
-<div class="discount">-30%</div>
+<div class="brand" onclick="openPage('flipkart.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732084.png"> Flipkart
 </div>
 
-<div class="card" data-platform="myntra">
-<img src="https://m.media-amazon.com/images/I/61cwywLZR-L.jpg">
-<div class="title">Backpack Travel Bag</div>
-<div class="price">₹899</div>
-<div class="old">₹1,999</div>
-<div class="discount">-55%</div>
+<div class="brand" onclick="openPage('myntra.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png"> Myntra
 </div>
+
+<div class="brand" onclick="openPage('meesho.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png"> Meesho
+</div>
+
+<div class="brand" onclick="openPage('ajio.html')">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"> Ajio
+</div>
+
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="grid" id="result"></div>
+
+<!-- SOCIAL -->
+<div class="social">
+
+<a class="wa"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+<a class="tg"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+<a class="yt"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
+<a class="ig"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
+<a class="fb"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
 
 </div>
 
 <script>
 
-/* FILTER PLATFORM */
-function filter(type){
-
-let cards = document.querySelectorAll(".card");
-
-cards.forEach(card=>{
-let platform = card.getAttribute("data-platform");
-
-if(type==="all"){
-card.classList.remove("hidden");
-}else{
-card.classList.toggle("hidden", platform!==type);
+/* HERO SLIDER */
+let index=0;
+function showSlide(i){
+let slides=document.querySelectorAll(".slide");
+slides.forEach(s=>s.classList.remove("active"));
+index=(i+slides.length)%slides.length;
+slides[index].classList.add("active");
 }
-});
+function changeSlide(dir){
+showSlide(index+dir);
+}
+setInterval(()=>changeSlide(1),4000);
+
+/* NAV */
+function openPage(p){
+window.location.href=p;
 }
 
-/* SEARCH */
-function search(){
-let val = document.getElementById("search").value.toLowerCase();
-let cards = document.querySelectorAll(".card");
+/* PRODUCT COMPARISON */
+const db={
+"Samsung S23 FE":{
+amazon:39999,
+flipkart:38999,
+myntra:0,
+meesho:37999,
+ajio:0
+},
+"watch":{
+amazon:1999,
+flipkart:1899,
+myntra:2100,
+meesho:1750,
+ajio:0
+}
+};
 
-cards.forEach(card=>{
-let text = card.innerText.toLowerCase();
-card.classList.toggle("hidden", !text.includes(val));
-});
+function compare(){
+
+let key=document.getElementById("search").value.toLowerCase();
+let d=db[key];
+
+let box=document.getElementById("result");
+
+if(!d){
+box.innerHTML="<div class='card'>No product found</div>";
+return;
+}
+
+let arr=[];
+let html="<div class='card'><h3>Price Comparison</h3>";
+
+function add(n,p){
+if(p>0){
+arr.push({n,p});
+html+=`<p>${n}: <span class='price'>₹${p}</span></p>`;
+}
+}
+
+add("Amazon",d.amazon);
+add("Flipkart",d.flipkart);
+add("Myntra",d.myntra);
+add("Meesho",d.meesho);
+add("Ajio",d.ajio);
+
+let best=arr.reduce((a,b)=>a.p<b.p?a:b);
+
+html+=`<p class='best'>🏆 Best Price: ${best.n} ₹${best.p}</p></div>`;
+
+box.innerHTML=html;
 }
 
 </script>
