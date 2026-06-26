@@ -22,7 +22,7 @@ font-size:20px;
 font-weight:bold;
 }
 
-/* HERO BANNER */
+/* HERO */
 .hero{
 background:linear-gradient(45deg,#ff9900,#ff5e00);
 color:white;
@@ -40,10 +40,10 @@ margin-top:8px;
 opacity:0.9;
 }
 
-/* BRAND ROW */
+/* BRAND BAR */
 .brand-row{
 display:flex;
-gap:10px;
+gap:12px;
 overflow-x:auto;
 padding:12px;
 background:#fff;
@@ -51,30 +51,39 @@ background:#fff;
 
 .brand{
 flex:0 0 auto;
-background:#fff;
-padding:10px 14px;
-border-radius:20px;
 display:flex;
 align-items:center;
-gap:6px;
+gap:8px;
+padding:10px 14px;
+border-radius:25px;
+background:#fff;
 box-shadow:0 2px 6px rgba(0,0,0,0.1);
 font-weight:bold;
 font-size:13px;
+cursor:pointer;
+text-decoration:none;
+color:#000;
+transition:0.2s;
 }
 
-.brand img{
-width:22px;
-height:22px;
+.brand:hover{
+transform:scale(1.05);
 }
 
-/* COLORS */
+/* BRAND COLORS */
 .amazon{border-left:4px solid #ff9900;}
 .flipkart{border-left:4px solid #2874f0;}
 .myntra{border-left:4px solid #ff3f6c;}
 .meesho{border-left:4px solid #9c27b0;}
 .ajio{border-left:4px solid #000;}
 
-/* SEARCH BOX */
+/* LOGOS */
+.brand img{
+width:22px;
+height:22px;
+}
+
+/* SEARCH */
 .search-box{
 padding:15px;
 }
@@ -131,46 +140,6 @@ color:green;
 font-weight:bold;
 margin-top:5px;
 }
-
-/* BEST */
-.best{
-background:#d4f8d4;
-border:2px solid #2ecc71;
-}
-
-/* SOCIAL */
-.social{
-position:fixed;
-right:10px;
-bottom:20px;
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.social a{
-width:45px;
-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-animation:float 2s infinite;
-box-shadow:0 3px 10px rgba(0,0,0,0.3);
-}
-
-.social img{width:22px;}
-
-.wa{background:#25D366;}
-.tg{background:#0088cc;}
-.yt{background:#FF0000;}
-.ig{background:#E4405F;}
-.fb{background:#1877F2;}
-
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-6px);}
-}
 </style>
 </head>
 
@@ -179,39 +148,46 @@ box-shadow:0 3px 10px rgba(0,0,0,0.3);
 <!-- HEADER -->
 <div class="header">Krishnalatha Deals</div>
 
-<!-- HERO BANNER -->
+<!-- HERO (FIXED AMAZON LINK HERE) -->
 <div class="hero">
 <h1>Best Deals Online</h1>
 <p>Amazon • Flipkart • Myntra • Meesho • Ajio</p>
+
+<!-- 🔥 AMAZON LINK FIX -->
+<button onclick="window.location.href='amazon.html'"
+style="margin-top:15px;padding:10px 16px;border:none;background:#000;color:#fff;border-radius:6px;cursor:pointer;">
+Shop Amazon
+</button>
+
 </div>
 
-<!-- BRAND LOGOS -->
+<!-- BRAND ROW (ALL CLICKABLE + LOGOS FIXED) -->
 <div class="brand-row">
 
-<div class="brand amazon">
+<a class="brand amazon" href="amazon.html">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968870.png">
 Amazon
-</div>
+</a>
 
-<div class="brand flipkart">
+<a class="brand flipkart" href="#">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732084.png">
 Flipkart
-</div>
+</a>
 
-<div class="brand myntra">
+<a class="brand myntra" href="#">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968894.png">
 Myntra
-</div>
+</a>
 
-<div class="brand meesho">
+<a class="brand meesho" href="#">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968764.png">
 Meesho
-</div>
+</a>
 
-<div class="brand ajio">
+<a class="brand ajio" href="#">
 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
 Ajio
-</div>
+</a>
 
 </div>
 
@@ -224,25 +200,9 @@ Ajio
 <!-- RESULT -->
 <div id="result" class="result"></div>
 
-<!-- SOCIAL -->
-<div class="social">
-
-<a class="wa" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
-<a class="tg" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
-<a class="yt" href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"></a>
-<a class="ig" href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"></a>
-<a class="fb" href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
-
-</div>
-
 <script>
 
-/* AMAZON LINK FIX (OPTIONAL) */
-function goAmazon(){
-window.location.href="amazon.html";
-}
-
-/* DATABASE */
+/* SAMPLE DATABASE */
 const db = {
 "Samsung S23 FE":{
 amazon:39999,
@@ -267,7 +227,7 @@ ajio:2100
 }
 };
 
-/* SEARCH */
+/* SEARCH FUNCTION */
 function searchProduct(){
 
 let name = document.getElementById("search").value.trim();
