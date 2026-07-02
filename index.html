@@ -404,7 +404,54 @@ Loading deals...
 
 <script>
 
-/* Home Page JavaScript */
+<script>
+async function loadFeatured() {
+  const featuredGrid = document.getElementById("featuredGrid");
+
+  try {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    const { getFirestore, collection, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+    const firebaseConfig = {
+      apiKey: "YOUR_KEY",
+      authDomain: "YOUR_DOMAIN",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_BUCKET",
+      messagingSenderId: "YOUR_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const snapshot = await getDocs(collection(db, "products"));
+
+    let html = "";
+
+    snapshot.forEach((doc) => {
+      const p = doc.data();
+
+      if (p.status === "Expired") return;
+
+      html += `
+        <div class="platform-card">
+          <img src="${p.image}" style="height:100px">
+          <h3>${p.name}</h3>
+          <p>₹${p.price}</p>
+        </div>
+      `;
+    });
+
+    featuredGrid.innerHTML = html;
+
+  } catch (err) {
+    console.error(err);
+    featuredGrid.innerHTML = "Failed to load deals";
+  }
+}
+
+loadFeatured();
+</script>
 
 </script>
 
