@@ -390,13 +390,20 @@ cursor:pointer;
     order:2;
 }   
 }
- .category-bar{
+.category-bar{
+    position:sticky;
+    top:78px;
+    z-index:998;
+
     display:flex;
     gap:8px;
     overflow-x:auto;
     white-space:nowrap;
+
     padding:10px;
-    background:white;
+    background:#ffffff;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 .category-bar::-webkit-scrollbar{
     display:none;
