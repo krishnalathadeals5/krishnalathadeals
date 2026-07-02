@@ -533,20 +533,85 @@ Meesho • AJIO • Reliance
 
 <script>
 
-/* HERO SLIDER */
+/* ================= HERO AUTO PAUSE ================= */
+
 const hero = document.querySelector(".hero");
 const track = document.querySelector(".hero-track");
 
 if(hero && track){
-  hero.addEventListener("mouseenter", ()=>{
-    track.style.animationPlayState="paused";
-  });
 
-  hero.addEventListener("mouseleave", ()=>{
-    track.style.animationPlayState="running";
-  });
+hero.addEventListener("mouseenter",()=>{
+
+track.style.animationPlayState="paused";
+
+});
+
+hero.addEventListener("mouseleave",()=>{
+
+track.style.animationPlayState="running";
+
+});
+
 }
-</script>
 
-</body>
-</html>
+/* ================= PREMIUM BRAND CLICK EFFECT ================= */
+
+document.querySelectorAll(".brand").forEach(card=>{
+
+card.addEventListener("mousedown",()=>{
+
+card.style.transform="scale(.96)";
+
+});
+
+card.addEventListener("mouseup",()=>{
+
+card.style.transform="translateY(-8px)";
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.transform="";
+
+});
+
+});
+
+/* ================= HERO CARD EFFECT ================= */
+
+document.querySelectorAll(".hero-slide").forEach(card=>{
+
+card.addEventListener("mousemove",(e)=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+
+const y=e.clientY-rect.top;
+
+card.style.background=
+`radial-gradient(circle at ${x}px ${y}px,#ffffff,#f7f7f7)`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.background="#fff";
+
+});
+
+});
+
+/* ================= SCROLL TO TOP ================= */
+
+window.addEventListener("load",()=>{
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+});
+
+</script>
