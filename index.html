@@ -12,7 +12,113 @@
 
 <style>
 
-/* We will add all home page CSS here */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#f3f4f6;
+}
+
+/* HEADER */
+
+.header{
+position:sticky;
+top:0;
+z-index:9999;
+
+display:flex;
+align-items:center;
+gap:15px;
+
+padding:12px 20px;
+
+background:#131921;
+
+box-shadow:0 3px 10px rgba(0,0,0,.18);
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+color:#ffb84d;
+white-space:nowrap;
+cursor:pointer;
+}
+
+.search{
+flex:1;
+display:flex;
+}
+
+.search input{
+width:100%;
+height:46px;
+padding:0 16px;
+border:none;
+outline:none;
+font-size:15px;
+border-radius:8px 0 0 8px;
+}
+
+.search button{
+width:58px;
+border:none;
+background:#febd69;
+cursor:pointer;
+font-size:20px;
+border-radius:0 8px 8px 0;
+transition:.3s;
+}
+
+.search button:hover{
+background:#f3a847;
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:18px;
+color:white;
+font-size:15px;
+font-weight:bold;
+}
+
+.header-icon{
+cursor:pointer;
+transition:.3s;
+}
+
+.header-icon:hover{
+color:#febd69;
+}
+
+@media(max-width:768px){
+
+.header{
+flex-wrap:wrap;
+padding:12px;
+}
+
+.logo{
+width:100%;
+text-align:center;
+font-size:22px;
+}
+
+.search{
+order:3;
+width:100%;
+}
+
+.header-right{
+margin-left:auto;
+}
+
+}
 
 </style>
 
