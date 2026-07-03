@@ -58,3 +58,16 @@ const sliderContainer = document.querySelector(".hero-slider");
 
 sliderContainer.addEventListener("mouseenter", () => clearInterval(interval));
 sliderContainer.addEventListener("mouseleave", startAuto);
+// PREVIOUS BUTTON
+document.querySelector(".hero-prev").addEventListener("click", () => {
+  index = (index - 1 + total) % total;
+  updateSlider();
+  resetAuto();
+});
+
+// NEXT BUTTON
+document.querySelector(".hero-next").addEventListener("click", () => {
+  index = (index + 1) % total;
+  updateSlider();
+  resetAuto();
+});
