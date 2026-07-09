@@ -642,7 +642,17 @@ appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
 
     let html = "";
 
-    snapshot.forEach((doc) => {
+   let count = 0;
+
+snapshot.forEach((doc) => {
+
+  if (count >= 8) return;
+
+  const p = doc.data();
+
+  if (p.status === "Expired") return;
+
+  count++;
       const p = doc.data();
 
       if (p.status === "Expired") return;
