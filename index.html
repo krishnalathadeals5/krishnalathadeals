@@ -761,29 +761,53 @@ appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
       if (p.status === "Expired") return;
       if (p.category !== category) return;
 
-      html += `
-        <div class="platform-card">
-          <img src="${p.image}">
-          <h3>${p.name}</h3>
-          <div class="platform-card">
+html += `
+<div class="platform-card">
 
-<img src="${p.image}">
+<img src="${p.image}" alt="${p.name}">
 
 <h3>${p.name}</h3>
 
-<p style="font-size:24px;color:#0f8a3d;font-weight:bold;">
+<p style="font-size:26px;color:#0f8a3d;font-weight:bold;margin:8px 0;">
 ₹${p.price}
 </p>
 
-<a href="${p.amazonLink}" target="_blank">
+<p style="
+color:#888;
+text-decoration:line-through;
+font-size:15px;
+margin:0;
+">
+₹${p.originalPrice || ""}
+</p>
+
+<p style="
+color:#d32f2f;
+font-weight:bold;
+font-size:14px;
+margin:8px 0;
+">
+🔥 Best Price
+</p>
+
+<a href="${
+p.amazonLink ||
+p.flipkartLink ||
+p.myntraLink ||
+p.meeshoLink ||
+p.ajioLink ||
+p.relianceLink ||
+'#'
+}" target="_blank">
+
 <button class="store-btn">
 Buy Now →
 </button>
+
 </a>
 
 </div>
-        </div>
-      `;
+`;
     });
 
     featuredGrid.innerHTML = html;
