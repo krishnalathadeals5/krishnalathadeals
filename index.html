@@ -804,6 +804,18 @@ function filterCategory(category) {
 
 // START PAGE
 loadFeatured();
+ searchBox.addEventListener("input", () => {
+
+  const keyword = searchBox.value.trim().toLowerCase();
+
+  if (keyword === "") {
+    loadFeatured();
+    return;
+  }
+
+  searchProducts(keyword);
+
+});
 </script>
 </body>
 
