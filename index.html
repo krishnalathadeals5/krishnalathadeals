@@ -747,7 +747,23 @@ appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
         <div class="platform-card">
           <img src="${p.image}">
           <h3>${p.name}</h3>
-          <p>₹${p.price}</p>
+          <div class="platform-card">
+
+<img src="${p.image}">
+
+<h3>${p.name}</h3>
+
+<p style="font-size:24px;color:#0f8a3d;font-weight:bold;">
+₹${p.price}
+</p>
+
+<a href="${p.amazonLink}" target="_blank">
+<button class="store-btn">
+Buy Now →
+</button>
+</a>
+
+</div>
         </div>
       `;
     });
