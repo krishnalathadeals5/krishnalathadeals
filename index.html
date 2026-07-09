@@ -416,17 +416,21 @@ transform:scale(1.05);
 .featured-grid .platform-card h3{
 font-size:18px;
 font-weight:700;
-line-height:1.5;
-height:84px;
-overflow:hidden;
+line-height:1.45;
 margin:12px 0;
 color:#222;
 text-align:center;
-display:flex;
-align-items:center;
-justify-content:center;
-}
 
+display:-webkit-box;
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+
+overflow:hidden;
+text-overflow:ellipsis;
+
+min-height:78px;
+max-height:78px;
+}
 .featured-grid .platform-card p{
 font-size:22px;
 font-weight:700;
