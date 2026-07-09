@@ -794,6 +794,78 @@ Buy Now →
 }
 
 // CATEGORY CLICK
+ // SEARCH PRODUCTS
+async function searchProducts(keyword) {
+
+  try {
+
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    const { getFirestore, collection, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBnp4vvQwB8e2ZedPXmhScChGu-VX_xJYA",
+      authDomain: "krishnalatha-deals.firebaseapp.com",
+      projectId: "krishnalatha-deals",
+      storageBucket: "krishnalatha-deals.firebasestorage.app",
+      messagingSenderId: "390458780701",
+      appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const snapshot = await getDocs(collection(db, "products"));
+
+    let html = "";
+    let count = 0;
+
+    snapshot.forEach((doc) => {
+
+      const p = doc.data();
+
+      if (p.status === "Expired") return;
+
+      if (!p.name.toLowerCase().includes(keyword)) return;
+
+      count++;
+
+      html += `
+      <div class="platform-card">
+
+        <img src="${p.image}" alt="${p.name}">
+
+        <h3>${p.name}</h3>
+
+        <p style="font-size:26px;color:#0f8a3d;font-weight:bold;margin:8px 0;">
+          ₹${p.price}
+        </p>
+
+        <p style="color:#888;text-decoration:line-through;font-size:15px;">
+          ₹${p.originalPrice || ""}
+        </p>
+
+        <a href="${p.productLink}" target="_blank">
+          <button class="store-btn">
+            Buy Now →
+          </button>
+        </a>
+
+      </div>
+      `;
+
+    });
+
+    if (count === 0) {
+      featuredGrid.innerHTML = "<h2>No products found.</h2>";
+    } else {
+      featuredGrid.innerHTML = html;
+    }
+
+  } catch (err) {
+    console.error(err);
+  }
+
+}
 function filterCategory(category) {
   if (category === "All") {
     loadFeatured();
