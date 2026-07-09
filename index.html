@@ -648,12 +648,22 @@ async function loadFeatured() {
       if (p.status === "Expired") return;
 
       html += `
-        <div class="platform-card">
-          <img src="${p.image}" style="height:100px">
-          <h3>${p.name}</h3>
-          <p>₹${p.price}</p>
-        </div>
-      `;
+<div class="platform-card">
+
+<img src="${p.image}" alt="${p.name}">
+
+<h3>${p.name}</h3>
+
+<p style="font-size:24px;color:#0f8a3d;font-weight:bold;">
+₹${p.price}
+</p>
+
+<button class="store-btn">
+Buy Now
+</button>
+
+</div>
+`;
     });
 
     featuredGrid.innerHTML = html;
