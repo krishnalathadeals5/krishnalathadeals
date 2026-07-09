@@ -844,7 +844,15 @@ async function searchProducts(keyword) {
           ₹${p.originalPrice || ""}
         </p>
 
-        <a href="${p.productLink}" target="_blank">
+        <a href="${
+p.amazonLink ||
+p.flipkartLink ||
+p.myntraLink ||
+p.meeshoLink ||
+p.ajioLink ||
+p.relianceLink ||
+'#'
+}" target="_blank">
           <button class="store-btn">
             Buy Now →
           </button>
