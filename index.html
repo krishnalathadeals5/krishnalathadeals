@@ -883,22 +883,40 @@ async function searchProducts(keyword) {
 
       count++;
 
-      html += `
-      <div class="platform-card">
+     html += `
+<div class="platform-card">
 
-        <img src="${p.image}" alt="${p.name}">
+<div class="card-content">
 
-        <h3>${p.name}</h3>
+<img src="${p.image}" alt="${p.name}">
 
-        <p style="font-size:26px;color:#0f8a3d;font-weight:bold;margin:8px 0;">
-          ₹${p.price}
-        </p>
+<h3>${p.name}</h3>
 
-        <p style="color:#888;text-decoration:line-through;font-size:15px;">
-          ₹${p.originalPrice || ""}
-        </p>
+<p style="font-size:26px;color:#0f8a3d;font-weight:bold;margin:8px 0;">
+₹${p.price}
+</p>
 
-        <a href="${
+<p style="
+color:#888;
+text-decoration:line-through;
+font-size:15px;
+margin:0;
+">
+₹${p.originalPrice || ""}
+</p>
+
+<p style="
+color:#d32f2f;
+font-weight:bold;
+font-size:14px;
+margin:8px 0;
+">
+🔥 Best Price
+</p>
+
+</div>
+
+<a href="${
 p.amazonLink ||
 p.flipkartLink ||
 p.myntraLink ||
@@ -907,14 +925,15 @@ p.ajioLink ||
 p.relianceLink ||
 '#'
 }" target="_blank">
-          <button class="store-btn">
-            Buy Now →
-          </button>
-        </a>
 
-      </div>
-      `;
+<button class="store-btn">
+Buy Now →
+</button>
 
+</a>
+
+</div>
+`;
     });
 
     if (count === 0) {
