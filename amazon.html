@@ -797,13 +797,28 @@ onclick="event.stopPropagation(); event.preventDefault(); toggleWish('${p.name}'
 ${p.old > 0 ? Math.round(((p.old-p.price)/p.old)*100) : 0}% OFF
 </div>
 <div class="card-content">
-<h3>${p.name}</h3>
-<div class="price">₹${p.price}</div>
-<div class="old-price">₹${p.old}</div>
 
-<button class="deal-btn" style="margin-top:auto;" onclick="event.stopPropagation(); openDetail('${p.name}')">
+<h3>${p.name}</h3>
+
+<div class="rating">
+⭐ 4.5 | 1,000+ Reviews
+</div>
+
+<div class="price">₹${p.price}</div>
+
+<div class="old-price">
+₹${p.old}
+</div>
+
+<div class="save-text">
+Save ₹${p.old > p.price ? (p.old - p.price) : 0}
+</div>
+
+<button class="deal-btn" style="margin-top:auto;" 
+onclick="event.stopPropagation(); openDetail('${p.name}')">
 View Deal
 </button>
+
 </div>
 </div>`;
 });
