@@ -1014,16 +1014,24 @@ cart.forEach(item => total += item.qty);
 document.getElementById("cartCount").innerText = total;
 
 }
-function filterCategory(category){
+function filterCategory(category, btn){
 
-if(category==="All"){
-render(products);
-return;
-}
+    document.querySelectorAll(".category-bar button").forEach(button=>{
+        button.classList.remove("active");
+    });
 
-render(products.filter(
-p => p.category === category
-));
+    btn.classList.add("active");
+
+    if(category==="All"){
+        render(products);
+        return;
+    }
+
+    render(
+        products.filter(
+            p => p.category === category
+        )
+    );
 
 }
 function openImageModal(src){
