@@ -581,9 +581,14 @@ footer p{
 </div>
 </div>
 
+<div class="container" id="grid"></div>
 <div class="category-wrapper">
 
-<div class="category-bar">
+<button class="cat-arrow left" onclick="scrollCategories(-250)">
+❮
+</button>
+
+<div class="category-bar" id="categoryBar">
 
 <button class="active" onclick="filterCategory('All',this)">🏠 All</button>
 
@@ -619,9 +624,11 @@ footer p{
 
 </div>
 
-</div>
-<div class="container" id="grid"></div>
+<button class="cat-arrow right" onclick="scrollCategories(250)">
+❯
+</button>
 
+</div>
 <!-- DETAIL -->
 <div class="detail" id="detailBox">
 <div class="detail-header">
