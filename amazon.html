@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krishnalatha Deals</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9X0EZYPCJ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9X0EZYPCJ4');
+</script>
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f5f6fa;
+}
+
+/* HEADER */
+.topbar{
+display:flex;
+justify-content:space-between;
+background:#131921;
+color:white;
+padding:14px;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+font-size:22px;
+font-weight:800;
+color:#ffb84d;
+}
+
+.top-icons span{
+margin-left:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* SEARCH */
+.search-box{
+    flex:1;
+    margin:0 20px;
+    background:#131921;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+.search-box input{
+width:calc(100% - 60px);
+height:50px;
+padding:0 20px;
+font-size:18px;
+border:none;
+border-radius:12px 0 0 12px;
+margin-right:-1px;
+outline:none;
+}
+  .search-btn{
+    height:50px;
+    width:60px;
+    border:none;
+    background:#febd69;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+
+    position:absolute;
+    right:0;
+    top:0;
+    border-radius:0 12px 12px 0;
+}
+/* 🔥 FIXED SMOOTH SCROLL */
+.scroll-wrapper{
+overflow:hidden;
+background:white;
+padding:10px 0;
+}
+
+.scroll-track{
+display:flex;
+gap:15px;
+width:max-content;
+animation:scroll 18s linear infinite;
+will-change:transform;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-50%);}
+}
+
+.scroll-item{
+min-width:140px;
+background:#eee;
+padding:8px;
+border-radius:20px;
+text-align:center;
+font-size:13px;
+font-weight:bold;
+}
+
+/* GRID */
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+justify-content:center;
+gap:15px;
+padding:15px;
+}
+
+
+
+.card img{
+display:block;
+width:calc(100% - 36px);
+height:220px;
+margin:18px auto 0;
+padding:0;
+object-fit:contain;
+background:#fff;
+transition:transform .35s ease;
+}
+
+.card:hover img{
+transform:scale(1.06);
+}
+    
+@media(max-width:768px){
+
+.container{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:10px;
+}
+
+.card img{
+height:110px;
+}
+
+}
+.card{
+position:relative;
+display:flex;
+flex-direction:column;
+background:#fff;
+border-radius:20px;
+overflow:hidden;
+border:1px solid #ececec;
+transition:all .35s ease;
+height:100%;
+min-height:400px;
+box-shadow:
+0 4px 12px rgba(0,0,0,.05),
+0 12px 28px rgba(0,0,0,.04);
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:#ff9900;
+box-shadow:
+0 14px 30px rgba(0,0,0,.12),
+0 28px 50px rgba(0,0,0,.10);
+}
+.card-content{
+display:flex;
+flex-direction:column;
+flex:1;
+padding:18px;
+gap:8px;
+min-height:180px;
+}
+
+.card-content h3{
+font-size:17px;
+font-weight:600;
+line-height:1.45;
+height:50px;
+overflow:hidden;
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+color:#1f2937;
+margin:0;
+letter-spacing:.2px;
+}
+
+.price{
+font-size:28px;
+font-weight:800;
+color:#008000;
+line-height:1;
+margin-top:auto;
+}
+
+.old-price{
+font-size:15px;
+color:#8a8a8a;
+text-decoration:line-through;
+margin:6px 0 18px;
+}
+/* HEART */
+    .discount-badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#ff4d4f;
+color:white;
+padding:5px 10px;
+border-radius:6px;
+font-size:13px;
+font-weight:bold;
+z-index:10;
+}
+.heart{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:white;
+    border-radius:50%;
+    cursor:pointer;
+    z-index:10;
+}
+.heart.active{
+background:red;
+color:white;
+}
+
+/* DETAIL */
+.detail{
+position:fixed;
+inset:0;
+background:white;
+display:none;
+z-index:9999;
+overflow:auto;
+}
+
+.detail-header{
+display:flex;
+justify-content:space-between;
+padding:12px;
+background:#131921;
+color:white;
+}
+
+.close{
+background:red;
+border:none;
+color:white;
+width:32px;
+height:32px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* AMAZON STYLE DETAIL */
+.detail-body{
+display:flex;
+gap:20px;
+padding:15px;
+flex-wrap:wrap;
+}
+
+.detail-body img{
+    width:320px;
+    max-width:100%;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.detail-info{
+flex:1;
+min-width:250px;
+}
+.image-modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.image-modal img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:10px;
+}
+
+.close-modal{
+    position:absolute;
+    top:20px;
+    right:30px;
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+}
+.old{
+text-decoration:line-through;
+color:gray;
+margin-left:8px;
+}
+
+.discount{
+color:green;
+font-weight:bold;
+margin:10px 0;
+}
+
+/* BUTTONS */
+.btn{
+  
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  color:white;
+  display:inline-block;
+}
+.buy{background:#28a745;color:white;}
+.cart{
+  background:#ff9800;
+  color:white;
+  margin-left:10px;
+}
+
+.cart:hover{
+  background:#e68900;
+}
+
+/* POPUP */
+.popup{
+position:fixed;
+inset:0;
+background:white;
+display:none;
+z-index:10000;
+flex-direction:column;
+}
+
+.popup-header{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:#131921;
+color:white;
+}
+
+.popup-content{
+padding:10px;
+overflow:auto;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+background:#f2f2f2;
+margin-bottom:10px;
+border-radius:10px;
+}
+
+.remove-btn{
+background:red;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+}
+/* MOBILE FIX */
+@media (max-width: 768px) {
+
+    .topbar{
+    flex-wrap:wrap;
+    padding:10px;
+    align-items:center;
+}
+
+    .logo{
+    width:auto;
+    font-size:20px;
+    order:1;
+}
+
+    .search-box{
+    width:100%;
+    margin-top:10px;
+    margin-left:0;
+    margin-right:0;
+    order:99;
+    flex-basis:100%;
+}
+
+ .top-icons{
+    width:auto;
+    margin-left:auto;
+    order:2;
+}   
+}
+.category-wrapper{
+    position:sticky;
+    top:78px;
+    z-index:998;
+    display:flex;
+    align-items:center;
+    background:#fff;
+    border-bottom:1px solid #ececec;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.category-bar{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    overflow-x:auto;
+    white-space:nowrap;
+    padding:12px;
+    flex:1;
+    scroll-behavior:smooth;
+    background:#fff;
+}
+  .category-bar::-webkit-scrollbar{
+    display:none;
+}
+
+.category-bar{
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+}
+  .cat-arrow{
+    width:44px;
+    height:44px;
+    border:none;
+    background:#ffffff;
+    color:#333;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+    flex-shrink:0;
+}
+
+.cat-arrow:hover{
+    background:#ff9900;
+    color:#fff;
+}
+
+.cat-arrow.left{
+    border-right:1px solid #eee;
+}
+
+.cat-arrow.right{
+    border-left:1px solid #eee;
+}
+.category-bar button{
+
+flex-shrink:0;
+
+padding:11px 18px;
+
+border:none;
+
+border-radius:30px;
+
+background:#f4f4f4;
+
+color:#333;
+
+font-size:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.30s;
+
+}
+
+.category-bar button:hover{
+
+background:#ff9900;
+
+color:#fff;
+
+transform:translateY(-2px);
+
+}
+
+.category-bar button.active{
+
+background:#ff9900;
+
+color:#fff;
+
+box-shadow:0 5px 14px rgba(255,153,0,.35);
+
+}
+    .deal-btn{
+margin-top:auto;
+height:48px;
+border:none;
+border-radius:10px;
+background:#ff9900;
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+.deal-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 10px 20px rgba(255,153,0,.35);
+
+}
+
+.deal-btn:hover{
+    background:#e68a00;
+}
+
+.affiliate-note{
+    text-align:center;
+    padding:15px;
+    color:#666;
+    font-size:14px;
+    background:#f5f5f5;
+    margin-top:20px;
+}
+
+footer{
+    background:#0d1321;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+footer p{
+    margin:5px 0;
+}
+
+
+.buy-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.amazon{
+  background:#28a745;
+  color:white;
+}
+
+.amazon:hover{
+  background:#218838;
+}
+.flipkart{ background:#2874f0; color:white; }
+.myntra{ background:#ff3f6c; color:white; }
+.meesho{ background:#9c27b0; color:white; }
+</style>
+
+</head>
+
+<body>
+
+
+
+<div class="topbar">
+
+   <div class="logo">
+      Krishnalatha Deals
+   </div>
+
+   <div class="search-box">
+    <input id="search"
+        placeholder="Search products..."
+        oninput="searchProducts()">
+
+    <button class="search-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7" stroke="#333" stroke-width="2" fill="none"/>
+        <line x1="16" y1="16" x2="22" y2="22" stroke="#333" stroke-width="2"/>
+    </svg>
+</button>
+</div>
+
+   <div class="top-icons">
+      <span onclick="openPopup('wishlist')">❤️
+      <span id="wishCount">0</span></span>
+
+      <span onclick="openPopup('cart')">🛒
+      <span id="cartCount">0</span></span>
+   </div>
+
+</div>
+
+<!-- SCROLL -->
+<div class="scroll-wrapper">
+<div class="scroll-track">
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New</div>
+<div class="scroll-item">🏆 Top</div>
+<div class="scroll-item">📦 Free</div>
+
+<div class="scroll-item">🔥 Deals</div>
+<div class="scroll-item">⚡ Fast</div>
+<div class="scroll-item">💰 Best Price</div>
+<div class="scroll-item">🆕 New</div>
+<div class="scroll-item">🏆 Top</div>
+<div class="scroll-item">📦 Free</div>
+</div>
+</div>
+
+
+<div class="category-wrapper">
+
+<button class="cat-arrow left" onclick="scrollCategories(-250)">
+❮
+</button>
+
+<div class="category-bar" id="categoryBar">
+
+<button class="active" onclick="filterCategory('All',this)">🏠 All</button>
+
+<button onclick="filterCategory('Deals',this)">🔥 Deals</button>
+
+<button onclick="filterCategory('Mobiles',this)">📱 Mobiles</button>
+
+<button onclick="filterCategory('Electronics',this)">🖥 Electronics</button>
+
+<button onclick="filterCategory('Computers',this)">💻 Computers</button>
+
+<button onclick="filterCategory('Home',this)">🏠 Home</button>
+
+<button onclick="filterCategory('Fashion',this)">👗 Fashion</button>
+
+<button onclick="filterCategory('Beauty',this)">💄 Beauty</button>
+
+<button onclick="filterCategory('Grocery',this)">🛒 Grocery</button>
+
+<button onclick="filterCategory('Bags',this)">👜 Bags</button>
+
+<button onclick="filterCategory('Kids',this)">🧸 Kids</button>
+
+<button onclick="filterCategory('Toys',this)">🎮 Toys</button>
+
+<button onclick="filterCategory('Books',this)">📚 Books</button>
+
+<button onclick="filterCategory('Health',this)">💪 Health</button>
+
+<button onclick="filterCategory('Sports',this)">⚽ Sports</button>
+
+<button onclick="filterCategory('Auto',this)">🚗 Auto</button>
+
+</div>
+
+<button class="cat-arrow right" onclick="scrollCategories(250)">
+❯
+</button>
+
+</div>
+
+<div class="container" id="grid"></div>
+
+<!-- DETAIL -->
+<div class="detail" id="detailBox">
+<div class="detail-header">
+<div>Product</div>
+<button class="close" onclick="closeDetail()">×</button>
+</div>
+
+<div class="detail-body" id="detailBody"></div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-header">
+<div id="popupTitle">List</div>
+<button onclick="closePopup()">Close</button>
+</div>
+<div class="popup-content" id="popupContent"></div>
+</div>
+
+<script>
+
+let products = [];
+
+async function loadProducts(){
+
+try{
+
+const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+
+const { getFirestore, collection, getDocs }
+= await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+const firebaseConfig = {
+apiKey: "AIzaSyBnp4vvQwB8e2ZedPXmhScChGu-VX_xJYA",
+authDomain: "krishnalatha-deals.firebaseapp.com",
+projectId: "krishnalatha-deals",
+storageBucket: "krishnalatha-deals.firebasestorage.app",
+messagingSenderId: "390458780701",
+appId: "1:390458780701:web:7f6638bbd480861b12eaf4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const snapshot = await getDocs(collection(db,"products"));
+
+products = [];
+
+snapshot.forEach((doc)=>{
+
+const p = doc.data();
+if(p.status === "Expired"){
+return;
+}
+products.push({
+name: p.name || "",
+price: Number(p.price || 0),
+old: Number(p.originalPrice || p.price || 0),
+img: p.image || "",
+
+amazonLink: p.amazonLink || "",
+flipkartLink: p.flipkartLink || "",
+myntraLink: p.myntraLink || "",
+meeshoLink: p.meeshoLink || "",
+
+category: p.category || "Other",
+status: p.status || "Active"
+});
+});
+
+render();
+
+}catch(err){
+
+console.error(err);
+
+document.getElementById("grid").innerHTML =
+"<h2 style='padding:20px'>Unable to load products</h2>";
+
+}
+
+}
+
+let wish = JSON.parse(localStorage.getItem("wish")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function save(){
+localStorage.setItem("wish",JSON.stringify(wish));
+localStorage.setItem("cart",JSON.stringify(cart));
+}
+
+/* RENDER */
+function render(list=products){
+let g=document.getElementById("grid");
+g.innerHTML="";
+
+list.forEach(p=>{
+let isW = wish.find(x=>x.name===p.name);
+
+g.innerHTML+=`
+<div class="card" onclick="openDetail('${p.name}')">
+
+<div class="heart ${isW?'active':''}"
+onclick="event.stopPropagation(); event.preventDefault(); toggleWish('${p.name}'); return false;">❤</div>
+<img
+    src="${p.img}"
+    alt="${p.name}"
+    onerror="this.src='https://placehold.co/300x300?text=No+Image'">
+<div class="discount-badge">
+${p.old > 0 ? Math.round(((p.old-p.price)/p.old)*100) : 0}% OFF
+</div>
+<div class="card-content">
+<h3>${p.name}</h3>
+<div class="price">₹${p.price}</div>
+<div class="old-price">₹${p.old}</div>
+
+<button class="deal-btn" style="margin-top:auto;" onclick="event.stopPropagation(); openDetail('${p.name}')">
+View Deal
+</button>
+</div>
+</div>`;
+});
+}
+
+/* SEARCH */
+function searchProducts(){
+let v=document.getElementById("search").value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
+}
+
+/* DETAIL */
+function openDetail(name){
+
+let p=products.find(x=>x.name===name);
+  if(!p) return;
+let d = p.old > 0 ? Math.round(((p.old - p.price) / p.old) * 100) : 0;
+
+document.getElementById("detailBody").innerHTML = `
+<img src="${p.img}" onclick="openImageModal('${p.img}')">
+
+<div class="detail-info" style="display:flex;flex-direction:column;gap:10px;">
+<h2>${p.name}</h2>
+
+<div>
+₹${p.price} <span class="old">₹${p.old}</span>
+</div>
+
+<div class="discount">${d}% OFF</div>
+
+<div class="buy-buttons">
+
+${p.amazonLink ? `
+<a href="${p.amazonLink}" target="_blank"
+onclick="event.stopPropagation()"
+class="btn amazon">Buy Now</a>
+` : ""}
+
+${p.flipkartLink ? `
+<a href="${p.flipkartLink}" target="_blank"
+onclick="event.stopPropagation()"
+class="btn flipkart">Buy Now</a>
+` : ""}
+
+${p.myntraLink ? `
+<a href="${p.myntraLink}" target="_blank"
+onclick="event.stopPropagation()"
+class="btn myntra">Buy Now</a>
+` : ""}
+
+${p.meeshoLink ? `
+<a href="${p.meeshoLink}" target="_blank"
+onclick="event.stopPropagation()"
+class="btn meesho">Buy Now</a>
+` : ""}
+
+<button 
+  id="btn_${p.name.replace(/\s/g,'')}"
+  class="btn cart"
+  onclick="event.stopPropagation(); addCart('${p.name}')">
+  Add to Cart (${getQty(p.name)})
+</button>
+
+<div class="qty-box">
+  <button onclick="changeQty('${p.name}', -1)">−</button>
+ <span id="detailQty_${p.name.replace(/\s/g,'')}">${getQty(p.name)}</span>
+  <button onclick="changeQty('${p.name}', 1)">+</button>
+</div>
+
+</div>
+</div>
+`;
+document.getElementById("detailBox").style.display="block";
+}
+
+function closeDetail(){
+document.getElementById("detailBox").style.display="none";
+}
+
+/* WISHLIST */
+function toggleWish(name){
+let i=wish.findIndex(x=>x.name===name);
+if(i>-1){
+  wish.splice(i,1);
+}else{
+  let p = products.find(x=>x.name===name);
+
+  wish.push({
+    name:p.name,
+    img:p.img,
+    price:p.price
+  });
+}
+save();
+updateCounts();
+render();
+}
+
+/* CART */
+  function getQty(name){
+  let item = cart.find(p => p.name === name);
+  return item ? item.qty : 0;
+}
+function addCart(name){
+  let p = products.find(x => x.name === name);
+  let item = cart.find(x => x.name === name);
+
+  if(item){
+    item.qty += 1;
+  }else if(p){
+    cart.push({ ...p, qty: 1 });
+  }
+
+  save();
+  updateCounts();
+  updateButtonCount(name);
+
+  // update qty span near + / -
+  let cleanName = name.replace(/\s/g,'');
+
+let detailQty = document.getElementById("detailQty_" + cleanName);
+if(detailQty){
+  detailQty.innerText = getQty(name);
+}
+
+let cartQty = document.getElementById("cartQty_" + cleanName);
+if(cartQty){
+  cartQty.innerText = getQty(name);
+}
+}
+function buyNow(name){
+
+let p=products.find(x=>x.name===name);
+
+if(!p || !p.amazonLink){
+alert("Affiliate link not available");
+return;
+}
+
+window.open(p.amazonLink, "_blank");
+
+}
+/* POPUP */
+function openPopup(type){
+let c=document.getElementById("popupContent");
+document.getElementById("popup").style.display="flex";
+
+if(type==="wishlist"){
+  c.innerHTML = wish.length ? wish.map(p=>`
+<div class="item" style="display:flex;align-items:center;gap:15px;padding:10px;">
+
+<img src="${p.img}" style="width:80px;height:80px;object-fit:contain;">
+
+<div style="flex:1;">
+<div>${p.name}</div>
+<div>₹${p.price}</div>
+</div>
+
+<button onclick="window.open('${p.meeshoLink}','_blank')">
+View Deal
+</button>
+
+<button class="remove-btn"
+onclick="removeWish('${p.name}')">
+Remove
+</button>
+
+</div>
+`).join("") : "Empty";
+
+  return;
+}
+
+if(type==="cart"){
+let total=0;
+
+c.innerHTML = cart.map(p=>{
+total += p.price * p.qty;
+return `
+<div class="item" style="display:flex;align-items:center;gap:15px;justify-content:space-between;">
+
+<img src="${p.img}" style="width:80px;height:80px;object-fit:contain;">
+
+<div style="flex:1;">
+<div>${p.name}</div>
+<div>₹${p.price}</div>
+</div>
+
+<div>
+<button onclick="changeQty('${p.name}',-1)">-</button>
+${p.qty}
+<button onclick="changeQty('${p.name}',1)">+</button>
+</div>
+
+<button class="remove-btn"
+onclick="removeCart('${p.name}')">
+✕
+</button>
+
+</div>`;
+}).join("");
+
+c.innerHTML += `<div style="padding:10px;font-weight:bold;">Total: ₹${total}</div>`;
+}
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+/* REMOVE */
+function removeWish(name){
+wish = wish.filter(x=>x.name!==name);
+save();
+updateCounts();
+openPopup("wishlist");
+render();
+}
+
+function removeCart(name){
+cart = cart.filter(x=>x.name!==name);
+save();
+updateCounts();
+openPopup("cart");
+}
+
+/* QTY */
+function changeQty(name, val){
+  let item = cart.find(x => x.name === name);
+
+  if(!item && val > 0){
+    let p = products.find(x => x.name === name);
+    if(p){
+      cart.push({ ...p, qty: 1 });
+    }
+  }else if(item){
+    item.qty += val;
+
+    if(item.qty <= 0){
+      cart = cart.filter(x => x.name !== name);
+    }
+  }
+
+  save();
+  updateCounts();
+  updateButtonCount(name);
+
+  let cleanName = name.replace(/\s/g,'');
+
+let detailQty = document.getElementById("detailQty_" + cleanName);
+if(detailQty){
+  detailQty.innerText = getQty(name);
+}
+
+let cartQty = document.getElementById("cartQty_" + cleanName);
+if(cartQty){
+  cartQty.innerText = getQty(name);
+}
+// if popup is open, refresh cart popup live
+let popup = document.getElementById("popup");
+if(popup && popup.style.display === "flex"){
+  openPopup("cart");
+}
+  }
+  /* COUNTS */
+function updateCounts(){
+
+document.getElementById("wishCount").innerText = wish.length;
+
+// ✅ count TOTAL quantity (not items)
+let total = 0;
+cart.forEach(item => total += item.qty);
+
+document.getElementById("cartCount").innerText = total;
+
+}
+function filterCategory(category, btn){
+
+    document.querySelectorAll(".category-bar button").forEach(button=>{
+        button.classList.remove("active");
+    });
+
+    btn.classList.add("active");
+
+    if(category==="All"){
+        render(products);
+        return;
+    }
+
+    render(
+        products.filter(
+            p => p.category === category
+        )
+    );
+
+}
+function openImageModal(src){
+    let img = document.getElementById("modalImage");
+    let modal = document.getElementById("imageModal");
+
+    if(img && modal){
+        img.src = src;
+        modal.style.display = "flex";
+    }
+} 
+
+function closeImageModal(){
+    document.getElementById("imageModal").style.display = "none";
+} 
+ function updateButtonCount(name){
+  let cleanName = name.replace(/\s/g,'');
+  let btn = document.getElementById("btn_" + cleanName);
+
+  if(btn){
+    btn.innerHTML = `Add to Cart (<span id="qty_${cleanName}">${getQty(name)}</span>)`;
+  }
+}
+  function scrollCategories(value){
+document.getElementById("categoryBar").scrollBy({
+left:value,
+behavior:"smooth"
+});
+}
+loadProducts();
+updateCounts();
+
+</script>
+<div class="affiliate-note">
+This website contains affiliate links. As an Amazon Associate, we may earn commissions from qualifying purchases at no extra cost to you.
+</div>
+
+<div class="price-disclaimer">
+Prices and availability are subject to change. Please verify details on the retailer website before purchasing.
+</div>
+
+<footer>
+  <p>© 2026 Krishnalatha Deals</p>
+  <p>Amazon Affiliate Website</p>
+ <p>
+<a href="contact.html">Contact</a>
+<a href="privacy.html">Privacy Policy</a>
+<a href="disclaimer.html">Disclaimer</a>
+</p></footer>
+ <div class="image-modal" id="imageModal">
+    <span class="close-modal" onclick="closeImageModal()">&times;</span>
+    <img id="modalImage" src="">
+</div>   
+</body>
+</html>
