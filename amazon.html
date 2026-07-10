@@ -1065,6 +1065,12 @@ function closeImageModal(){
     btn.innerHTML = `Add to Cart (<span id="qty_${cleanName}">${getQty(name)}</span>)`;
   }
 }
+  function scrollCategories(value){
+document.getElementById("categoryBar").scrollBy({
+left:value,
+behavior:"smooth"
+});
+}
 loadProducts();
 updateCounts();
 
