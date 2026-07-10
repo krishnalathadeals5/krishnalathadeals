@@ -98,7 +98,7 @@ prevBtn.addEventListener("click", () => {
 
 // Auto slide
 function startAuto() {
-  interval = setInterval(nextSlide, 3000);
+  interval = setInterval(nextSlide, 5000);
 }
 
 function resetAuto() {
